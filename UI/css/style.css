@@ -17,6 +17,9 @@ label{
     margin: 0px 5% 0px 5%;
 }
 
+.hide{
+    display: none;
+}
 /*Classes for the header*/
 .header{
     background: #0c4da2;
@@ -89,6 +92,32 @@ label{
     margin: 0px 10px 0px 10px;
 }
 
+/*classes for the search button*/
+.header-right .search{
+    display: inline-block;
+    width:220px;
+    margin: 10px 0 0px 0;
+    border-radius:10px; 
+    height: 40px ;
+    z-index: 5;
+    }
+    
+    .search #search-btn{
+        margin: 10px 3% 1px 5px;
+        cursor: pointer;
+    }
+    
+    .search .to-left{
+        margin: 4px 0% 0% 2%;
+        border: none;
+        border-radius: 5px;
+        height: 60%;
+        width : 85%;
+    }
+    
+.fas{
+    cursor: pointer;
+}
 /* classes of the body*/
 
 .app-pub .to-left{
