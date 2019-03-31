@@ -19,6 +19,8 @@ const callHome = () => {
 
 //Going to the home page
 document.getElementById('home-nav').addEventListener('click', callHome);
+document.getElementById('logo').addEventListener('click', callHome);
+document.getElementById('home-nav').addEventListener('click', callHome);
 
 //Going to the signin page
 document.getElementById('signin-nav').addEventListener('click', callSignin);
