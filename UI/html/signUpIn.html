@@ -40,15 +40,12 @@
             </div>
 
             <!-- Registration forms -->
-
-
-
             <div class="form to-right">
                 <!-- Signup form -->
                 <form action="#" class="signup-form">
                     <div class="form-body">
                         <div>
-                            <img  src="../assets/images/logo.png" onclick="callHome()" width="50">
+                            <img src="../assets/images/logo.png" onclick="callHome()" width="50">
                         </div>
                         <label class="">Email</label>
                         <input required type="email" placeholder="Email">
@@ -63,7 +60,27 @@
                             <input type="checkbox" id="remember-me" name="choix" />
                         </div>
                         <button>Register</button>
-                        <p class="message">Already registred ? <a href="#" id="signin-ref">Sign in</a></p>
+                        <p class="message">Already registred ? <a href="#" id="go-to-signin">Sign in</a></p>
+                    </div>
+                </form>
+                <!-- /Signup form -->
+
+                <!-- Signin form -->
+                <form action="#" class="signin-form hide">
+                    <div class="form-body move-down-form">
+                        <div>
+                            <img src="../assets/images/logo.png" onclick="callHome()" width="50">
+                        </div>
+                        <label class="">Email</label>
+                        <input required type="email" placeholder="Email">
+                        <label class="">Password</label>
+                        <input required type="password" placeholder="Password">
+                        <div class="remember-me">
+                            <label class="rm-label">Remember me</label>
+                            <input type="checkbox" id="remember-me" name="choix" />
+                        </div>
+                        <button>Login</button>
+                        <p class="message">Not registred ? <a href="#" id="go-to-signup">Sign up</a></p>
                     </div>
                 </form>
                 <!-- /Signup form -->
@@ -96,6 +113,8 @@
         </div>
         <!-- /footer-->
     </div>
+<!-- js scripts to manage the page-->
+<script src="../js/manage.registration.js"></script>
 </body>
 
 </html>
