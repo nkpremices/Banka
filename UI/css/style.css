@@ -1,12 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Oswald:400,700');
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Oswald');
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto');
+
 
 /* General CSS*/
 
 body {
-background-image:  url('../assets/images/ba.jpg');
+background:  url('../assets/images/ba.jpg') fixed;
+
 margin: 0 0 0 0;
+font-family: 'Montserrat', sans-serif;
 }
 
 label{
@@ -24,7 +26,7 @@ label{
 .header{
     background: #0c4da2;
     color: white;
-    width: 100;
+    width: 100%;
     height: 60px;
     margin: 0 0 0 0;
     position: relative;
@@ -36,7 +38,6 @@ label{
 }
 
 .to-right{
-    font-family: 'Montserrat', sans-serif;
     float: right;
 }
 .header-left{ 
@@ -45,19 +46,20 @@ label{
 }
 .header-right{
     height: 50px;
-    display: inline-block;
-    width: 70%;
+    width: 55%;
+    margin-left: 15%;
 }
 
 .header-left h1{
-    margin: 5px 10px 10px 35%;
-    font-family: 'Oswald', sans-serif;
+    margin: 10px 10px 10px 35%;
     font-weight: 400;
     font-size: 32px;
+    cursor: pointer;
 }
 
 .logo{
     margin: 5px 0px 0px 10%;
+    cursor: pointer;
 }
 
 .li{
@@ -67,11 +69,12 @@ label{
     text-decoration: none;
     text-transform: uppercase;
     text-align: center;
+    cursor: pointer;
 }
 .nav-inactive:hover{
-    margin: 10px 0% 0% 0%;
-    padding: 15px 0% 20px 0%;
-     background-color: #393c41e9;
+    margin: 0px 0% 0% 0%;
+    padding: 25px 0% 15px 0%;
+     background-color: #2d2f31e9;
 }
 
 .nav-active{
@@ -121,24 +124,30 @@ label{
 /* classes of the body*/
 
 .app-pub .to-left{
-width: 40%;      
-background: #f3f3f3 ;
+    width: 40%;
+    height: 400px;      
+    background: #f3f3f3 ;
 }
 
 .app-pub .to-right{
-    width: 60%; 
+    width: 58%; 
+    height: 210px;  
     font-weight: 400;
     font-size: 16px;
     color:#0c4da2;
     background: #f3f3f3;
-    padding: 50px 0px 142px 0px;
+    padding: 50px 0px 140px 2%;
 }
+
+ img[alt="app-illustration"]{
+     width: 90%;
+     height: 100%;
+ }
 
 .app-pub .to-right p{
     padding-right: 30%;
 }
 .button {
-    font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     text-align: center;
     outline: 0;
@@ -160,13 +169,13 @@ background: #f3f3f3 ;
 .footer{
     background:#0c4da2;
     color: white;
-    width: 100;    
+    width: 100%;    
     height: 200px;
     display: inline-block;
 }
 
 
-.footer .page-body-left{
+.footer .footer-left{
     display: inline-block;
     width : 33%;
     color: white;
@@ -175,7 +184,7 @@ background: #f3f3f3 ;
     text-align: left;
 }
 
-.footer .page-body-center{
+.footer .footer-center{
     display: inline-block;
     width : 33%;
     color: white;
@@ -183,7 +192,7 @@ background: #f3f3f3 ;
     padding: 30px 0% 0px 0%;     
     text-align: left;
 }
-.footer .page-body-right{
+.footer .footer-right{
     display: inline-block;
     width : 33%;
     color: white;
@@ -192,35 +201,31 @@ background: #f3f3f3 ;
     padding: 30px 0% 0px 0%;
 }
 
-.footer .page-body-left #app-pub{
+.footer .footer-left #content{
     color:white;  
     margin: 10px 15% 0px 15% ;
-    font-size:16px;
-    font-family: 'Montserrat', sans-serif;     
+    font-size:16px;   
 }
 
-.footer .page-body-left #app-name{
+.footer .footer-left #title{
     margin: 5px 10px 10px 15%;
      display: inline;
-    font-family: 'Oswald', sans-serif;
     font-weight: 400;
-    font-size: 25px;
+    font-size: 22px;
     color:white;
 }
 
-.footer .page-body-center #app-pub{
+.footer .footer-center #content{
     color:white;  
     margin: 10px 15% 0px 15% ;
-    font-size:16px;
-    font-family: 'Montserrat', sans-serif;     
+    font-size:16px;    
 }
 
-.footer .page-body-center #app-name{
+.footer .footer-center #title{
     margin: 5px 10px 10px 15%;
      display: inline;
-    font-family: 'Oswald', sans-serif;
     font-weight: 400;
-    font-size: 25px;
+    font-size: 22px;
     color:white;  
 }
 
@@ -233,4 +238,132 @@ li a{
     color: white;
     margin: 20px;
     font-weight: bold;
+}
+
+/*mobile responsiveness*/
+
+@media screen and (max-width:768px){
+    /* General CSS*/
+    .page{
+        margin: 2px 1% 0px 2%;
+    }
+
+    /*Classes for the header*/
+
+    .header{
+        height: 50px;
+    }
+
+    .logo{
+        display: none;
+    }
+    .header-left{ 
+        width: 10%;   
+    }
+    .header-right{
+        width: 65%;
+        margin-left: 25%;
+    }
+    
+    .header-left h1{
+        margin: 15px 10px 10px 40%;
+        font-size: 20px;
+    }
+
+    .li{
+        width : 20%;
+        font-size: 65%;
+    }
+    .nav-inactive:hover{
+        padding: 25px 0% 10px 0%;
+    }
+    
+    .nav-active{
+        padding: 25px 0% 10px 0%;
+    }
+    .nav-inactive{
+        margin: 0% 0% 0% 0%;
+    }
+    
+    .divider-small{
+        height: 3px;
+    }
+
+    /* classes of the body*/
+
+    .app-pub .to-left{
+     display: none;
+    }
+    
+    .app-pub .to-right{
+        width: 98%; 
+        font-size: 10px;
+        padding: 0px 0px 0px 2%;
+    }
+    
+    .app-pub .to-right p{
+        padding-right: 20%; 
+    }
+    .button {
+        width: 20%;
+        border: 0;
+        padding: 10px;
+        font-size: 7px;
+    }
+    
+    .app-pub .to-right .button{
+        margin: 5% 0 0 0;
+    }
+    
+    /*classes for the footer*/
+    
+    .footer{
+        width: 100%;    
+        height: 100%;
+    }
+    
+    
+    .footer .footer-left{
+        width : 100%;
+        padding: 10px 0% 0px 0%;
+    }
+    
+    .footer .footer-center{
+        width : 100%;
+        padding: 10px 0% 0px 0%;     
+        text-align: left;
+    }
+    .footer .footer-right{
+        width : 100%;
+        padding: 0px 0% 0px 0%;
+    }
+    
+    .footer .footer-left #content{ 
+        margin: 10px 5% 0px 10% ;
+        font-size: 10px;   
+    }
+    
+    .footer .footer-left #title{
+        margin: 5px 0 10px 10%;
+        font-size: 15px;
+    }
+    
+    .footer .footer-center #content{
+        margin: 10px 5% 0px 10% ;
+        font-size: 10px;       
+    }
+    
+    .footer .footer-center #title{
+        margin: 5px 0 10px 10%;
+        font-size: 15px;
+    }
+    
+    ul{
+        list-style-type: none;
+    }
+    
+    li a{
+        margin: 0px;
+        font-size: 10px;
+    }        
 }
