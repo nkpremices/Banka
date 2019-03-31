@@ -104,7 +104,7 @@ label{
 
 .page-body .to-left{
     width: 40%;
-    height: 600px;      
+    height: 550px;      
     background: #f3f3f3 ;
 }
 
@@ -114,9 +114,9 @@ img[alt="app-illustration"]{
     height: 80%;
 }
 
-.page-body .to-right{
+.page-body .form{
     width: 58%; 
-    height: 410px;  
+    height: 360px;  
     z-index: 1;
     font-size: 16px;
     color:white;
@@ -128,7 +128,7 @@ img[alt="app-illustration"]{
     display: box;
     z-index: 1;
     text-align: center;
-    border-radius: 10%;
+    border-radius: 40px;
     background: #0c4da2;
     padding: 20px 5% 20px 5%;
     margin: 0 0 0 15%;
@@ -178,6 +178,18 @@ img[alt="app-illustration"]{
 .remember-me #remember-me{
     width: 25%;    
     float: right ;
+}
+
+.form .message {
+    margin: 15px;
+    font-size: 15px;
+    margin: 5px 0px 0px 0px;
+}
+
+.form-body .message a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 /*classes for the footer*/
@@ -306,7 +318,30 @@ li a{
     }
 
     /* classes of the body*/
+    .page-body .to-left{
+        display: none;
+    }
 
+    .page-body .form{
+        width: 98%;
+        font-size: 12px;
+        padding: 50px 0px 140px 2%;
+    }
+    .form-body{
+        width: 70%;
+        margin: 0 0 0 9%;
+    }
+
+    .form input {
+        width: 100%;
+        border: 0;
+        border-radius: 15px;
+        margin: 0 0 10px ;     
+        box-sizing: border-box;
+        font-size: 14px;
+        padding: 10px;
+    }
+    
     /*classes for the footer*/
     
     .footer{
@@ -355,7 +390,7 @@ li a{
     }
     
     li a{
-        margin: 0px;
+        margin: 4%;
         font-size: 10px;
     }        
 }
