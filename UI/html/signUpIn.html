@@ -19,15 +19,15 @@
         <div class="divider-small"></div>
         <div class="header">
             <div class="header-left to-left">
-                <img class="to-left logo" src="../assets/images/logo.png" onclick="callHome()" width="50" alt="logo">
-                <h1 onclick="callHome()">BANKA</h1>
+                <img class="to-left logo" src="../assets/images/logo.png" id="logo" width="50" alt="logo">
+                <h1 id="app-name">BANKA</h1>
             </div>
 
             <!-- Navigation -->
             <div class="header-right to-right">
                 <div class="li nav-inactive" id="home-nav"> Home </div>
-                <div class="li nav-inactive" id="signin-nav" onclick="callSignin()"> Sign in </div>
-                <div class="li nav-active" id="signup-nav" onclick="callSignup()"> Sign up </div>
+                <div class="li nav-inactive" id="signin-nav" > Sign in </div>
+                <div class="li nav-active" id="signup-nav"> Sign up </div>
             </div>
             <!-- End of the navigation -->
         </div>
@@ -45,7 +45,7 @@
                 <form action="#" class="signup-form">
                     <div class="form-body">
                         <div>
-                            <img src="../assets/images/logo.png" onclick="callHome()" width="50">
+                            <img src="../assets/images/logo.png" width="50">
                         </div>
                         <label class="">Email</label>
                         <input required type="email" placeholder="Email">
@@ -69,7 +69,7 @@
                 <form action="#" class="signin-form hide">
                     <div class="form-body move-down-form">
                         <div>
-                            <img src="../assets/images/logo.png" onclick="callHome()" width="50">
+                            <img src="../assets/images/logo.png" width="50">
                         </div>
                         <label class="">Email</label>
                         <input required type="email" placeholder="Email">
@@ -83,7 +83,7 @@
                         <p class="message">Not registred ? <a href="#" id="go-to-signup">Sign up</a></p>
                     </div>
                 </form>
-                <!-- /Signup form -->
+                <!-- /Signin form -->
             </div>
             <!-- / registration forms -->
         </div>
