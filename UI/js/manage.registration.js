@@ -47,6 +47,8 @@ document.getElementById('go-to-signup').addEventListener('click', signUp);
 
 // Going to the home page
 document.getElementById('home-nav').addEventListener('click', backToHome);
+document.getElementById('logo').addEventListener('click', backToHome);
+document.getElementById('app-name').addEventListener('click', backToHome);
 
 // Going to sign up from the navigation
 document.getElementById('signup-nav').addEventListener('click', signUp);
