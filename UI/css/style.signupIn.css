@@ -22,6 +22,7 @@ label{
 .hide{
     display: none;
 }
+
 /*Classes for the header*/
 .header{
     background: #0c4da2;
@@ -46,8 +47,7 @@ label{
 }
 .header-right{
     height: 50px;
-    width: 55%;
-    margin-left: 15%;
+    width: 70%;
 }
 
 .header-left h1{
@@ -70,6 +70,10 @@ label{
     text-transform: uppercase;
     text-align: center;
     cursor: pointer;
+}
+
+#home-nav{
+    margin-left: 48%;
 }
 .nav-inactive:hover{
     margin: 0px 0% 0% 0%;
@@ -135,6 +139,9 @@ img[alt="app-illustration"]{
     width : 40%;
 }
 
+.move-down-form{
+    margin: 50px 0 0 15%;
+}
 .form input {
     outline: 1;
     background: white;
@@ -190,6 +197,10 @@ img[alt="app-illustration"]{
     color: white;
     text-decoration: none;
     font-weight: bold;
+}
+
+.form-body .message a:hover {
+    color: rgb(96, 192, 195);
 }
 
 /*classes for the footer*/
@@ -301,6 +312,10 @@ li a{
     .li{
         width : 20%;
         font-size: 65%;
+    }
+
+    #home-nav{
+        margin-left: 25%;
     }
     .nav-inactive:hover{
         padding: 25px 0% 10px 0%;

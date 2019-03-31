@@ -19,15 +19,15 @@
         <div class="divider-small"></div>
         <div class="header">
             <div class="header-left to-left">
-                <img class="to-left logo" src="assets/images/logo.png" onclick="callHome()" width="50" alt="logo">
-                <h1 onclick="callHome()">BANKA</h1>
+                <img class="to-left logo" id="logo" src="assets/images/logo.png" width="50" alt="logo">
+                <h1 id="app-name">BANKA</h1>
             </div>
 
             <!-- Navigation -->
             <div class="header-right to-right">
-                <div class="li nav-active" id="home-nav" onclick="callHome()"> Home </div>
-                <div class="li nav-inactive" id="signin-nav" onclick="callSignin()"> Sign in </div>
-                <div class="li nav-inactive" id="signup-nav" onclick="callSignup()"> Sign up </div>
+                <div class="li nav-active" id="home-nav"> Home </div>
+                <div class="li nav-inactive" id="signin-nav"> Sign in </div>
+                <div class="li nav-inactive" id="signup-nav"> Sign up </div>
             </div>
             <!-- End of the navigation -->
         </div>
@@ -41,7 +41,7 @@
                 <h1>Online banking operations</h1>
                 <p class="pub">Check your account balance, deposit or withdraw, and do many more everywhere you go</p>
                 <p>
-                    <div class="button" onclick="backToHome(this)">Let's start <i class="fas fa-key"></i></div>
+                    <div class="button" id="start" >Let's start <i class="fas fa-key"></i></div>
                 </p>
             </div>
         </div>
@@ -68,6 +68,8 @@
 </div>
 <!-- /footer-->
     </div>
+    <!--scripts to manage the page-->
+    <script src="js/manage.home.js"></script>
 </body>
 
 </html>

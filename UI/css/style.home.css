@@ -46,8 +46,7 @@ label{
 }
 .header-right{
     height: 50px;
-    width: 55%;
-    margin-left: 15%;
+    width: 70%;
 }
 
 .header-left h1{
@@ -70,6 +69,10 @@ label{
     text-transform: uppercase;
     text-align: center;
     cursor: pointer;
+}
+
+#home-nav{
+    margin-left: 52%;
 }
 .nav-inactive:hover{
     margin: 0px 0% 0% 0%;
@@ -273,6 +276,10 @@ li a{
     .li{
         width : 20%;
         font-size: 65%;
+    }
+
+    #home-nav{
+        margin-left: 25%;
     }
     .nav-inactive:hover{
         padding: 25px 0% 10px 0%;
