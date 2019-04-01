@@ -128,14 +128,14 @@ nav:hover div {
 
 .header-right .search{
     display: inline-block;
-    width: 30%;
-    margin: 9px 0 0px 22%;
+    width: 35%;
+    margin: 9px 0 0px 15%;
     border-radius:10px; 
     height: 40px ;
     }
     
     .search #search-btn{
-        margin: 10px 1% 1px 10px;
+        margin: 10px 1% 1px 5px;
         font-size:20px;
         cursor: pointer;
     }
@@ -203,21 +203,36 @@ nav:hover div {
         display: none;
     }
     .header-left{ 
-        width: 10%;   
+        width: 45%;   
     }
     .header-right{
-        width: 65%;
-        margin-left: 25%;
+        width: 55%;
+        margin-left: 0%;
     }
     
     .header-left h1{
-        margin: 15px 10px 10px 40%;
+        margin: 13px 0px 0px 0;
         font-size: 20px;
+
+    }
+
+    nav div {
+        height: 3px;
+        margin: 4px 0;
+        border-radius: 20px;
+    }
+    
+    nav {
+        width: 20px;
+        padding-right : 20px; 
+        margin: 15px 0 0 15px;
+        cursor: pointer;
     }
 
     .li{
-        width : 20%;
-        font-size: 65%;
+        width : 15%;
+        margin: 15px 0 0 0;
+        font-size: 35%;
     }
 
 
@@ -236,6 +251,56 @@ nav:hover div {
         height: 3px;
     }
 
+    /*classes for the search button*/
+
+.header-right .search{
+    width: 55%;
+    margin: 9px 0 0px 0%;
+    padding: 0 0 0 0;
+    height: 30px ;
+    }
+    
+    .search #search-btn{
+        margin: 10px 0% 1px 3%;
+        width:17%;
+        font-size:15px;
+        cursor: pointer;
+    }
+    
+    .search .to-left{/*the input*/
+        margin: 4px 0% 0% 0%;
+        width : 80%;
+    }
+    .fa-bell{
+        font-size: 15px;
+    }
+    .fa-bell:hover{
+        font-size: 19px;
+    }
+    
+    .fa-product-hunt{
+        padding: 6px 0 0 0;
+        font-size: 25px;
+    }
+    
+    .fa-question{
+        font-size: 15px;
+    }
+    .fa-question:hover{
+        font-size: 19px;
+    }
+    
+    #search{
+        margin-left: 7%;
+        font-size:15px;
+    }
+    .search:hover{
+        font-size: 19px;
+    }
+
+    #profile{
+        display: none;
+    }
     /* classes of the body*/
      
 }
