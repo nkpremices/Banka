@@ -33,6 +33,8 @@ label{
 
 /*Classes for the header*/
 .header{
+    box-shadow: 1px 1px 12px #555;  
+    z-index: 1;
     background: #0c4da2;
     color: white;
     width: 100%;
@@ -42,6 +44,8 @@ label{
     display: block;
 }
 
+
+
 .to-left{
     float: left;
 }
@@ -50,11 +54,9 @@ label{
     float: right;
 }
 .header-left{ 
-    width: 30%;
-    height: 50px;    
+    width: 30%;  
 }
 .header-right{
-    height: 50px;
     width: 70%;
 }
 
@@ -93,6 +95,11 @@ nav:hover div {
     font-weight: 400;
     font-size: 32px;
     cursor: pointer;
+    z-index: 1;
+}
+
+.overlay{
+    width: 20%;
 }
 
 .logo{
@@ -182,8 +189,105 @@ nav:hover div {
 
 .page-body{
     width:100%;
+    display: block;
 }
+
+/*Side menu */
+
+.side-nav {
+    box-shadow: 1px 1px 12px #555;  
+    z-index: 1;
+    font-weight: 550;
+    position: fixed;
+    width: 20%;
+    height: 100%;
+    color: #0c4da2;
+    font-family: 'Montserrat', sans-serif;
+    background: #ffffff;
+    border-radius: 1px;
+    margin: 0px 0% 5px 0%;
+    transition: 0.5s;
+}
+
+.profile-activity{
+  padding: 15px 0 20px 0;
+  margin: 2px 5% 0 5%;
+  color: white;
+  border-radius: 20px;
+  background: #0c4da2;
+  z-index: 2;
+  box-shadow: 1px 1px 12px #555;
+}
+
+.profile-activity #profile-photo {
+    display: inline-block;
+    height: 50px;
+    border-radius: 70%;
+    cursor: pointer;
+    margin-left: 5%; 
+}
+
+.profile-photo i{
+    width: 100%;
+    display: inline-block;
+}
+
+.profile-activity .username-display {
+    display: inline-block;
+    font-size: 20px;
+    padding: 0 0 0px 0;
+}
+
+.side-nav .choice {
+    text-decoration: none;
+    display: block;
+    margin: 10px 0% 5px 10%;
+}
+.side-nav .choice div{
+    cursor: pointer;
+    padding: 5px 5px 5px 5px;
+}
+.profile-activity .username-display {
+    text-align: center;
+    display: inline-block;
+}
+
+.profile-activity .profile-photo {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.account-number-display{
+    color: rgb(14, 11, 163);
+    margin: 5px 0 0 0;
+    padding: 20px 0 20px 10px;
+    z-index: 2;
+  box-shadow: 1px 1px 12px #555;    
+    
+}
+
+.side-nav .new-account {
+    border: 0.5px solid #0c4da2;
+    padding: 5px 0% 6px 10%;
+    margin: 0px 40% 0px 0%;
+    border-radius: 10px;
+}
+
+.side-active {
+    box-shadow: 1px 1px 10px #0c4da2;
+    border-radius: 15px;
+    padding-left: 10px;
+    z-index: 2;
+    background-color: #ffffffe8;
+    padding: 5px 0% 2px 0%;
+    margin: 0px 15% 0px 0%;
  
+}
+
+.new-account:hover {
+    background-color: #0c4da2;
+    color: white;
+}
 
 /*mobile responsiveness*/
 
@@ -302,5 +406,9 @@ nav:hover div {
         display: none;
     }
     /* classes of the body*/
+
+    .side-nav{
+        display: none;
+    }
      
 }
