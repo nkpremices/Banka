@@ -125,6 +125,8 @@ label{
     padding-right: 30%;
 }
 .button {
+    box-shadow: 1px 1px 12px #555;  
+    z-index: 1;
     text-transform: uppercase;
     text-align: center;
     outline: 0;
