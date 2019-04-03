@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="../css/style.dashboard.css">
+    <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>Banka</title>
+</head>
+
+<body>
+    <div class="page">
+        <!-- header start -->
+        <div class="divider-small"></div>
+        <div class="header">
+            <div class="header-left to-left">
+                <div class="to-left">
+                    <nav id="slide-button">
+                        <div class="one"></div>
+                        <div class="two"></div>
+                        <div class="three"></div>
+                    </nav>
+                </div>
+                <img class="to-left logo" src="../assets/images/logo.png" id="logo" width="50" alt="logo">
+                <h1 id="app-name">BANKA</h1>
+            </div>
+
+            <!-- Navigation -->
+            <div class="header-right to-right">
+                <div class="hide">
+                    <input type='text' placeholder='  Search...' id='search-text-input' class="to-left" />
+                    <i class="fas fa-search" id="search-btn"></i>
+                </div>
+
+                <div class="li" id="search">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="li" id="notifications"><i class="fas fa-bell"></i></div>
+                <div class="li" id="faq"> <i class="fas fa-question"></i></div>
+                <div class="li" id="profile"> <i class="fab fa-product-hunt"></i> </div>
+            </div>
+            <!-- End of the navigation -->
+        </div>
+        <!-- End of the header-->
+
+        <!-- body start -->
+        <div class="page-body">
+            <!-- Section side menu-->
+
+            <div class="side-nav to-left" id="side-menu">
+                <div class="profile-activity hide">
+                    <div class="" id="profile-photo"> <i class="fab fa-product-hunt"></i> </div>
+                    <div class="username-display">Peter Mahoro</div>
+                </div>
+                <div id="" class="account-name-display">Account : Scholarship</div>
+                <div class="choice">
+                    <div id="" class="side-active"><i class="fab fa-accusoft"></i>Profile</div>
+                    <div id="" class="side-inactive"><i class="fas fa-comments-dollar"></i>Transactions</div>
+                    <div id="" class="side-inactive"><i class="fas fa-folder"></i>My accounts</div>
+                    <div id="" class="new-account">Create account</div>
+                </div>
+            </div>
+            <!--/ Section side menu-->
+            <!-- Section main-->
+            <div class="main to-right">
+                <div class="account-number">Account number <em>12437</em></div>
+                <div class="content to-right">
+                    <div class="profile-header">Account overview</div>
+                    <div class="profile-body">
+                        <div class="summary">
+                            <ul>
+                                <li>Recent transactions : 7</li>
+                                <li>This account was recently renamed to : Scolarship</li>
+                            </ul>
+                        </div>
+                        <div class="divider-line to-right"></div>
+                        <div class="space"></div>
+                        <div class="balance-history to-left">
+                            <p>Balance history</p>
+                            <div class="history-graph to-left">
+                                <div class="month" id="1">
+                                    <div class="to-left">December 2018</div>
+                                    <div class="to-right">1 600 $</div>
+                                </div>
+                                <div class="month" id="2">
+                                    <div class="to-left">January 2019</div>
+                                    <div class="to-right">1 000$</div>
+                                </div>
+                                <div class="month" id="3">
+                                    <div class="to-left">February</div>
+                                    <div class="to-right">1 300$</div>
+                                </div>
+                                <div class="month" id="4">
+                                    <div class="to-left">March</div>
+                                    <div class="to-right">675.6$</div>
+                                </div>
+                                <div class="month" id="5">
+                                    <div class="to-left">April</div>
+                                    <div class="to-right">1 200$</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="account-profile-content to-right">
+
+                        </div>
+                    </div>
+                    <div class="space"></div>
+                </div>
+            </div>
+            <!--/ Section main-->
+        </div>
+        <!-- End of the body -->
+
+    </div>
+
+     <!-- Message boxes forms -->
+     <div class="form to-right hide">
+            <!-- Reset form -->
+            <form action="#" class="create-account-form hide">
+                <div class="form-body ">
+                        <i class="fas fa-times to-right"></i>
+                    <label class="create-account-form-title">Create account</label>
+                    <input required type="text" placeholder="Account name">
+                    <select class="currency" >
+                            <option value="default">currency</option>
+                            <option value="usd">Dollar USD</option>
+                            <option value="eu">Euro EU</option>
+                            <option value="rwf">Rwandan Francs RWF</option>
+                            <option value="cdf">Congolese Francs CDF</option>
+                    </select>
+                    <select class="currency" >
+                            <option value="default">Type</option>
+                            <option value="current">Current</option>
+                            <option value="savings">Savings</option>
+                    </select>
+                        <input required type="number" placeholder="National Id or Passport">
+                        <input required type="email" placeholder="Email">
+                        <input required type="number" placeholder="Phone number">                   
+                    <button>Create</button>
+                </div>
+            </form>
+            <!-- /reset form -->
+        </div>
+        <!-- / registration forms -->
+
+        <!--overlay-->
+        <div class="overlay hide"></div>
+    <!-- js scripts to manage the page-->
+    <script src="../js/manage.dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,685 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto');
+
+
+/* General CSS*/
+
+body {
+background:  url('../assets/images/ba.jpg') fixed;
+
+margin: 0 0 0 0;
+font-family: 'Montserrat', sans-serif;
+}
+
+label{
+   float: left;
+}
+
+.page{
+    margin: 0px 5% 0px 5%;
+}
+
+.hide{
+    display: none;
+}
+
+.to-left{
+    float: left;
+}
+
+.to-right{
+    float: right;
+}
+
+/*Classes for the header*/
+.header{
+    background: #0c4da2;
+    color: white;
+    width: 100%;
+    height: 60px;
+    margin: 0 0 0 0;
+    position: relative;
+    display: block;
+}
+
+
+
+.to-left{
+    float: left;
+}
+
+.to-right{
+    float: right;
+}
+.header-left{ 
+    width: 30%;  
+}
+.header-right{
+    width: 70%;
+}
+
+nav div {
+    height: 4px;
+    background: white;
+    margin: 5px 0;
+    border-radius: 25px;
+    transition: 0.3s;
+}
+
+nav {
+    width: 30px;
+    margin: 15px 0 0 40px;
+    cursor: pointer;
+}
+
+.one {
+    width: 30px;
+}
+
+.two {
+    width: 20px;
+}
+
+.three {
+    width: 25px
+}
+
+nav:hover div {
+    width: 30px;
+}
+
+.header-left h1{
+    margin: 10px 10px 10px 36%;
+    font-weight: 400;
+    font-size: 32px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.overlay{
+    width: 20%;
+}
+
+.logo{
+    margin: 5px 0px 0px 3%;
+    cursor: pointer;
+}
+
+.li{
+    display: inline-block;
+    width : 15%;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+}
+
+.divider-small{
+    background-color:#121825e8;
+    height: 6px;
+}
+
+.header-right i{
+    margin: 0px 10px 0px 10px;
+}
+
+/*classes for the search button*/
+#search{
+    margin-left: 37%;
+    font-size:25px;
+}
+
+
+.header-right .search{
+    display: inline-block;
+    width: 35%;
+    margin: 9px 0 0px 15%;
+    border-radius:10px; 
+    height: 40px ;
+    }
+    
+    .search #search-btn{
+        margin: 10px 1% 1px 5px;
+        font-size:20px;
+        cursor: pointer;
+    }
+    
+    .search .to-left{
+        margin: 4px 0% 0% 2%;
+        border: none;
+        border-radius: 5px;
+        height: 60%;
+        width : 85%;
+    }
+    
+.fas{
+    cursor: pointer;
+}
+
+.header .fas{
+    transition: 0.3s;
+}
+
+.fa-bell{
+    font-size: 25px;
+}
+.fa-bell:hover{
+    font-size: 29px;
+}
+
+.fa-product-hunt{
+    padding: 6px 0 0 0 !important;
+    font-size: 40px;
+    width: 100%;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.fa-question{
+    font-size: 25px;
+}
+.fa-question:hover{
+    font-size: 29px;
+}
+
+.search:hover{
+    font-size: 29px;
+}
+/* classes of the body*/
+
+
+.page-body{
+    width:100%;
+    display: block;
+}
+
+/*Side menu */
+
+.side-nav {
+    box-shadow: 5px 1px 12px #555;  
+    z-index: 1;
+    font-weight: 550;
+    width: 22.5%;
+    height: 700px;
+    color: #0c4da2;
+    font-family: 'Montserrat', sans-serif;
+    background: #ffffff;
+    border-radius: 1px;
+    border: solid 0.2% rgb(59, 43, 153);
+}
+
+.profile-activity{
+  padding: 15px 0 20px 0;
+  margin: 2px 5% 0 5%;
+  color: white;
+  border-radius: 20px;
+  background: #0c4da2;
+  z-index: 2;
+  box-shadow: 1px 1px 12px #555;
+}
+
+.profile-activity #profile-photo {
+    display: inline-block;
+    height: 50px;
+    border-radius: 70%;
+    cursor: pointer;
+    margin-left: 5%; 
+}
+
+.profile-photo i{
+    width: 100%;
+    display: inline-block;
+}
+
+.profile-activity .username-display {
+    display: inline-block;
+    font-size: 20px;
+    padding: 0 0 0px 0;
+}
+
+.side-nav .choice {
+    text-decoration: none;
+    display: block;
+    margin: 10px 0% 5px 10%;
+}
+.side-nav .choice div{
+    cursor: pointer;
+    padding: 10px 5px 5px 10px;
+    transition: 0.5s;
+}
+.profile-activity .username-display {
+    text-align: center;
+    display: inline-block;
+}
+
+.profile-activity .profile-photo {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.account-name-display{
+    color: rgb(14, 11, 163);
+    margin: 5px 0 0 0;
+    padding: 20px 0 20px 10px;
+    z-index: 2;
+  box-shadow: 1px 1px 12px #555;    
+    
+}
+
+.side-nav .new-account {
+    border: 0.5px solid #0c4da2;
+    padding: 5px 0% 6px 10%;
+    margin: 0px 40% 0px 0%;
+    border-radius: 10px;
+}
+
+.side-active {
+    box-shadow: 1px 1px 10px #0c4da2;
+    border-radius: 15px;
+    padding-left: 10px;
+    z-index: 2;
+    background-color: #ffffffe8;
+    padding: 5px 0% 2px 0%;
+    margin: 0px 15% 0px 0%;
+ 
+}
+.side-nav .side-active:hover{
+    color:white;
+    background: #0c4da2;
+    margin: 3   px 20% 3px 0;
+}
+.side-nav .side-inactive:hover{
+    color:white;
+    background: #0c4da2;
+    border-radius: 15px;
+    margin: 2px 20% 2px 0;
+}
+
+.new-account:hover {
+    background-color: #0c4da2;
+    color: white;
+}
+
+.fa-accusoft,
+.fa-comments-dollar,
+.fa-folder  {
+    font-size: 20px;
+    padding-right: 10px;
+}
+
+/*Main part*/
+
+.main {
+    width: 77.3%;
+    background: #ffffff;
+    height: 700px;
+    position: relative;
+}
+
+.account-number{
+    color: #0c4da2;
+    font-weight: 600;
+    font-size: 20px;
+    padding: 20px 0 20px 3%;
+}
+
+.main .profile-header{
+    padding: 10px 0 10px 3%;
+    background-color: #0c4da2;
+    color: white;
+}
+
+.divider-line{
+    height: 1px;
+    background: #000000;
+    margin: 0 2.5% 0 2.5%;
+    width: 95%;
+}
+
+.space {
+    padding: 10px 0;
+}
+
+.content{
+    border: solid 1px #000000;
+    width: 96%;
+    margin: 0 2% 0 2%;
+    border-radius: 2px;
+    height: 70%;
+}
+
+.balance-history{
+    width: 50%;
+    height: 300px;
+}
+
+.balance-history p{
+    margin: 0px 68% 0px 2.5%;
+    width: 29.5%;
+    border-radius: 3px;
+    padding: 5px 0 5px 1%;
+    color: white;
+    background: #0c4da2;
+}
+
+.history-graph{
+    width: 96%;
+    display: block;
+    border: 1px solid black;
+    margin: 10px 2% 10px 2%;
+    border-radius: 3px;
+    height: 250px;
+ 
+}
+
+.account-profile-content{
+    width:50%;
+    height: 300px;
+}
+
+.month{
+    margin: 3%;
+    height: 20px;
+}
+
+.month div{
+    padding: 5px 0 0 0;
+}
+
+.month .to-left{
+    color: white;
+    padding: 1%;
+}
+
+div[id="1"]{
+    margin-top: 8%;
+}
+
+div[id="1"] .to-left{
+    background: #048b48;
+    width: 80%;
+}
+
+div[id="1"] .to-right{
+    width: 16%;
+}
+
+div[id="2"] .to-left{
+    background: #2b3662;
+    width: 50%;
+}
+
+div[id="2"] .to-right{
+    width: 46%;
+}
+
+div[id="3"] .to-left{
+    background: #b4b227;
+    width: 65%;
+}
+
+div[id="3"] .to-right{
+    width: 31%;
+}
+
+div[id="4"] .to-left{
+    background: #d15287;
+    width: 33.78%;
+}
+
+div[id="4"] .to-right{
+    width: 60.22%;
+}
+
+div[id="5"] .to-left{
+    background: #c5c759;
+    width: 60%;
+}
+
+div[id="5"] .to-right{
+    width: 36%;
+}
+
+/*forms*/
+
+.form{
+    width: 98%;
+    height: 90%;
+    z-index: 15;
+    font-size: 16px;
+    color:white;
+    padding: 50px 0px 140px 2%;
+    top: 0;
+    position: absolute;
+}
+
+.form-body {
+    box-shadow: 1px 1px 12px #555; 
+    display: box;
+    z-index: 1;
+    text-align: center;
+    border-radius: 40px;
+    background: #2262b6;
+    padding: 20px 5% 20px 5%;
+    margin: 0 0 0 15%;
+    width : 75%;
+}
+
+.form input {
+    outline: 1;
+    background: white;
+    width: 100%;
+    border: 0;
+    border-radius: 15px;
+    margin: 0 0 10px ;     
+    box-sizing: border-box;
+    font-size: 14px;
+    padding: 10px;
+}
+
+.form input::placeholder {
+    font-size: 16px;
+}
+
+.form button {
+    text-transform: uppercase;
+    outline: 0;
+    background-color:  #121825e8; 
+    width: 100%;
+    border: 0;
+    border-radius: 15px;
+    padding: 15px;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.form button:hover {
+    background: rgb(96, 192, 195)
+}
+
+.create-account-form{
+    margin: 5% 0% 0% 35%;
+    width: 400px;
+}
+
+.currency{
+    width: 100%;
+    border-radius: 15px;
+    height: 35px;
+    margin: 0 0 10px 0;
+    background: white;
+}
+
+
+.currency option{
+    font-size: 16px;    
+}
+
+ label{
+     font-weight: 550;
+     margin: 0 0 15px 25%;
+ }
+
+.fa-times{
+    font-size: 30px;
+    margin: 0% 0 20px 0; 
+}
+
+.overlay{
+    width: 100%;
+    height: 100%;
+    margin: 0 0 0 0;
+    top:0;
+    z-index: 5;
+    opacity: .7;
+    background: rgb(0, 0, 0);
+    position: fixed;
+}
+/*mobile responsiveness*/
+
+@media screen and (max-width:768px){
+    /* General CSS*/
+    .page{
+        margin: 2px 1% 0px 2%;
+    }
+
+    /*Classes for the header*/
+
+    .header{
+        height: 50px;
+    }
+
+    .logo{
+        display: none;
+    }
+    .header-left{ 
+        width: 45%;   
+    }
+    .header-right{
+        width: 55%;
+        margin-left: 0%;
+    }
+    
+    .header-left h1{
+        margin: 13px 0px 0px 0;
+        font-size: 20px;
+    }
+
+    nav div {
+        height: 3px;
+        margin: 4px 0;
+        border-radius: 20px;
+    }
+    
+    nav {
+        width: 20px;
+        padding-right : 20px; 
+        margin: 15px 0 0 15px;
+        cursor: pointer;
+    }
+
+    .li{
+        width : 15%;
+        margin: 15px 0 0 0;
+        font-size: 35%;
+    }
+
+
+    .nav-inactive:hover{
+        padding: 25px 0% 10px 0%;
+    }
+    
+    .nav-active{
+        padding: 25px 0% 10px 0%;
+    }
+    .nav-inactive{
+        margin: 0% 0% 0% 0%;
+    }
+    
+    .divider-small{
+        height: 3px;
+    }
+
+    /*classes for the search button*/
+
+.header-right .search{
+    width: 55%;
+    margin: 9px 0 0px 0%;
+    padding: 0 0 0 0;
+    height: 30px ;
+    }
+    
+    .search #search-btn{
+        margin: 10px 0% 1px 3%;
+        width:17%;
+        font-size:15px;
+        cursor: pointer;
+    }
+    
+    .search .to-left{/*the input*/
+        margin: 4px 0% 0% 0%;
+        width : 80%;
+    }
+    .fa-bell{
+        font-size: 15px;
+    }
+    .fa-bell:hover{
+        font-size: 19px;
+    }
+    
+    .fa-product-hunt{
+        padding: 6px 0 0 0;
+        font-size: 25px;
+    }
+    
+    .fa-question{
+        font-size: 15px;
+    }
+    .fa-question:hover{
+        font-size: 19px;
+    }
+    
+    #search{
+        margin-left: 7%;
+        font-size:15px;
+    }
+    .search:hover{
+        font-size: 19px;
+    }
+
+    #profile{
+        display: none;
+    }
+    /* classes of the body*/
+
+    .side-nav{
+        display: none;
+    }
+
+    .main{
+        font-size: 12px;
+        width: 100%;
+    }
+    
+    .balance-history{
+        width: 100%;
+    }
+
+    .history-graph{
+        height: 200px;
+    }
+
+    /*classes for the create message part*/
+
+    .form-body{
+        width: 70%;
+        margin: 0 0 0 9%;
+    }
+
+    .create-account-form{
+        margin: 5% 0% 0% 2%;
+        width: 400px;
+    }
+}
