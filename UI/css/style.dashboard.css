@@ -33,8 +33,6 @@ label{
 
 /*Classes for the header*/
 .header{
-    box-shadow: 1px 1px 12px #555;  
-    z-index: 1;
     background: #0c4da2;
     color: white;
     width: 100%;
@@ -157,6 +155,7 @@ nav:hover div {
     
 .fas{
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .fa-bell{
@@ -195,18 +194,16 @@ nav:hover div {
 /*Side menu */
 
 .side-nav {
-    box-shadow: 1px 1px 12px #555;  
+    box-shadow: 5px 1px 12px #555;  
     z-index: 1;
     font-weight: 550;
-    position: fixed;
-    width: 20%;
-    height: 100%;
+    width: 22.5%;
+    height: 522px;
     color: #0c4da2;
     font-family: 'Montserrat', sans-serif;
     background: #ffffff;
     border-radius: 1px;
-    margin: 0px 0% 5px 0%;
-    transition: 0.5s;
+    border: solid 0.2% rgb(59, 43, 153);
 }
 
 .profile-activity{
@@ -245,7 +242,8 @@ nav:hover div {
 }
 .side-nav .choice div{
     cursor: pointer;
-    padding: 5px 5px 5px 5px;
+    padding: 10px 5px 5px 10px;
+    transition: 0.5s;
 }
 .profile-activity .username-display {
     text-align: center;
@@ -257,7 +255,7 @@ nav:hover div {
     cursor: pointer;
 }
 
-.account-number-display{
+.account-name-display{
     color: rgb(14, 11, 163);
     margin: 5px 0 0 0;
     padding: 20px 0 20px 10px;
@@ -283,10 +281,160 @@ nav:hover div {
     margin: 0px 15% 0px 0%;
  
 }
+.side-nav .side-active:hover{
+    color:white;
+    background: #0c4da2;
+    margin: 3   px 20% 3px 0;
+}
+.side-nav .side-inactive:hover{
+    color:white;
+    background: #0c4da2;
+    border-radius: 15px;
+    margin: 2px 20% 2px 0;
+}
 
 .new-account:hover {
     background-color: #0c4da2;
     color: white;
+}
+
+.fa-accusoft,
+.fa-comments-dollar,
+.fa-folder  {
+    font-size: 20px;
+    padding-right: 10px;
+}
+
+/*Main part*/
+
+.main {
+    width: 77.3%;
+    background: #ffffff;
+    height: 522px;
+    position: relative;
+}
+
+.account-number{
+    color: #0c4da2;
+    font-weight: 600;
+    font-size: 20px;
+    padding: 20px 0 20px 3%;
+}
+
+.main .profile-header{
+    padding: 10px 0 10px 3%;
+    background-color: #0c4da2;
+    color: white;
+}
+
+.divider-line{
+    height: 1px;
+    background: #000000;
+    margin: 0 2.5% 0 2.5%;
+    width: 95%;
+}
+
+.space {
+    padding: 10px 0;
+}
+
+.content{
+    border: solid 1px #000000;
+    width: 96%;
+    margin: 0 2% 0 2%;
+    border-radius: 2px;
+}
+
+.balance-history{
+    width: 50%;
+    height: 300px;
+}
+
+.balance-history p{
+    margin: 0px 68% 0px 2.5%;
+    width: 29.5;
+    border-radius: 3px;
+    padding: 5px 0 5px 1%;
+    color: white;
+    background: #0c4da2;
+}
+
+.history-graph{
+    width: 96%;
+    display: block;
+    border: 1px solid black;
+    margin: 10px 2% 10px 2%;
+    border-radius: 3px;
+    height: 250px;
+ 
+}
+
+.account-profile-content{
+    width:50%;
+    height: 300px;
+}
+
+.month{
+    margin: 3%;
+    height: 20px;
+}
+
+.month div{
+    padding: 5px 0 0 0;
+}
+
+.month .to-left{
+    color: white;
+    padding: 1%;
+}
+
+div[id="1"]{
+    margin-top: 8%;
+}
+
+div[id="1"] .to-left{
+    background: #048b48;
+    width: 80%;
+}
+
+div[id="1"] .to-right{
+    width: 16%;
+}
+
+div[id="2"] .to-left{
+    background: #2b3662;
+    width: 50%;
+}
+
+div[id="2"] .to-right{
+    width: 46%;
+}
+
+div[id="3"] .to-left{
+    background: #b4b227;
+    width: 65%;
+}
+
+div[id="3"] .to-right{
+    width: 31%;
+}
+
+div[id="4"] .to-left{
+    background: #d15287;
+    width: 33.78%;
+}
+
+div[id="4"] .to-right{
+    width: 60.22%;
+}
+
+div[id="5"] .to-left{
+    background: #c5c759;
+    width: 60%;
+}
+
+div[id="5"] .to-right{
+    width: 36%;
 }
 
 /*mobile responsiveness*/
@@ -317,7 +465,6 @@ nav:hover div {
     .header-left h1{
         margin: 13px 0px 0px 0;
         font-size: 20px;
-
     }
 
     nav div {
@@ -409,6 +556,10 @@ nav:hover div {
 
     .side-nav{
         display: none;
+    }
+
+    .main{
+        width: 100%;
     }
      
 }
