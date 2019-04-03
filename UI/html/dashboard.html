@@ -117,6 +117,39 @@
         <!-- End of the body -->
 
     </div>
+
+     <!-- Message boxes forms -->
+     <div class="form to-right hide">
+            <!-- Reset form -->
+            <form action="#" class="create-account-form hide">
+                <div class="form-body ">
+                        <i class="fas fa-times to-right"></i>
+                    <label class="create-account-form-title">Create account</label>
+                    <input required type="text" placeholder="Account name">
+                    <select class="currency" >
+                            <option value="default">currency</option>
+                            <option value="usd">Dollar USD</option>
+                            <option value="eu">Euro EU</option>
+                            <option value="rwf">Rwandan Francs RWF</option>
+                            <option value="cdf">Congolese Francs CDF</option>
+                    </select>
+                    <select class="currency" >
+                            <option value="default">Type</option>
+                            <option value="current">Current</option>
+                            <option value="savings">Savings</option>
+                    </select>
+                        <input required type="number" placeholder="National Id or Passport">
+                        <input required type="email" placeholder="Email">
+                        <input required type="number" placeholder="Phone number">                   
+                    <button>Create</button>
+                </div>
+            </form>
+            <!-- /reset form -->
+        </div>
+        <!-- / registration forms -->
+
+        <!--overlay-->
+        <div class="overlay hide"></div>
     <!-- js scripts to manage the page-->
     <script src="../js/manage.dashboard.js"></script>
 </body>
