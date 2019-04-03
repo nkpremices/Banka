@@ -155,6 +155,9 @@ nav:hover div {
     
 .fas{
     cursor: pointer;
+}
+
+.header .fas{
     transition: 0.3s;
 }
 
@@ -198,7 +201,7 @@ nav:hover div {
     z-index: 1;
     font-weight: 550;
     width: 22.5%;
-    height: 522px;
+    height: 700px;
     color: #0c4da2;
     font-family: 'Montserrat', sans-serif;
     background: #ffffff;
@@ -310,7 +313,7 @@ nav:hover div {
 .main {
     width: 77.3%;
     background: #ffffff;
-    height: 522px;
+    height: 700px;
     position: relative;
 }
 
@@ -343,6 +346,7 @@ nav:hover div {
     width: 96%;
     margin: 0 2% 0 2%;
     border-radius: 2px;
+    height: 70%;
 }
 
 .balance-history{
@@ -352,7 +356,7 @@ nav:hover div {
 
 .balance-history p{
     margin: 0px 68% 0px 2.5%;
-    width: 29.5;
+    width: 29.5%;
     border-radius: 3px;
     padding: 5px 0 5px 1%;
     color: white;
@@ -437,6 +441,102 @@ div[id="5"] .to-right{
     width: 36%;
 }
 
+/*forms*/
+
+.form{
+    width: 98%;
+    height: 90%;
+    z-index: 15;
+    font-size: 16px;
+    color:white;
+    padding: 50px 0px 140px 2%;
+    top: 0;
+    position: absolute;
+}
+
+.form-body {
+    box-shadow: 1px 1px 12px #555; 
+    display: box;
+    z-index: 1;
+    text-align: center;
+    border-radius: 40px;
+    background: #2262b6;
+    padding: 20px 5% 20px 5%;
+    margin: 0 0 0 15%;
+    width : 75%;
+}
+
+.form input {
+    outline: 1;
+    background: white;
+    width: 100%;
+    border: 0;
+    border-radius: 15px;
+    margin: 0 0 10px ;     
+    box-sizing: border-box;
+    font-size: 14px;
+    padding: 10px;
+}
+
+.form input::placeholder {
+    font-size: 16px;
+}
+
+.form button {
+    text-transform: uppercase;
+    outline: 0;
+    background-color:  #121825e8; 
+    width: 100%;
+    border: 0;
+    border-radius: 15px;
+    padding: 15px;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.form button:hover {
+    background: rgb(96, 192, 195)
+}
+
+.create-account-form{
+    margin: 5% 0% 0% 35%;
+    width: 400px;
+}
+
+.currency{
+    width: 100%;
+    border-radius: 15px;
+    height: 35px;
+    margin: 0 0 10px 0;
+    background: white;
+}
+
+
+.currency option{
+    font-size: 16px;    
+}
+
+ label{
+     font-weight: 550;
+     margin: 0 0 15px 25%;
+ }
+
+.fa-times{
+    font-size: 30px;
+    margin: 0% 0 20px 0; 
+}
+
+.overlay{
+    width: 100%;
+    height: 100%;
+    margin: 0 0 0 0;
+    top:0;
+    z-index: 5;
+    opacity: .7;
+    background: rgb(0, 0, 0);
+    position: fixed;
+}
 /*mobile responsiveness*/
 
 @media screen and (max-width:768px){
@@ -559,7 +659,27 @@ div[id="5"] .to-right{
     }
 
     .main{
+        font-size: 12px;
         width: 100%;
     }
-     
+    
+    .balance-history{
+        width: 100%;
+    }
+
+    .history-graph{
+        height: 200px;
+    }
+
+    /*classes for the create message part*/
+
+    .form-body{
+        width: 70%;
+        margin: 0 0 0 9%;
+    }
+
+    .create-account-form{
+        margin: 5% 0% 0% 2%;
+        width: 400px;
+    }
 }
