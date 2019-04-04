@@ -116,19 +116,41 @@ document.querySelector('#search').addEventListener('click', () => {
         document.querySelector('#search').className = 'hide' ;
 });
 
+// A function to display an alert message
+const alertMessage = (message) => {
+    document.querySelector('.alert .message').innerHTML = message;
+    setTimeout(createMessageBox, 600);
+    setTimeout(destroyMessageBox, 2000);
+}
+
 //creating the alert message on success
 const createMessageSucces = () => {
     destroyCreateAccountBox();
     destroyOverlay();
-    document.querySelector('.alert .message').innerHTML = 'Account created sucessfully';
-    setTimeout(createMessageBox, 600);
-    setTimeout(destroyMessageBox, 2000);
+    alertMessage('Account created successfully');
 };
+
+// A funtion to display the user profile
+const userProfile = () => {
+    document.querySelector('.profile-activity-user').className = 'profile-activity-user';
+    document.querySelector('.overlay').className = 'overlay';
+}
+
+// A funtion to reset the password
+const resetPassword = () => {
+    document.querySelector('.reset-password').className = 'form to-right reset-password';
+    document.querySelector('.profile-activity-user').className = 'profile-activity-user hide';
+    document.querySelector('.overlay').className = 'overlay';
+}
+
+// A funtion to destroy the reset password form 
+const destoyResetPassword = () => {
+    document.querySelector('.reset-password').className = 'form to-right reset-password hide';
+    destroyOverlay();
+}
 
 // Creating an account
 document.querySelector('.new-account').addEventListener('click', createAccount);
-
-
 
 // Destroying the Create account message box
 document.querySelector('.create-account-form .form-body .fa-times')
@@ -155,5 +177,31 @@ document.querySelector('#notifications').addEventListener('click', () =>{
 
 // Creating the success message on creation of an account
 document.querySelector('.create-account-form').addEventListener('submit', createMessageSucces);
+
+// Calling the profile of the user
+document.querySelector('.fa-product-hunt').addEventListener('click', userProfile);
+
+// Calling the reset password form
+document.querySelector('.buttons .to-left').addEventListener('click', resetPassword);
+
+// Closing the reset password form
+document.querySelector('.reset-form .form-body .fa-times').addEventListener('click',destoyResetPassword);
+
+// Closing the user profile box
+document.querySelector('.profile-activity-user .fa-times').addEventListener('click', () => {
+    document.querySelector('.profile-activity-user').className = 'profile-activity-user hide';
+    destroyOverlay();
+});
+
+// Dislaying a success message after submission on the reset password form
+document.querySelector('.reset-form').addEventListener('submit', () =>{
+    destoyResetPassword();
+    alertMessage('Password successfully reset');
+});
+
+// Logout
+document.querySelector('.buttons .to-right').addEventListener('click', () =>{
+    window.location = './signUpIn.html?hide=true';
+});
 
 
