@@ -655,6 +655,33 @@ table {
     background: #f5f5f5
 }
 
+/*Alert messages*/
+.alert{
+    width: 90%;
+    background: #048b48;
+    color: white;
+    height: inherit;
+    margin: 0 5% 0 5%;
+    top: 0;
+    left:0;
+    z-index: 16;
+    position: fixed;
+    opacity: 0;
+    display: none;
+    transition:  1s;
+}
+
+.alert .message{
+    width: 93%;
+    margin-left: 2%;
+}
+.alert .to-right{
+    width: 5%;
+    margin: 8px 0 0 0;
+    font-size: 25px;
+}
+
+
 /*mobile responsiveness*/
 
 @media screen and (max-width:768px){

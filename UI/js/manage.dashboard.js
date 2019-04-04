@@ -16,6 +16,7 @@ const createAccount = () => {
 const destroyCreateAccountBox = () => {
     document.querySelector('.form').className = 'form to-right hide';
     document.querySelector('.create-account-form').className = 'create-account-form hide';
+    destroyOverlay();
 }
 
 // Going to the home page
@@ -78,6 +79,23 @@ document.getElementById('slide-button').addEventListener('click', () => {
     }
 });
 
+// Function to dismiss and create the alert messages
+const destroyMessageBox = () =>{
+    const alert = document.querySelector('.alert');
+    alert.style.opacity = '0';
+    setTimeout(() => alert.style.display = "none", 1000);
+}
+
+const createMessageBox = () =>{
+    const alert = document.querySelector('.alert');
+    alert.style.display = "inline-block";
+    alert.style.opacity = '1';
+}
+
+// A function to destroy the overlay
+const destroyOverlay = () => {
+    document.querySelector('.overlay').className = 'overlay hide';
+};
 
 // Displaying the search field
 document.querySelector('#search').addEventListener('click', () => {
@@ -86,13 +104,19 @@ document.querySelector('#search').addEventListener('click', () => {
         document.querySelector('#search').className = 'hide' ;
 });
 
+//creating the alert message on success
+const createMessageSucces = () => {
+    destroyCreateAccountBox();
+    destroyOverlay();
+    document.querySelector('.alert .message').innerHTML = 'Account created sucessfully';
+    setTimeout(createMessageBox, 600);
+    setTimeout(destroyMessageBox, 2000);
+};
+
 // Creating an account
 document.querySelector('.new-account').addEventListener('click', createAccount);
 
-// Destroying the overlay
-document.querySelector('.fa-times').addEventListener('click', () => {
-    document.querySelector('.overlay').className = 'overlay hide';
-});
+
 
 // Destroying the Create account message box
 document.querySelector('.create-account-form .form-body .fa-times')
@@ -106,3 +130,11 @@ document.getElementById('profile-nav').addEventListener('click', accountProfile)
 
 // Switching to the accounts list 
 document.getElementById('accounts-nav').addEventListener('click', accounts);
+
+//destroying the alert message
+document.querySelector('.alert .to-right').addEventListener('click', destroyMessageBox);
+
+// Creating the success message on creation of an account
+document.querySelector('.create-account-form').addEventListener('submit', createMessageSucces);
+
+
