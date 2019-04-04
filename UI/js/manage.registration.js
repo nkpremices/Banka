@@ -1,14 +1,17 @@
 // fetching a variable comming from the home page
 const params = location.search.substring(1).split("&");
 const fromHome = params[0].split("=");
-const fromReset = params[1].split("=");
 const hide = fromHome[1];
 
 // A variable to fetch actions on the registration page
 let registration;
 //a variable to fetch variables coming from the reset password page
 let resetSuccess;
-if(fromReset) resetSuccess = fromReset[1];
+let fromReset;
+if(params[1]) {
+    resetSuccess = fromReset[1];
+    fromReset = params[1].split("=");
+};
 // Showing a success message if coming from the reset password page
 
 
@@ -37,6 +40,14 @@ const signUp = () => {
     document.querySelector('.signin-form').className = 'signin-form hide';
 
     registration = true;
+};
+
+const admin = () => {
+    window.location = './admin.login.html';
+};
+
+const staff = () => {
+    window.location = './staff.login.html';
 };
 
 // a funtion to return back on the home page
@@ -81,7 +92,13 @@ document.getElementById('signup-nav').addEventListener('click', signUp);
 // Going to sign in from the navigation
 document.getElementById('signin-nav').addEventListener('click', signIn);
 
-console.log(fromHome, fromReset);
+// Going to the admin login page in from the navigation
+document.getElementById('admin-nav').addEventListener('click', admin);
+
+// Going to the staff login page in from the navigation
+document.getElementById('staff-nav').addEventListener('click', staff);
+
+
 // Creating the success message on creation of an account
 if(resetSuccess) createMessageSucces();
 
