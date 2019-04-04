@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="../css/style.reset.password.css">
+    <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>Banka</title>
+</head>
+
+<body>
+    <div class="page">
+        <!-- header start -->
+        <div class="divider-small"></div>
+        <div class="header">
+            <div class="header-left to-left">
+                <img class="to-left logo" src="../assets/images/logo.png" id="logo" width="50" alt="logo">
+                <h1 id="app-name">BANKA</h1>
+            </div>
+
+            <!-- Navigation -->
+            <div class="header-right to-right">
+                <div class="li nav-inactive" id="home-nav"> Home </div>
+                <div class="li nav-inactive" id="signin-nav"> Sign in </div>
+                <div class="li nav-active" id="signup-nav"> Sign up </div>
+            </div>
+            <!-- End of the navigation -->
+        </div>
+        <!-- End of the header-->
+
+        <!-- body start -->
+        <div class="page-body">
+            <div class="to-left">
+                <img src="../assets/images/banking.png" alt="app-illustration">
+            </div>
+
+            <!-- Registration forms -->
+            <div class="form to-right">
+                <!-- Signin form -->
+                <form action="./admin.dashboard.html" class="signin-form">
+                    <div class="form-body move-down-form">
+                        <div>
+                            <img src="../assets/images/logo.png" width="50">
+                        </div>
+                        <input required type="email" placeholder="Email">
+                        <input required type="password" placeholder="Password">
+                        <div class="remember-me">
+                            <label class="rm-label">Remember me</label>
+                            <input type="checkbox" id="remember-me" name="choix" />
+                        </div>
+                        <button>Login</button>
+                        <p class="message">Not registred ? <a href="#" id="go-to-signup">Sign up</a></p>
+                        <p class="message"><a href="./resetPassword.html" id="go-to-signup">Forgot password?</a></p>
+                    </div>
+                </form>
+                <!-- /Signin form -->
+            </div>
+            <!-- / registration forms -->
+        </div>
+
+
+        <!-- End of the body -->
+
+        <!-- footer-->
+        <div class="footer">
+            <div class="footer-left to-left">
+                <p id="title">Banka</p>
+                <p id='content'>A light-weight core banking application that powers banking operations</p>
+
+            </div>
+            <div class="footer-center">
+                <p id="title"> One Account for everything</p>
+                <p id='content'>To execute your online banking operations, all you need to do is to get registred.
+                </p>
+            </div>
+            <div class="footer-right to-right">
+                <ul>
+                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#">Terms of service</a></li>
+                </ul>
+            </div>
+
+        </div>
+        <!-- /footer-->
+    </div>
+    <!-- js scripts to manage the page-->
+    <script src="../js/manage.reset.password.js"></script>
+</body>
+
+</html>
