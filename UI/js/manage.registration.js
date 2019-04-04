@@ -1,10 +1,16 @@
 // fetching a variable comming from the home page
 const params = location.search.substring(1).split("&");
-const temp = params[0].split("=");
-const hide = temp[1];
+const fromHome = params[0].split("=");
+const fromReset = params[1].split("=");
+const hide = fromHome[1];
 
 // A variable to fetch actions on the registration page
 let registration;
+//a variable to fetch variables coming from the reset password page
+let resetSuccess;
+if(fromReset) resetSuccess = fromReset[1];
+// Showing a success message if coming from the reset password page
+
 
 // Functions to shift the sign in and sign up parts
 const signIn = () => {
@@ -38,6 +44,25 @@ const backToHome = () => {
     window.location = '../index.html';
 };
 
+// Function to dismiss and create the alert messages
+const destroyMessageBox = () =>{
+    const alert = document.querySelector('.alert');
+    alert.style.opacity = '0';
+    setTimeout(() => alert.style.display = "none", 1000);
+}
+
+const createMessageBox = () =>{
+    const alert = document.querySelector('.alert');
+    alert.style.display = "inline-block";
+    alert.style.opacity = '1';
+}
+
+//creating the alert message on success
+const createMessageSucces = () => { 
+    const message = 'A new password has been sent to the email, please login with that password';
+    document.querySelector('.alert .message').innerHTML = message;
+    setTimeout(createMessageBox, 800);
+};
 
 // Going to sign in from the form
 document.getElementById('go-to-signin').addEventListener('click', signIn);
@@ -55,6 +80,13 @@ document.getElementById('signup-nav').addEventListener('click', signUp);
 
 // Going to sign in from the navigation
 document.getElementById('signin-nav').addEventListener('click', signIn);
+
+console.log(fromHome, fromReset);
+// Creating the success message on creation of an account
+if(resetSuccess) createMessageSucces();
+
+//destroying the alert message
+document.querySelector('.alert .to-right').addEventListener('click', destroyMessageBox);
 
 // Trynig to see which form will be hide
 if(!registration){
