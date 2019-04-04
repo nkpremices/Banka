@@ -600,7 +600,7 @@ ul{
     width: 96%;
     margin: 0 2% 0 2%;
     border-radius: 2px;
-    padding-bottom: 193px;
+    padding-bottom: 415px;
 }
 
 .transactions-table{
@@ -635,7 +635,7 @@ table {
     width: 96%;
     margin: 0 2% 0 2%;
     border-radius: 2px;
-    padding-bottom: 309px;
+    padding-bottom: 530px;
 }
 
 .accounts-header{
@@ -835,6 +835,10 @@ table {
         width: 400px;
     }
 
+    .accounts{
+        padding-bottom: 100px;
+    }
+
     .account-profile-content{
         width:100%;
         margin: 0 0 0 0;
@@ -850,6 +854,7 @@ table {
 
     .transactions{
        font-size: 10px;
+       padding-bottom: 100px;
     }
 
  
