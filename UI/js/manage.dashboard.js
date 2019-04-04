@@ -92,6 +92,18 @@ const createMessageBox = () =>{
     alert.style.opacity = '1';
 }
 
+// Functions to create the notifications box
+const createNotificationsBox = () =>{
+    const alert = document.querySelector('.notifications');
+    alert.style.display = "inline-block";
+    alert.style.opacity = '1';
+}
+
+const destroyNotificationsBox = () =>{
+    const alert = document.querySelector('.notifications');
+    alert.style.opacity = '0';
+    setTimeout(() => alert.style.display = "none", 1000);
+}
 // A function to destroy the overlay
 const destroyOverlay = () => {
     document.querySelector('.overlay').className = 'overlay hide';
@@ -133,6 +145,13 @@ document.getElementById('accounts-nav').addEventListener('click', accounts);
 
 //destroying the alert message
 document.querySelector('.alert .to-right').addEventListener('click', destroyMessageBox);
+
+// Calling the notifications box the alert message
+document.querySelector('#notifications').addEventListener('click', () =>{
+    createNotificationsBox();
+    setTimeout(destroyNotificationsBox, 2000);
+
+});
 
 // Creating the success message on creation of an account
 document.querySelector('.create-account-form').addEventListener('submit', createMessageSucces);
