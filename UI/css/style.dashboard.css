@@ -623,6 +623,34 @@ table {
     padding: 5px;
     text-align: left;
   }
+
+  /*Accounts list*/
+
+  .accounts{
+    border: solid 1px #000000;
+    width: 96%;
+    margin: 0 2% 0 2%;
+    border-radius: 2px;
+    padding-bottom: 309px;
+}
+
+.accounts-header{
+    padding: 10px 0 10px 3%;
+    background-color: #0c4da2;
+    color: white;
+}
+
+.accounts-table{
+    width: 96%;
+    margin: 10px 2% 10px 2%; 
+}
+
+.account:hover{
+    font-size: 15px;
+    cursor: pointer;
+    background: #f5f5f5
+}
+
 /*mobile responsiveness*/
 
 @media screen and (max-width:768px){

@@ -21,7 +21,7 @@ document.getElementById('logo').addEventListener('click', backToHome);
 document.getElementById('app-name').addEventListener('click', backToHome);
 
 
-// A function to change go to the transactions
+// A function go to the transactions
 const transactions = () => {
     // changing the display of the navigation
     document.getElementById('profile-nav').className = 'side-inactive';
@@ -30,11 +30,26 @@ const transactions = () => {
 
     //displayng the content
     document.querySelector('.content').className = 'content hide';
+    document.querySelector('.accounts').className = 'accounts hide';
     document.querySelector('.transactions').className = 'transactions';
 }
 
+// A function go to the transactions
+const accounts = () => {
+    // changing the display of the navigation
+    document.getElementById('profile-nav').className = 'side-inactive';
+    document.getElementById('transactions-nav').className = 'side-inactive';
+    document.getElementById('accounts-nav').className = 'side-active';
+
+    //displayng the content
+    document.querySelector('.content').className = 'content hide';
+    document.querySelector('.transactions').className = 'transactions hide';
+    document.querySelector('.accounts').className = 'accounts to-right';
+    
+}
+
 // A function to change go to the profile
-const profile = () => {
+const accountProfile = () => {
     // changing the display of the navigation
     document.getElementById('profile-nav').className = 'side-active';
     document.getElementById('transactions-nav').className = 'side-inactive';
@@ -42,6 +57,7 @@ const profile = () => {
 
     //displayng the content
     document.querySelector('.transactions').className = 'transactions hide';
+    document.querySelector('.accounts').className = 'accounts hide';
     document.querySelector('.content').className = 'content';
 }
 
@@ -66,5 +82,8 @@ document.querySelector('.create-account-form .form-body .fa-times')
 // Switching to the transactions 
 document.getElementById('transactions-nav').addEventListener('click', transactions);
 
-// Switching to the profile 
-document.getElementById('profile-nav').addEventListener('click', profile);
+// Switching to the account profile 
+document.getElementById('profile-nav').addEventListener('click', accountProfile);
+
+// Switching to the accounts list 
+document.getElementById('accounts-nav').addEventListener('click', accounts);
