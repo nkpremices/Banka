@@ -206,7 +206,7 @@ nav:hover div {
     background: #ffffff;
     border-radius: 1px;
     border: solid 0.2% rgb(59, 43, 153);
-    padding-bottom: 300px;
+    padding-bottom: 521px;
 }
 
 .profile-activity{
@@ -317,6 +317,10 @@ nav:hover div {
     position: relative;
 }
 
+.main-alone{
+    width: 100%;
+}
+
 .account-number{
     color: #0c4da2;
     font-weight: 600;
@@ -346,7 +350,7 @@ nav:hover div {
     width: 96%;
     margin: 0 2% 0 2%;
     border-radius: 2px;
-    height: 428px;
+    height: 650px;
 }
 
 .balance-history{
@@ -769,6 +773,9 @@ table {
     /* classes of the body*/
 
     .side-nav{
+        width: 100%;
+        padding: 0 0 15px 0;
+        border-bottom: 2px solid #0c4da2;
         display: none;
     }
 
@@ -777,6 +784,10 @@ table {
         width: 100%;
     }
     
+    .main-alone{
+        width: 100%;
+    }
+
     .balance-history{
         width: 100%;
     }
