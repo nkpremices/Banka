@@ -53,7 +53,7 @@
             <!-- Section side menu-->
 
             <div class="side-nav to-left" id="side-menu">
-                <div class="profile-activity hide">
+                <div class="profile-activity">
                     <div class="" id="profile-photo"> <i class="fab fa-product-hunt"></i> </div>
                     <div class="username-display">Peter Mahoro</div>
                 </div>
@@ -274,6 +274,37 @@
     <div class="notifications to-right">
         <p>Nikuze deposited $ 575.6 in your account on April 4, 2018</p>
     </div>
+
+    <!--User profile-->
+    <div class="profile-activity-user hide">
+        <i class="fas fa-times"></i>
+        <div class="user">
+                <p class="to-left" id="profile-photo"> <i class="fab fa-product-hunt"></i> </p>
+                <p class="username-display to-right">Peter Mahoro</p>
+        </div>
+        <div class="buttons">
+                <button class="to-left">Change password</button>
+                <button class="to-right">Logout</button>
+        </div>
+    </div>
+    <!--/userprofile-->
+
+    <!--reset password-->
+
+    <div class="form to-right reset-password hide">
+            <!-- reset password -->
+            <form action="#" class="reset-form">
+                <div class="form-body">
+                    <i class="fas fa-times"></i>
+                    <input type="password" required placeholder="Current password">
+                    <input type="password" required placeholder="New password">
+                    <input type="password" required placeholder="Confirm new password">
+                    <button id="reset-password" class="button" onclick="submit(this)">Submit</button>
+                </div>
+            </form>       
+        </div>
+
+    <!--/reset password-->
 
     <!--overlay-->
     <div class="overlay hide"></div>
