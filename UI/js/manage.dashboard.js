@@ -1,3 +1,5 @@
+let reverse = true;
+
 // a funtion to return back on the home page
 const backToHome = () => {
     window.location = '../index.html';
@@ -61,6 +63,23 @@ const accountProfile = () => {
     document.querySelector('.content').className = 'content';
 }
 
+// side menu display or hide
+
+document.getElementById('slide-button').addEventListener('click', () => {
+    if (reverse) {
+        document.querySelector('.main').className = 'main main-alone to-right';
+        document.getElementById('side-menu').style.display = 'none';
+        reverse = false;
+    } else {
+        document.querySelector('.main').className = 'main to-right';
+        document.getElementById('side-menu').className = 'side-nav to-left';
+        document.getElementById('side-menu').style.display = 'inline-block';
+        reverse = true;
+    }
+});
+
+
+// Displaying the search field
 document.querySelector('#search').addEventListener('click', () => {
     //Showing the search field
         document.querySelector('.header-right .hide').className = 'search' ;
