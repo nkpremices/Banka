@@ -217,6 +217,7 @@ nav:hover div {
   background: #0c4da2;
   z-index: 2;
   box-shadow: 1px 1px 12px #555;
+  display: none;
 }
 
 .profile-activity #profile-photo {
@@ -698,7 +699,82 @@ table {
     transition:  3s;
 }
 
+/*User profile*/
 
+.profile-activity-user{
+    color: rgb(255, 255, 255);
+    border-radius: 20px;
+    background: #2262b6;
+    box-shadow: 1px 1px 12px #555;
+    position: fixed;
+    width: 300px;
+    z-index: 15;
+    top: 30px;
+    right: 10%;
+}
+
+.profile-activity-user #profile-photo{
+    width: 20%;
+    padding: 0 0 0 0;
+}
+
+.profile-activity-user .username-display{
+    width: 80%;
+    padding: 20px 0 0 0;
+}
+
+.profile-activity-user .fa-times{
+    font-size: 20px;
+    padding: 0 0 0 0;
+    margin: 5px 0 0 90%;
+    right: 0;
+}
+
+.profile-activity-user .user{
+    width: 100%;
+}
+
+.profile-activity-user button{
+    text-transform: uppercase;
+    outline: 0;
+    background-color:  #121825e8; 
+    border: 0;
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 7px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.user{
+    padding: 0 0 0 10px;
+}
+
+.user p{
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+}
+
+.buttons{
+    width: 96%;
+    height: 50px;
+    padding: 60px 0 0 0;
+    margin: 0 2% 0 2%;
+}
+
+/*reset password classes*/
+.reset-password{
+    width:350px;
+    top: 0;
+    right: 5%;
+}
+
+.reset-password .fa-times{
+    font-size: 15px;
+    padding: 0 0 0 0;
+    margin: 0 0 15px 90%;
+}
+ 
 /*mobile responsiveness*/
 
 @media screen and (max-width:768px){
@@ -811,8 +887,9 @@ table {
         font-size: 19px;
     }
 
-    #profile{
-        display: none;
+    .profile-activity{
+        display: inline-block;
+        width: 50%;
     }
     /* classes of the body*/
 
