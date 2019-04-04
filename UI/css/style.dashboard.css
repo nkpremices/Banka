@@ -681,6 +681,23 @@ table {
     font-size: 25px;
 }
 
+/*notifications*/
+.notifications{
+    position: fixed;
+    z-index: 15;
+    background: #3171c5;
+    box-shadow: 5px 1px 12px rgb(175, 167, 167);
+    width: 200px;
+    right: 13%;
+    top: 40px;
+    color: white;
+    font-size: 13px;
+    padding: 10px;
+    opacity: 0;
+    display: none;
+    transition:  3s;
+}
+
 
 /*mobile responsiveness*/
 
