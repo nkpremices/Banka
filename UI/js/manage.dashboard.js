@@ -20,6 +20,31 @@ const destroyCreateAccountBox = () => {
 document.getElementById('logo').addEventListener('click', backToHome);
 document.getElementById('app-name').addEventListener('click', backToHome);
 
+
+// A function to change go to the transactions
+const transactions = () => {
+    // changing the display of the navigation
+    document.getElementById('profile-nav').className = 'side-inactive';
+    document.getElementById('transactions-nav').className = 'side-active';
+    document.getElementById('accounts-nav').className = 'side-inactive';
+
+    //displayng the content
+    document.querySelector('.content').className = 'content hide';
+    document.querySelector('.transactions').className = 'transactions';
+}
+
+// A function to change go to the profile
+const profile = () => {
+    // changing the display of the navigation
+    document.getElementById('profile-nav').className = 'side-active';
+    document.getElementById('transactions-nav').className = 'side-inactive';
+    document.getElementById('accounts-nav').className = 'side-inactive';
+
+    //displayng the content
+    document.querySelector('.transactions').className = 'transactions hide';
+    document.querySelector('.content').className = 'content';
+}
+
 document.querySelector('#search').addEventListener('click', () => {
     //Showing the search field
         document.querySelector('.header-right .hide').className = 'search' ;
@@ -38,3 +63,8 @@ document.querySelector('.fa-times').addEventListener('click', () => {
 document.querySelector('.create-account-form .form-body .fa-times')
     .addEventListener('click', destroyCreateAccountBox);
 
+// Switching to the transactions 
+document.getElementById('transactions-nav').addEventListener('click', transactions);
+
+// Switching to the profile 
+document.getElementById('profile-nav').addEventListener('click', profile);
