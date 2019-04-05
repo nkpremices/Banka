@@ -24,7 +24,7 @@
 }
 
 .side-nav{
-    padding-bottom: 680px;
+    padding-bottom: 780px;
 }
 
 .content button{
@@ -41,4 +41,21 @@
 
 .content button:hover{
     background: rgb(43, 138, 87);
+}
+
+.account-profile-content{
+    height: 350px;
+}
+
+.account-profile-content button{
+    width: inherit;
+    padding: 5px;
+}
+
+button[class="action-1"]:hover{
+    background: #318f2e;
+}
+
+button[class="action-2"]:hover{
+    background: #ff0000;
 }
