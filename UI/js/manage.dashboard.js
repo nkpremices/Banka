@@ -150,12 +150,14 @@ const destoyResetPassword = () => {
 }
 
 // Creating an account
-document.querySelector('.new-account').addEventListener('click', createAccount);
-
+if (document.querySelector('.new-account')) {
+    document.querySelector('.new-account').addEventListener('click', createAccount);
+}
 // Destroying the Create account message box
-document.querySelector('.create-account-form .form-body .fa-times')
-    .addEventListener('click', destroyCreateAccountBox);
-
+if (document.querySelector('.create-account-form .form-body .fa-times')) {
+    document.querySelector('.create-account-form .form-body .fa-times')
+        .addEventListener('click', destroyCreateAccountBox);
+}
 // Switching to the transactions 
 if (document.getElementById('transactions-nav')) {
     document.getElementById('transactions-nav').addEventListener('click', transactions);
@@ -178,8 +180,9 @@ document.querySelector('#notifications').addEventListener('click', () => {
 });
 
 // Creating the success message on creation of an account
+if (document.querySelector('.create-account-form')){
 document.querySelector('.create-account-form').addEventListener('submit', createMessageSucces);
-
+}
 // Calling the profile of the user
 document.querySelector('.fa-product-hunt').addEventListener('click', userProfile);
 
