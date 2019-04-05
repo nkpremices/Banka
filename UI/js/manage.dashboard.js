@@ -7,9 +7,9 @@ const backToHome = () => {
 
 // A function to create an account
 const createAccount = () => {
-        document.querySelector('.overlay').className = 'overlay';
-        document.querySelector('.form').className = 'form to-right';
-        document.querySelector('.create-account-form').className = 'create-account-form';
+    document.querySelector('.overlay').className = 'overlay';
+    document.querySelector('.form').className = 'form to-right';
+    document.querySelector('.create-account-form').className = 'create-account-form';
 }
 
 // A function to destroy the create account message box
@@ -48,7 +48,7 @@ const accounts = () => {
     document.querySelector('.content').className = 'content hide';
     document.querySelector('.transactions').className = 'transactions hide';
     document.querySelector('.accounts').className = 'accounts to-right';
-    
+
 }
 
 // A function to change go to the profile
@@ -80,26 +80,26 @@ document.getElementById('slide-button').addEventListener('click', () => {
 });
 
 // Function to dismiss and create the alert messages
-const destroyMessageBox = () =>{
+const destroyMessageBox = () => {
     const alert = document.querySelector('.alert');
     alert.style.opacity = '0';
     setTimeout(() => alert.style.display = "none", 1000);
 }
 
-const createMessageBox = () =>{
+const createMessageBox = () => {
     const alert = document.querySelector('.alert');
     alert.style.display = "inline-block";
     alert.style.opacity = '1';
 }
 
 // Functions to create the notifications box
-const createNotificationsBox = () =>{
+const createNotificationsBox = () => {
     const alert = document.querySelector('.notifications');
     alert.style.display = "inline-block";
     alert.style.opacity = '1';
 }
 
-const destroyNotificationsBox = () =>{
+const destroyNotificationsBox = () => {
     const alert = document.querySelector('.notifications');
     alert.style.opacity = '0';
     setTimeout(() => alert.style.display = "none", 1000);
@@ -112,8 +112,8 @@ const destroyOverlay = () => {
 // Displaying the search field
 document.querySelector('#search').addEventListener('click', () => {
     //Showing the search field
-        document.querySelector('.header-right .hide').className = 'search' ;
-        document.querySelector('#search').className = 'hide' ;
+    document.querySelector('.header-right .hide').className = 'search';
+    document.querySelector('#search').className = 'hide';
 });
 
 // A function to display an alert message
@@ -157,19 +157,21 @@ document.querySelector('.create-account-form .form-body .fa-times')
     .addEventListener('click', destroyCreateAccountBox);
 
 // Switching to the transactions 
-document.getElementById('transactions-nav').addEventListener('click', transactions);
-
+if (document.getElementById('transactions-nav')) {
+    document.getElementById('transactions-nav').addEventListener('click', transactions);
+};
 // Switching to the account profile 
 document.getElementById('profile-nav').addEventListener('click', accountProfile);
 
 // Switching to the accounts list 
-document.getElementById('accounts-nav').addEventListener('click', accounts);
-
+if (document.getElementById('accounts-nav')) {
+    document.getElementById('accounts-nav').addEventListener('click', accounts);
+}
 //destroying the alert message
 document.querySelector('.alert .to-right').addEventListener('click', destroyMessageBox);
 
 // Calling the notifications box the alert message
-document.querySelector('#notifications').addEventListener('click', () =>{
+document.querySelector('#notifications').addEventListener('click', () => {
     createNotificationsBox();
     setTimeout(destroyNotificationsBox, 2000);
 
@@ -185,7 +187,7 @@ document.querySelector('.fa-product-hunt').addEventListener('click', userProfile
 document.querySelector('.buttons .to-left').addEventListener('click', resetPassword);
 
 // Closing the reset password form
-document.querySelector('.reset-form .form-body .fa-times').addEventListener('click',destoyResetPassword);
+document.querySelector('.reset-form .form-body .fa-times').addEventListener('click', destoyResetPassword);
 
 // Closing the user profile box
 document.querySelector('.profile-activity-user .fa-times').addEventListener('click', () => {
@@ -194,13 +196,13 @@ document.querySelector('.profile-activity-user .fa-times').addEventListener('cli
 });
 
 // Dislaying a success message after submission on the reset password form
-document.querySelector('.reset-form').addEventListener('submit', () =>{
+document.querySelector('.reset-form').addEventListener('submit', () => {
     destoyResetPassword();
     alertMessage('Password successfully reset');
 });
 
 // Logout
-document.querySelector('.buttons .to-right').addEventListener('click', () =>{
+document.querySelector('.buttons .to-right').addEventListener('click', () => {
     window.location = './signUpIn.html?hide=true';
 });
 
