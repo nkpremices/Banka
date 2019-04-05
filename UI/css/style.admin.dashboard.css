@@ -24,10 +24,10 @@
 }
 
 .side-nav{
-    padding-bottom: 780px;
+    padding-bottom: 832px;
 }
 
-.content button{
+.content button, .admin-buttons button{
     background:#0c4da2;
     outline:0;
     border: 0;
@@ -52,10 +52,33 @@
     padding: 5px;
 }
 
-button[class="action-1"]:hover{
+button[class="action-1"]{
     background: #318f2e;
 }
 
+button[class="action-1"]:hover{
+    padding: 6px;
+}
+
+button[class="action-2"]{
+    background: #aca928;
+}
+
 button[class="action-2"]:hover{
-    background: #ff0000;
+    padding: 6px;
+    background: #aca928;
+}
+
+button[class="action-3"]{
+    background: #ac2828;
+}
+
+button[class="action-3"]:hover{
+    padding: 6px;
+    background: #ac2828;
+}
+
+.admin-buttons{
+    width: 100%;
+    margin-top: 890px;
 }
