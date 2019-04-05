@@ -28,7 +28,7 @@ const destoyCreditAccount = () => {
 // Dislaying a success message after submission on the reset password form
 document.querySelector('.credit-debit-account-form').addEventListener('submit', () => {
     destoyCreditAccount();
-    alertMessage('Credit operation successfull');
+    alertMessage('Credit/Debit operation successfull');
 });
 
 // Destroying the credit account box
