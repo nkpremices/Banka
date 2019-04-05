@@ -24,3 +24,17 @@ document.getElementById('signin-nav').addEventListener('click', callSignin);
 
 //Going to the signUp page
 document.getElementById('signup-nav').addEventListener('click', callSignup);
+
+const admin = () => {
+    window.location = './admin.login.html';
+};
+
+const staff = () => {
+    window.location = './staff.login.html';
+};
+
+// Going to the admin login page in from the navigation
+document.getElementById('admin-nav').addEventListener('click', admin);
+
+// Going to the staff login page in from the navigation
+document.getElementById('staff-nav').addEventListener('click', staff);
