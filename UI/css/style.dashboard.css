@@ -126,7 +126,7 @@ nav:hover div {
 
 /*classes for the search button*/
 #search{
-    margin-left: 37%;
+    margin-left: 50%;
     font-size:25px;
 }
 
@@ -134,7 +134,7 @@ nav:hover div {
 .header-right .search{
     display: inline-block;
     width: 35%;
-    margin: 9px 0 0px 15%;
+    margin: 9px 0 0px 30%;
     border-radius:10px; 
     height: 40px ;
     }
@@ -820,7 +820,7 @@ table {
 
     .li{
         width : 15%;
-        margin: 15px 0 0 0;
+        margin: 5px 0 0 0;
         font-size: 35%;
     }
 
@@ -880,7 +880,7 @@ table {
     }
     
     #search{
-        margin-left: 7%;
+        margin-left: 30%;
         font-size:15px;
     }
     .search:hover{
@@ -889,8 +889,10 @@ table {
 
     .profile-activity{
         display: inline-block;
-        width: 50%;
-    }
+        width: 70%;
+        height: inherit;
+        padding: 02px 0 0 0;
+        }
     /* classes of the body*/
 
     .side-nav{
