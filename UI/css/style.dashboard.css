@@ -927,8 +927,9 @@ table {
     }
 
     .create-account-form{
-        margin: 5% 0% 0% 2%;
-        width: 400px;
+        margin: 5% 0% 0% 0%;
+        padding: 0 0 0 0;
+        width: 350px;
     }
 
     .accounts{
