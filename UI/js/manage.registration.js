@@ -9,8 +9,8 @@ let registration;
 let resetSuccess;
 let fromReset;
 if(params[1]) {
-    resetSuccess = fromReset[1];
     fromReset = params[1].split("=");
+    resetSuccess = fromReset[1];
 };
 // Showing a success message if coming from the reset password page
 
