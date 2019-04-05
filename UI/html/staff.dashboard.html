@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="../css/style.dashboard.css">
     <link rel="stylesheet" href="../css/style.admin.dashboard.css">
+    <link rel="stylesheet" href="../css/style.staff.dashboard.css">
     <link rel="shortcut icon" href="../assets/images/logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -48,65 +49,115 @@
         </div>
         <!-- End of the header-->
 
-        <!-- body start -->
-        <div class="page-body">
-            <!-- Section side menu-->
-
-            <div class="side-nav to-left" id="side-menu">
-                <div class="profile-activity hide">
-                    <div class="" id="profile-photo"> <i class="fab fa-product-hunt"></i> </div>
-                    <div class="username-display">Peter Mahoro</div>
-                </div>
-                <div id="" class="account-name-display"></div>
-                <div class="choice">
-                    <div id="profile-nav" class="side-active"><i class="fab fa-accusoft"></i>Bank accounts</div>
-                    <div id="new-account-admin-staff" class="new-account">Create account</div>
-                </div>
-            </div>
-            <!--/ Section side menu-->
-            <!-- Section main-->
-            <div class="main to-right">
-                <div class="account-number"></div>
-                <div class="content to-right">
-                    <div class="profile-header">Accounts list
-                        <div class="hide">
-                            <input type='text' placeholder='  Search...' id='search-text-input' class="to-left" />
-                            <i class="fas fa-search" id="search-btn"></i>
-                        </div>
-
-                        <div class="li" id="search">
-                            <i class="fas fa-search"></i>
-                        </div>
+         <!-- body start -->
+         <div class="page-body">
+                <!-- Section side menu-->
+    
+                <div class="side-nav to-left" id="side-menu">
+                    <div class="profile-activity hide">
+                        <div class="" id="profile-photo"> <i class="fab fa-product-hunt"></i> </div>
+                        <div class="username-display">Peter Mahoro</div>
                     </div>
-                    <div class="profile-body">
-                        <div class="summary">
-                            <ul>
-                                <li>Total number of accounts : 4</li>
-                            </ul>
+                    <div id="" class="account-name-display"></div>
+                    <div class="choice">
+                        <div id="profile-nav" class="side-active"><i class="fab fa-accusoft"></i>Bank accounts</div>
+                    </div>
+                </div>
+                <!--/ Section side menu-->
+                <!-- Section main-->
+                <div class="main to-right">
+                    <div class="account-number"></div>
+                    <div class="content to-right">
+                        <div class="profile-header">Accounts list
+                            <div class="hide">
+                                <input type='text' placeholder='  Search...' id='search-text-input' class="to-left" />
+                                <i class="fas fa-search" id="search-btn"></i>
+                            </div>
+    
+                            <div class="li" id="search">
+                                <i class="fas fa-search"></i>
+                            </div>
                         </div>
-                        <div class="divider-line to-right"></div>
-                        <div class="space"></div>
-                        <div class="account-profile-content to-left">
-                            <p id="p">Account 1</p>
-                            <div class="profile-description to-left">
-                                <p class="photo to-left"><i class="fab fa-product-hunt"></i></p>
-                                <p class="name to-right">Peter Mahoro</p>
-                                <p class="details">
-                                    <ul>
-                                        <li> <em>Account name : </em>Scolarship</li>
-                                        <li><em>Currency : </em> USD</li>
-                                        <li><em>Type :</em> Savings</li>
-                                        <li><em>Nationnal Id :</em> 22132733782</li>
-                                        <li><em>Email :</em> peter.mahoro@gmail.com</li>
-                                        <li><em>Phone number :</em> +250 783 674 593</li>
-                                        <li><em>Current balance :</em> 1200$ </li>
-                                        <li><em>Available balance :</em> 1200$ </li>
-                                    </ul>
-                                </p>
+                        <div class="profile-body">
+                            <div class="summary">
+                                <ul>
+                                    <li>Total number of accounts : 4</li>
+                                </ul>
+                            </div>
+                            <div class="divider-line to-right"></div>
+                            <div class="space"></div>
+                            <div class="account-profile-content to-left">
+                                <p id="p">Account 1</p>
+                                <div class="profile-description to-left">
+                                    <p class="photo to-left"><i class="fab fa-product-hunt"></i></p>
+                                    <p class="name to-right">Peter Mahoro</p>
+                                    <p class="details">
+                                        <ul>
+                                            <li> <em>Account name : </em>Scolarship</li>
+                                            <li><em>Currency : </em> USD</li>
+                                            <li><em>Type :</em> Savings</li>
+                                            <li><em>Status :</em><i> Active</i></li>
+                                            <li><em>Nationnal Id :</em> 22132733782</li>
+                                            <li><em>Email :</em> peter.mahoro@gmail.com</li>
+                                            <li><em>Phone number :</em> +250 783 674 593</li>
+                                            <li><em>Current balance :</em> 1200$ </li>
+                                            <li><em>Available balance :</em> 1200$ </li>
+                                        </ul>
+                                    </p>
+                                    <p class="actions">
+                                        <button class="action-s1">Credit</button>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="account-profile-content to-right">
+                                <p id="p">Account 2</p>
+                                <div class="profile-description to-left">
+                                    <p class="photo to-left"><i class="fab fa-product-hunt"></i></p>
+                                    <p class="name to-right">Peter Mahoro</p>
+                                    <p class="details">
+                                        <ul>
+                                            <li> <em>Account name : </em>Scolarship</li>
+                                            <li><em>Currency : </em> USD</li>
+                                            <li><em>Type :</em> Savings</li>
+                                            <li><em>Status :</em><i> Active</i></li>
+                                            <li><em>Nationnal Id :</em> 22132733782</li>
+                                            <li><em>Email :</em> peter.mahoro@gmail.com</li>
+                                            <li><em>Phone number :</em> +250 783 674 593</li>
+                                            <li><em>Current balance :</em> 1200$ </li>
+                                            <li><em>Available balance :</em> 1200$ </li>
+                                        </ul>
+                                    </p>
+                                    <p class="actions">
+                                        <button class="action-s1">Credit</button>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="account-profile-content to-left">
+                                <p id="p">Account 3</p>
+                                <div class="profile-description to-left">
+                                    <p class="photo to-left"><i class="fab fa-product-hunt"></i></p>
+                                    <p class="name to-right">Peter Mahoro</p>
+                                    <p class="details">
+                                        <ul>
+                                            <li> <em>Account name : </em>Scolarship</li>
+                                            <li><em>Currency : </em> USD</li>
+                                            <li><em>Type :</em> Savings</li>
+                                            <li><em>Status :</em><i> Active</i></li>
+                                            <li><em>Nationnal Id :</em> 22132733782</li>
+                                            <li><em>Email :</em> peter.mahoro@gmail.com</li>
+                                            <li><em>Phone number :</em> +250 783 674 593</li>
+                                            <li><em>Current balance :</em> 1200$ </li>
+                                            <li><em>Available balance :</em> 1200$ </li>
+                                        </ul>
+                                    </p>
+                                    <p class="actions">
+                                        <button class="action-s1">Credit</button>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <div class="account-profile-content to-right">
-                            <p id="p">Account 2</p>
+                            <p id="p">Account 4</p>
                             <div class="profile-description to-left">
                                 <p class="photo to-left"><i class="fab fa-product-hunt"></i></p>
                                 <p class="name to-right">Peter Mahoro</p>
@@ -115,6 +166,7 @@
                                         <li> <em>Account name : </em>Scolarship</li>
                                         <li><em>Currency : </em> USD</li>
                                         <li><em>Type :</em> Savings</li>
+                                        <li><em>Status :</em><i> Active</i></li>
                                         <li><em>Nationnal Id :</em> 22132733782</li>
                                         <li><em>Email :</em> peter.mahoro@gmail.com</li>
                                         <li><em>Phone number :</em> +250 783 674 593</li>
@@ -122,83 +174,38 @@
                                         <li><em>Available balance :</em> 1200$ </li>
                                     </ul>
                                 </p>
-                            </div>
-                        </div>
-                        <div class="account-profile-content to-left">
-                            <p id="p">Account 3</p>
-                            <div class="profile-description to-left">
-                                <p class="photo to-left"><i class="fab fa-product-hunt"></i></p>
-                                <p class="name to-right">Peter Mahoro</p>
-                                <p class="details">
-                                    <ul>
-                                        <li> <em>Account name : </em>Scolarship</li>
-                                        <li><em>Currency : </em> USD</li>
-                                        <li><em>Type :</em> Savings</li>
-                                        <li><em>Nationnal Id :</em> 22132733782</li>
-                                        <li><em>Email :</em> peter.mahoro@gmail.com</li>
-                                        <li><em>Phone number :</em> +250 783 674 593</li>
-                                        <li><em>Current balance :</em> 1200$ </li>
-                                        <li><em>Available balance :</em> 1200$ </li>
-                                    </ul>
+                                <p class="actions">
+                                        <button class="action-s1">Credit</button>
                                 </p>
                             </div>
                         </div>
-                    </div>
-                    <div class="account-profile-content to-right">
-                        <p id="p">Account 4</p>
-                        <div class="profile-description to-left">
-                            <p class="photo to-left"><i class="fab fa-product-hunt"></i></p>
-                            <p class="name to-right">Peter Mahoro</p>
-                            <p class="details">
-                                <ul>
-                                    <li> <em>Account name : </em>Scolarship</li>
-                                    <li><em>Currency : </em> USD</li>
-                                    <li><em>Type :</em> Savings</li>
-                                    <li><em>Nationnal Id :</em> 22132733782</li>
-                                    <li><em>Email :</em> peter.mahoro@gmail.com</li>
-                                    <li><em>Phone number :</em> +250 783 674 593</li>
-                                    <li><em>Current balance :</em> 1200$ </li>
-                                    <li><em>Available balance :</em> 1200$ </li>
-                                </ul>
-                            </p>
+                        <div class="space">
                         </div>
                     </div>
-                    <button>Next</button>
-                    <button>Next</button>
-                    <div class="space">
+                    <div class="admin-buttons">
+                            <button>Prev</button>
+                            <button>Next</button>   
                     </div>
                 </div>
+                <!--/ Section main-->
             </div>
-            <!--/ Section main-->
+            <!-- End of the body -->
+    
         </div>
-        <!-- End of the body -->
-
-    </div>
 
     <!-- Message boxes forms -->
-    <div class="form to-right hide">
+    <div class="form to-right hide" id="credit-debit-account">
         <!-- Reset form -->
-        <form action="#" class="create-account-form hide">
+        <form action="#" class="credit-debit-account-form hide">
             <div class="form-body ">
                 <i class="fas fa-times to-right"></i>
-                <label class="create-account-form-title">Create account</label>
-                <input required type="text" placeholder="Account name">
+                <label class="create-account-form-title">Credit account</label>
+                <input required type="number" placeholder="Amount">
                 <select class="currency">
-                    <option value="default">currency</option>
-                    <option value="usd">Dollar USD</option>
-                    <option value="eu">Euro EU</option>
-                    <option value="rwf">Rwandan Francs RWF</option>
-                    <option value="cdf">Congolese Francs CDF</option>
+                    <option value="default">Operation</option>
+                    <option value="usd">Credit</option>
                 </select>
-                <select class="currency">
-                    <option value="default">Type</option>
-                    <option value="current">Current</option>
-                    <option value="savings">Savings</option>
-                </select>
-                <input required type="number" placeholder="National Id or Passport">
-                <input required type="email" placeholder="Email">
-                <input required type="number" placeholder="Phone number">
-                <button>Create</button>
+                <button>Submit</button>
             </div>
         </form>
         <!-- /reset form -->
@@ -253,6 +260,7 @@
     <!-- js scripts to manage the page-->
     <script src="../js/manage.dashboard.js"></script>
     <script src="../js/manage.admin.dashboard.js"></script>
+    <script src="../js/manage.staff.dashboard.js"></script>
 </body>
 
 </html>
