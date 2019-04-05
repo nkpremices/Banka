@@ -1,0 +1,44 @@
+#new-account-admin-staff{
+    margin-top: 20px;
+}
+
+.profile-header{
+    height: 25px;
+}
+
+.profile-header #search{
+    font-size: 15px;
+    margin: 0 0 0 0;
+}
+
+.profile-header .search{
+    width: 30%;
+    height: 30px;
+    float: right;
+    padding: 0 50% 0 0;
+    margin: 0 0 5px 0;
+}
+
+.content{
+    height: inherit;
+}
+
+.side-nav{
+    padding-bottom: 680px;
+}
+
+.content button{
+    background:#0c4da2;
+    outline:0;
+    border: 0;
+    width: 10%;
+    margin-left: 5%;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.content button:hover{
+    background: rgb(43, 138, 87);
+}
