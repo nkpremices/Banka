@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+- v10.15.1
+deploy:
+  provider: heroku
+  api_key:
+    secure: 1L2tB0hswXBBbO+KCZRUBcsKlG0eutae5H2XnJNgMZ3nuYtgEjW/ZSeIxuG5AoAwILUypVJtcIQWUFAxDhZnQl2s5ZqXkanYWQH+7czgUye7pqZUH3d3sdk590lnwDk9fcUc6kcYr1XxJNFyxbfURgTAGLka2iSm4nBN2yBkZglbyKN7+bnK07t2AWqLGaTuwrQG2dwBP4rOF0RvDMXMywYK/911f+ajRLZY9+PrEfN9M+pNC6k5ZYziJ6S9gTWTwAHgW9gszPA0IL786XqKMutruSo203pF06OT+gH8L5aaP/jFPG8nd+bFJtG9ERwYrfL/z4XINSCR1DRLoMBRNR/9ToCONLe+9ezh4YS11eDnWH2QCzrFR1EPQtNCnipJFj04DvOWSnaV51Q11mg5v/frd9vDnOElXVBWBrSHSha6tk2z+0bTjatwXZWG5eycxdtE249iL833QDBt90mgDwkxEAgzf8GTn8mROwsuqW6lRFqJqvbbpKUbgqumTAU2YXTVX36qORiUjJHZAwSUAuk5EMKcc6KPZb+hKZREldtwENCoPU9gwKZesTvOQBaIxb4ndkNec1qkh1lCRTFAqzld+7lDIYSuZANhvlwCkEZeYNQoZJ+ytJVUcIEtIbr6LMsx5+RHUUW71xnQqUJu3/Epyplabf2DSZSeV7uaIP8=
+  app: banka-heroku
+  on: back-end
+script:
+ - npm run test
+after_success: npm run coverage
