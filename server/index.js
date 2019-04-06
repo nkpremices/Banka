@@ -30,3 +30,5 @@ app.listen(`${stage.port}`, () => {
     // eslint-disable-next-line
     console.log(`Server now listening at localhost:${stage.port}`);
 });
+
+export default app;
