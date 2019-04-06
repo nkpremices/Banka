@@ -1,28 +1,31 @@
+/* eslint-disable no-return-assign */
 // fetching a variable comming from the home page
-const params = location.search.substring(1).split("&");
-const fromHome = params[0].split("=");
+const params = location.search.substring(1).split('&'); // eslint-disable-line
+const fromHome = params[0].split('=');
 const hide = fromHome[1];
 
 // A variable to fetch actions on the registration page
 let registration;
-//a variable to fetch variables coming from the reset password page
+/* a variable to fetch variables coming
+    from the reset password page */
 let resetSuccess;
 let fromReset;
-if(params[1]) {
-    fromReset = params[1].split("=");
-    resetSuccess = fromReset[1];
-};
-// Showing a success message if coming from the reset password page
+if (params[1]) {
+    fromReset = params[1].split('=');
+    resetSuccess = fromReset[1];// eslint-disable-line
+}
+/* Showing a success message if
+coming from the reset password page */
 
 
 // Functions to shift the sign in and sign up parts
 const signIn = () => {
-    //changing the navigation display
+    // changing the navigation display
     document.getElementById('home-nav').className = 'li nav-inactive';
     document.getElementById('signin-nav').className = 'li nav-active';
     document.getElementById('signup-nav').className = 'li nav-inactive';
 
-    //shifting to the sign in part
+    // shifting to the sign in part
     document.querySelector('.signup-form').className = 'hide';
     document.querySelector('.signin-form').className = 'signin-form';
 
@@ -35,7 +38,7 @@ const signUp = () => {
     document.getElementById('signin-nav').className = 'li nav-inactive';
     document.getElementById('signup-nav').className = 'li nav-active';
 
-    //shifting to the signup part
+    // shifting to the signup part
     document.querySelector('.form .hide').className = 'signup-form';
     document.querySelector('.signin-form').className = 'signin-form hide';
 
@@ -56,21 +59,22 @@ const backToHome = () => {
 };
 
 // Function to dismiss and create the alert messages
-const destroyMessageBox = () =>{
+const destroyMessageBox = () => {
     const alert = document.querySelector('.alert');
     alert.style.opacity = '0';
-    setTimeout(() => alert.style.display = "none", 1000);
-}
+    setTimeout(() => alert.style.display = 'none', 1000);
+};
 
-const createMessageBox = () =>{
+const createMessageBox = () => {
     const alert = document.querySelector('.alert');
-    alert.style.display = "inline-block";
+    alert.style.display = 'inline-block';
     alert.style.opacity = '1';
-}
+};
 
-//creating the alert message on success
-const createMessageSucces = () => { 
-    const message = 'A new password has been sent to the email, please login with that password';
+// creating the alert message on success
+const createMessageSucces = () => {
+    const message = 'A new password has been sent to the email,'
+        + ' please login with that password';
     document.querySelector('.alert .message').innerHTML = message;
     setTimeout(createMessageBox, 800);
 };
@@ -100,12 +104,13 @@ document.getElementById('staff-nav').addEventListener('click', staff);
 
 
 // Creating the success message on creation of an account
-if(resetSuccess) createMessageSucces();
+if (resetSuccess) createMessageSucces();
 
-//destroying the alert message
-document.querySelector('.alert .to-right').addEventListener('click', destroyMessageBox);
+// destroying the alert message
+document.querySelector('.alert .to-right')
+    .addEventListener('click', destroyMessageBox);
 
 // Trynig to see which form will be hide
-if(!registration){
-    if(hide) signIn();
+if (!registration) {
+    if (hide) signIn();
 }
