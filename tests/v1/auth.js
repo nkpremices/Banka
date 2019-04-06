@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 describe('home', () => {// eslint-disable-line
     it('should return an object', (done) => { // eslint-disable-line
         chai.request(app)// eslint-disable-line
-            .post('/')
+            .get('/')
             .end((err, res) => {
                 res.body.should.be.an('Object')
                     .which.have.property('data').which.is.an('Object')
