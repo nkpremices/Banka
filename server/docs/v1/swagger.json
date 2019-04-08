@@ -1,0 +1,394 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "BANKA",
+        "description": "BAKA Appi Documentation",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "contact": {
+            "Author": "Prémices NZANZU KAMASUWA"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/api/v1/auth/signup": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Sign up new user",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Register new user",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/signup"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid entries"
+                    },
+                    "default": {
+                        "description": "Something went wrong"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/signin": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Login a user",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Login a user",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/signin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User logged in successfully"
+                    },
+                    "400": {
+                        "description": "Invalid Username or password"
+                    },
+                    "default": {
+                        "description": "Something went wrong"
+                    }
+                }
+            }
+        },
+        "/api/v1/accounts": {
+            "post": {
+                "tags": [
+                    "Bank accounts"
+                ],
+                "summary": "Create a bank account",
+                "description": "Specify bank account details in the body of the request",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Send email",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/createBankAccount"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Account created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid entries"
+                    },
+                    "default": {
+                        "description": "Sorry, error occured"
+                    }
+                }
+            }
+        },
+        "/api/v1/accounts/{accountNumber}": {
+            "patch": {
+                "tags": [
+                    "Bank accounts"
+                ],
+                "summary": "Activate or deactivate an account",
+                "description": "Specify the new ​ status ​ in​ ​ the request body.",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "accountNumber",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Send email",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/cahangeStatusBankAccount"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Account status successfully changed"
+                    },
+                    "400": {
+                        "description": "Invalid entries"
+                    },
+                    "default": {
+                        "description": "Sorry, error occured"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Bank accounts"
+                ],
+                "summary": "Delete a specific Bank account",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "accountNumber",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Account has been deleted successfully"
+                    },
+                    "400": {
+                        "description": "The account you are trying to delete doesn't exist"
+                    },
+                    "default": {
+                        "description": "Sorry, error occured"
+                    }
+                }
+            }
+        },
+        "/api/v1/transactions/{accountNumber}/debit": {
+            "post": {
+                "tags": [
+                    "Bank accounts"
+                ],
+                "summary": "Debit a bank account",
+                "description": "Specify the amount in the body of the request",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "accountNumber",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Send email",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/debitBankAccount"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Debit a specific account record"
+                    },
+                    "400": {
+                        "description": "The account you are trying to debit doesn't exist"
+                    },
+                    "default": {
+                        "description": "Sorry, error occured"
+                    }
+                }
+            }
+        },
+        "/api/v1/transactions/{accountNumber}/credit": {
+            "post": {
+                "tags": [
+                    "Bank accounts"
+                ],
+                "summary": "Credit a bank account",
+                "description": "Specify amount in the body of the request",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "accountNumber",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Send email",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/creditBankAccount"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Credit a specific account record"
+                    },
+                    "400": {
+                        "description": "The account you are trying to credit doesn't exist"
+                    },
+                    "default": {
+                        "description": "Sorry, error occured"
+                    }
+                }
+            }
+        }
+    },
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    },
+    "definitions": {
+        "signup": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "isAdmin": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "signin": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "cahangeStatusBankAccount": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "debitBankAccount": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                }
+            }
+        },
+        "creditBankAccount": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                }
+            }
+        },
+        "createBankAccount": {
+            "type": "object",
+            "properties": {
+                "accountName": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "nationalIdPassport": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "integer"
+                },
+                "phoneNumber": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

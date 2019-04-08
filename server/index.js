@@ -1,34 +1,25 @@
 import '@babel/polyfill';
 import express from 'express';
 import dotenv from 'dotenv';
-import logger from 'morgan';
-import configs from './configs/configs';
+import v1 from './api/v1/routes/index';
+import docs from './api/v1/routes/docs';
+import home from './api/v1/routes/home';
+import environement from './configs/environnements';
+import registerMiddleware from './middlewares/register';
 
 dotenv.config();
 const app = express();
 
-const environment = process.env.NODE_ENV; // development
-const stage = configs.development;
+// Register middleware
+registerMiddleware(app);
 
-if (environment !== 'production') {
-    app.use(logger('dev'));
-}
+app.use('/api/v1', v1);
+app.use('/docs/v1', docs);
+app.use('/', home);
 
-
-app.get('/', (req, res) => {
-    const status = 200;
-    const result = {
-        status,
-        data: {
-            message: 'Welcome on Banka',
-        },
-    };
-    res.status(status).json(result);
-});
-
-app.listen(`${stage.port}`, () => {
+app.listen(`${environement.app.port}`, () => {
     // eslint-disable-next-line
-    console.log(`Server now listening at localhost:${stage.port}`);
+    console.log(`Server now listening at localhost:${environement.app.port}`);
 });
 
 export default app;
