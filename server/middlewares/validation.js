@@ -35,11 +35,20 @@ export default (useJoiError = false, schema) => {
                             next();
                         } else {
                             // Build error object
+                            const regexpInEror = '/^(?=.*[a-z])(?=.*[A-Z])'
+                            + '(?=.*[0-9])(?=.{6,})/';
+                            let message = err.details[0].message
+                                .replace(/['"]/g, '');
+                            const errorWithoutRegexp = message
+                                .split(regexpInEror)[0];
+                            if (message !== errorWithoutRegexp) {
+                                message = `${errorWithoutRegexp}`
+                                + ' Numbers, uppercase and lowercase letters';
+                            }
                             const errorObj = {
                                 status: 400,
                                 error: {
-                                    message: err.details[0].message
-                                        .replace(/['"]/g, ''),
+                                    message,
                                 },
                             };
 
