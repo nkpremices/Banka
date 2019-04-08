@@ -18,16 +18,18 @@ export default {
             firstName,
             lastName,
             password,
+            type,
+            isAdmin,
         } = req.body;
 
         // Verifying the availability of the given fields
-        const verifications = userVerification(email, firstName, lastName);
+        const verifications = userVerification(email);
         if (!verifications) {
             try {
                 const hashedPass = await createHash(password);
                 // trying to insert a user
                 const tempUser = await usersModel.saveUser(email,
-                    firstName, lastName, hashedPass);
+                    firstName, lastName, hashedPass, type, isAdmin, false);
 
                 const token = createToken(tempUser);
                 result.status = status;
