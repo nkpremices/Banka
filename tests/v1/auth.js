@@ -53,6 +53,8 @@ describe('POST - /api/v1/auth/signup', () => {// eslint-disable-line
                 res.should.have.status(200);
                 res.body.data.should.be.an('object');
                 res.body.data.should.have.property('token');
+                res.body.data.should.have.property('id')
+                    .which.is.a('number');
                 res.body.data.should.have.property('firstName', 'Yvette');
                 res.body.data.should.have.property('lastName', 'kalimumbalo');
                 res.body
@@ -90,4 +92,65 @@ describe('POST - /api/v1/auth/signup', () => {// eslint-disable-line
                     done();
                 });
         });
+});
+
+describe('POST - /api/v1/auth/signin', () => {// eslint-disable-line
+    it('it should login an existing user with valid credentials', (done) => {// eslint-disable-line
+        const user2 = {
+            email: 'yvettekal@gmail.com',
+            password: 'R72kal20',
+        };
+
+        chai
+            .request(app)
+            .post('/api/v1/auth/signin')
+            .send(user2)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.an('object');
+                res.body.data.should.have.property('token');
+                res.body.data.should.have.property('id')
+                    .which.is.a('number');
+                res.body.data.should.have.property('firstName', 'Yvette');
+                res.body.data.should.have.property('lastName', 'kalimumbalo');
+                res.body
+                    .data.should.have.property('email', 'yvettekal@gmail.com');
+                done();
+            });
+    });
+
+    it('it should not login with invalid email', (done) => {// eslint-disable-line
+        const user3 = {
+            email: 'yvettekannl@gmail.com',
+            password: 'R72kal20',
+        };
+        chai
+            .request(app)
+            .post('/api/v1/auth/signin')
+            .send(user3)
+            .end((err, res) => {
+                res.should.have.status(404);
+                res.body.should.have.property('data')
+                    .which.have
+                    .property('error', 'Incorect username or password');
+                done();
+            });
+    });
+
+    it('it should not login with invalid password', (done) => {// eslint-disable-line
+        const user3 = {
+            email: 'yvettekal@gmail.com',
+            password: 'R72kaxl20',
+        };
+
+
+        chai
+            .request(app)
+            .post('/api/v1/auth/signin')
+            .send(user3)
+            .end((err, res) => {
+                res.should.have.status(404);
+                done();
+            });
+    });
 });
