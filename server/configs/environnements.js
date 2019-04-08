@@ -7,6 +7,7 @@ dotenv.config();
 
 const appPort = process.env.PORT;
 const saltingRounds = process.env.SALTING_ROUNDS;
+const jwtKey = process.env.JWT_KEY;
 
 const environments = {
     test: {
@@ -14,6 +15,7 @@ const environments = {
             port: appPort || 3000,
         },
         saltingRounds,
+        jwtKey,
     },
 
     development: {
@@ -21,13 +23,15 @@ const environments = {
             port: appPort || 3000,
         },
         saltingRounds,
+        jwtKey,
     },
 
-    production: {
+    staging: {
         app: {
             port: appPort || 3000,
         },
         saltingRounds,
+        jwtKey,
     },
 };
 
