@@ -18,4 +18,8 @@ export default {
         type: string.valid('client', 'staff').required(),
         isAdmin: Bool.required(),
     }),
+    signin: Joi.object().keys({
+        email,
+        password,
+    }),
 };
