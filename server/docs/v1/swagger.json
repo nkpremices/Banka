@@ -130,7 +130,7 @@
                 }
             }
         },
-        "/api/v1/account/{accountNumber}": {
+        "/api/v1/accounts/{accountNumber}": {
             "patch": {
                 "tags": [
                     "Bank accounts"
