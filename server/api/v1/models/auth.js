@@ -1,4 +1,6 @@
 import dataStructureDb from '../../../storage/data.structures';
+import userVerification from '../../../helpers/v1/auth.verifications';
+import verifyPassword from '../../../helpers/v1/password.verification';
 
 
 let id = 0;
@@ -17,8 +19,25 @@ const saveUser = (email, firstName,
     resolve(tempUser);
 });
 
+// A function to find if a user is stored
+// eslint-disable-next-line no-unused-vars
+const findUser = (email, password) => new Promise(async (resolve, reject) => {
+    // finding a user by his email
+    const tempUser = userVerification(email);
+    if (tempUser) {
+        // verifying if the password matches
+        try {
+            if (await verifyPassword(tempUser, password)) resolve(tempUser);
+        } catch (error) {
+            reject(error);
+        }
+    }
+    resolve(false);
+});
+
 const usersModel = {
     saveUser,
+    findUser,
 };
 
 export default usersModel;

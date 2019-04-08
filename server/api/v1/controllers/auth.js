@@ -2,6 +2,7 @@ import usersModel from '../models/auth';
 import createHash from '../../../helpers/generate.hash';
 import createToken from '../../../helpers/generate.token';
 import userVerification from '../../../helpers/v1/auth.verifications';
+import register from '../../../helpers/v1/register.user';
 
 export default {
 /**
@@ -23,8 +24,8 @@ export default {
         } = req.body;
 
         // Verifying the availability of the given fields
-        const verifications = userVerification(email);
-        if (!verifications) {
+        const verify = userVerification(email);
+        if (!verify) {
             try {
                 const hashedPass = await createHash(password);
                 // trying to insert a user
@@ -35,6 +36,7 @@ export default {
                 result.status = status;
                 result.data = {
                     token,
+                    id: tempUser.id,
                     firstName: tempUser.firstName,
                     lastName: tempUser.lastName,
                     email: tempUser.email,
@@ -44,11 +46,42 @@ export default {
                 res.status(status = 400).json(`${error}`);
             }
         } else {
-            result.status = 400;
+            result.status = 404;
             result.data = {
                 error: 'Email address already in use',
             };
             res.status(400).json(result);
+        }
+    },
+    signin: async (req, res) => {
+        let result = {};// eslint-disable-line
+        let status = 200;
+
+        const { email, password } = req.body;
+
+        try {
+            const tempUser = await usersModel.findUser(email, password);
+            if (tempUser) {
+                const token = createToken(tempUser);
+                register.loginUser(tempUser);
+                result.status = status;
+                result.data = {
+                    token,
+                    id: tempUser.id,
+                    firstName: tempUser.firstName,
+                    lastName: tempUser.lastName,
+                    email: tempUser.email,
+                };
+                res.status(status).json(result);
+            } else {
+                result.status = 404;
+                result.data = {
+                    error: 'Incorect username or password',
+                };
+                res.status(404).json(result);
+            }
+        } catch (error) {
+            res.status(status = 400).json(`${error}`);
         }
     },
 };
