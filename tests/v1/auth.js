@@ -12,6 +12,8 @@ const user = {
     firstName: 'Yvette',
     lastName: 'kalimumbalo',
     password: 'R72kal20',
+    type: 'client',
+    isAdmin: true,
 };
 
 // A user to enable validation tests
@@ -20,6 +22,8 @@ const user1 = {
     firstName: 'Yvette',
     lastName: 'kalimumbalo ',
     password: 'R72kal20',
+    type: 'client',
+    isAdmin: true,
 };
 
 // Testing the base url
