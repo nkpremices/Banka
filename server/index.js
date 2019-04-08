@@ -1,7 +1,8 @@
 import '@babel/polyfill';
 import express from 'express';
 import dotenv from 'dotenv';
-import v1 from './api/v1/routes';
+import v1 from './api/v1/routes/index';
+import docs from './api/v1/routes/docs';
 import home from './api/v1/routes/home';
 import environement from './configs/environnements';
 import registerMiddleware from './middlewares/register';
@@ -13,6 +14,7 @@ const app = express();
 registerMiddleware(app);
 
 app.use('/api/v1', v1);
+app.use('/docs/v1', docs);
 app.use('/', home);
 
 app.listen(`${environement.app.port}`, () => {
