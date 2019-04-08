@@ -323,6 +323,12 @@
                 },
                 "password": {
                     "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "isAdmin": {
+                    "type": "boolean"
                 }
             }
         },
