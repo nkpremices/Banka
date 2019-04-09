@@ -17,6 +17,7 @@ const environments = {
         saltingRounds,
         jwtKey,
         accountNumberLength,
+        adminToken: process.env.ADMIN_TOKEN,
     },
 
     development: {
