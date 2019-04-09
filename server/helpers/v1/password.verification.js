@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 
-const verifyPassword = (tempUser, password) => new Promise((resolve, reject) => {
+const verifyPassword = (tempUser,
+    password) => new Promise((resolve, reject) => {
     try {
         bcrypt.compare(password, tempUser.password).then((match) => {
             if (match) resolve(true);
