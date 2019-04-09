@@ -22,4 +22,11 @@ export default {
         email,
         password,
     }),
+    createBankAccount: Joi.object().keys({
+        accountName: string.alphanum().min(3).max(30)
+            .required(),
+        currency: string.valid('usd', 'eu', 'rwf', 'cdf').required(),
+        type: string.valid('curent', 'savings').required(),
+        status: string.valid('draft', 'active', 'dormant').required(),
+    }),
 };

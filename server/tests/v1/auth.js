@@ -1,6 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../../server';
+import app from '../../index';
 
 const should = chai.should();// eslint-disable-line
 
@@ -129,10 +129,10 @@ describe('POST - /api/v1/auth/signin', () => {// eslint-disable-line
             .post('/api/v1/auth/signin')
             .send(user3)
             .end((err, res) => {
-                res.should.have.status(404);
+                res.should.have.status(400);
                 res.body.should.have.property('data')
                     .which.have
-                    .property('error', 'Incorect username or password');
+                    .property('error', 'A user with that email doesn\'t exist');
                 done();
             });
     });
