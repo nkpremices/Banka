@@ -77,23 +77,21 @@ export default {
             };
             res.status(status).json(result);
         }
-            if (!tempUser.foundEmail) {
+        if (!tempUser.foundEmail) {
+            result.status = 404;
+            result.data = {
+                error: 'A user with that email doesn\'t exist',
+            };
+            res.status(404).json(result);
+        }
+        if (!tempUser.foundPassword) {
+            if (tempUser.foundEmail) {
                 result.status = 404;
-                result.data = {
-                    error: 'A user with that email doesn\'t exist',
-                };
-                res.status(404).json(result);
-            }
-            if (!tempUser.foundPassword) {
-                if (tempUser.foundEmail){
-                    result.status = 404;
                 result.data = {
                     error: 'Incorect Password',
                 };
                 res.status(404).json(result);
-                }
             }
-        
-        
+        }
     },
 };
