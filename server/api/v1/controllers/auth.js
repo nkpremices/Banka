@@ -56,32 +56,44 @@ export default {
     signin: async (req, res) => {
         let result = {};// eslint-disable-line
         let status = 200;
-
+        let tempUser;
         const { email, password } = req.body;
 
         try {
-            const tempUser = await usersModel.findUser(email, password);
-            if (tempUser) {
-                const token = createToken(tempUser);
-                register.loginUser(tempUser);
-                result.status = status;
-                result.data = {
-                    token,
-                    id: tempUser.id,
-                    firstName: tempUser.firstName,
-                    lastName: tempUser.lastName,
-                    email: tempUser.email,
-                };
-                res.status(status).json(result);
-            } else {
-                result.status = 404;
-                result.data = {
-                    error: 'Incorect username or password',
-                };
-                res.status(404).json(result);
-            }
+            tempUser = await usersModel.findUser(email, password);
         } catch (error) {
             res.status(status = 400).json(`${error}`);
         }
+        if (tempUser.email) {
+            const token = createToken(tempUser);
+            register.loginUser(tempUser);
+            result.status = status;
+            result.data = {
+                token,
+                id: tempUser.id,
+                firstName: tempUser.firstName,
+                lastName: tempUser.lastName,
+                email: tempUser.email,
+            };
+            res.status(status).json(result);
+        }
+            if (!tempUser.foundEmail) {
+                result.status = 404;
+                result.data = {
+                    error: 'A user with that email doesn\'t exist',
+                };
+                res.status(404).json(result);
+            }
+            if (!tempUser.foundPassword) {
+                if (tempUser.foundEmail){
+                    result.status = 404;
+                result.data = {
+                    error: 'Incorect Password',
+                };
+                res.status(404).json(result);
+                }
+            }
+        
+        
     },
 };
