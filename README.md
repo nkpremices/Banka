@@ -6,3 +6,29 @@ A core banking operations web application
 * HTML.
 * CSS.
 * Javascript.
+
+## Installation steps
+
+* Clone the repo using ```git clone https://github.com/nkpremices/Banka.git```
+* Run ```npm install``` 
+* Create a ```.env``` file at the root of the project and fill out the variables you can find in ```.env.example``` file
+* You need to at least set the ```NODE_ENV``` variable's value before running the command in the next step
+* You can now run ```npm start``` to start the server
+
+## Environment Variables
+
+* ```NODE_ENV```: Node environment variable
+* ```PORT```: The server's listening port
+* ```ACCOUNT_NUMBER_LENGTH```: Length of account number on bank account creation
+* ```JWT_KEY```: String used to creat tokens
+* ```SALTING_ROUNDS```: Integer used to hash passwords
+* ```ADMIN_TOKEN```: Admin token for testing purposes
+
+## Steps for running tests
+
+* Change the ```NODE_ENV``` environment variable value to "test"
+* Run ```npm test``` 
+
+## Documentation
+
+All the API endpoints are documented and available [here](https://banka-heroku.herokuapp.com/docs/v1/)
