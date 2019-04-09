@@ -13,7 +13,7 @@ export default {
         const result = {};
         let status = 200;
 
-        // getting the body for joi validation
+        // getting the body of the request
         const {
             email,
             firstName,
@@ -32,7 +32,9 @@ export default {
                 const tempUser = await usersModel.saveUser(email,
                     firstName, lastName, hashedPass, type, isAdmin, false);
 
+                // Creating a token for the user
                 const token = createToken(tempUser);
+                // Sending the result
                 result.status = status;
                 result.data = {
                     token,
@@ -54,19 +56,28 @@ export default {
         }
     },
     signin: async (req, res) => {
-        let result = {};// eslint-disable-line
+        // Signin part of the users controller
+        const result = {};
         let status = 200;
         let tempUser;
         const { email, password } = req.body;
 
+        // Trying to fetch the user from the storage
         try {
             tempUser = await usersModel.findUser(email, password);
         } catch (error) {
             res.status(status = 400).json(`${error}`);
         }
+
+        // Send the required object if the user is found
         if (tempUser.email) {
+            // creating a token
             const token = createToken(tempUser);
+
+            // Changing the state of the user to 'logged in'
             register.loginUser(tempUser);
+
+            // Sending back the required object
             result.status = status;
             result.data = {
                 token,
@@ -76,21 +87,25 @@ export default {
                 email: tempUser.email,
             };
             res.status(status).json(result);
-        }
-        if (!tempUser.foundEmail) {
-            result.status = 404;
-            result.data = {
-                error: 'A user with that email doesn\'t exist',
-            };
-            res.status(404).json(result);
-        }
-        if (!tempUser.foundPassword) {
-            if (tempUser.foundEmail) {
-                result.status = 404;
+        } else {
+            // Send a custom message if the email is not found
+            if (!tempUser.foundEmail) {
+                result.status = 400;
                 result.data = {
-                    error: 'Incorect Password',
+                    error: 'A user with that email doesn\'t exist',
                 };
-                res.status(404).json(result);
+                res.status(400).json(result);
+            }
+
+            // Send a custom message if the password is incorect
+            if (!tempUser.foundPassword) {
+                if (tempUser.foundEmail) {
+                    result.status = 404;
+                    result.data = {
+                        error: 'Incorect Password',
+                    };
+                    res.status(404).json(result);
+                }
             }
         }
     },
