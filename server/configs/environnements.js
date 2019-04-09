@@ -8,7 +8,7 @@ dotenv.config();
 const appPort = process.env.PORT;
 const saltingRounds = process.env.SALTING_ROUNDS;
 const jwtKey = process.env.JWT_KEY;
-
+const accountNumberLength = process.env.ACCOUNT_NUMBER_LENGTH;
 const environments = {
     test: {
         app: {
@@ -16,6 +16,7 @@ const environments = {
         },
         saltingRounds,
         jwtKey,
+        accountNumberLength,
     },
 
     development: {
@@ -24,6 +25,7 @@ const environments = {
         },
         saltingRounds,
         jwtKey,
+        accountNumberLength,
     },
 
     staging: {
@@ -32,6 +34,7 @@ const environments = {
         },
         saltingRounds,
         jwtKey,
+        accountNumberLength,
     },
 };
 
