@@ -16,7 +16,6 @@ const accountCreationTemp = {
 
 describe('Accounts', () => {// eslint-disable-line
     describe('POST - /api/v1/accounts', () => {// eslint-disable-line
-        let userToken;
         before((done) => {// eslint-disable-line
             const user = {
                 email: 'premices@gmail.com',
@@ -47,8 +46,8 @@ describe('Accounts', () => {// eslint-disable-line
                 .request(app)
                 .post('/api/v1/auth/signin')
                 .send(user1)
+                // eslint-disable-next-line no-unused-vars
                 .end((err, res) => {
-                    userToken = res.body.data.token;
                     done();
                 });
         });
@@ -57,7 +56,7 @@ describe('Accounts', () => {// eslint-disable-line
             chai
                 .request(app)
                 .post('/api/v1/accounts')
-                .set('token', `${userToken}`)
+                .set('token', environment.adminToken)
                 .send(accountCreationTemp)
                 .end((err, res) => {
                     res.should.have.status(200);
