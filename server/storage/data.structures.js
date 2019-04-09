@@ -1,5 +1,5 @@
 /**
- * Library for storing and editing data
+ * Library for storing and creating data
  */
 
 // a schema of all the users
@@ -18,14 +18,34 @@ class UsersSchema {
     }
 }
 
+// a schema of all the bank accounts
+class AccountsSchema {
+    constructor(id,
+        accountName, accountNumber, createdOn, owner,
+        type, status, balance) {
+        this.id = id;
+        this.accountName = accountName;
+        this.accountNumber = accountNumber;
+        this.createdOn = createdOn;
+        this.owner = owner;
+        this.type = type;
+        this.status = status;
+        this.balance = balance;
+    }
+}
+
+
 const usersStorage = [];
+const accountsStorage = [];
 
 const dataStructureDb = {
     schemas: {
         UsersSchema,
+        AccountsSchema,
     },
     storages: {
         usersStorage,
+        accountsStorage,
     },
 };
 
