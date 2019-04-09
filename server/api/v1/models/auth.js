@@ -22,17 +22,26 @@ const saveUser = (email, firstName,
 // A function to find if a user is stored
 // eslint-disable-next-line no-unused-vars
 const findUser = (email, password) => new Promise(async (resolve, reject) => {
+    // An object to return
+    const retObj = {
+        foundEmail: false,
+        foundPassword: false,
+    };
     // finding a user by his email
     const tempUser = userVerification(email);
     if (tempUser) {
+        retObj.foundEmail = true;
+        let passwordVerification;
         // verifying if the password matches
         try {
-            if (await verifyPassword(tempUser, password)) resolve(tempUser);
+            passwordVerification = await verifyPassword(tempUser, password);
         } catch (error) {
             reject(error);
         }
+        if (passwordVerification) resolve(tempUser);
+        resolve(retObj);
     }
-    resolve(false);
+    resolve(retObj);
 });
 
 const usersModel = {
