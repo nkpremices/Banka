@@ -18,6 +18,8 @@ const environments = {
         jwtKey,
         accountNumberLength,
         adminToken: process.env.ADMIN_TOKEN,
+        adminEmail: process.env.ADMIN_EMAIL,
+        adminPassword: process.env.ADMIN_PASSWORD,
     },
 
     development: {
