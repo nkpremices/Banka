@@ -78,7 +78,7 @@ export default {
                 }
             } else {
                 userRegister(email, firstName, lastName,
-                    password, type, isAdmin);
+                    password, 'client', false);
             }
         } else {
             result.status = 400;
