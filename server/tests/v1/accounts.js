@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../index';
-import environment from '../../configs/environnements';// eslint-disable-line
+import environment from '../../configs/environnements';
 
 const should = chai.should();// eslint-disable-line
 
@@ -10,59 +10,116 @@ chai.use(chaiHttp);
 const accountCreationTemp = {
     accountName: 'scolarship',
     currency: 'usd',
-    type: 'curent',
+    type: 'current',
     status: 'active',
 };
 
 describe('Accounts', () => {// eslint-disable-line
-    describe('POST - /api/v1/accounts', () => {// eslint-disable-line
-        before((done) => {// eslint-disable-line
-            const user = {
-                email: 'premices@gmail.com',
-                firstName: 'premices',
-                lastName: 'tuverer',
-                password: 'dddddd4U',
-                type: 'client',
-                isAdmin: 'true',
-            };
-            chai
-                .request(app)
-                .post('/api/v1/auth/signup')
-                .send(user)
-                // eslint-disable-next-line no-unused-vars
-                .end((err, res) => {
-                    done();
-                });
-        });
+    let userToken;
+    let accountNumber1;
+    before((done) => {// eslint-disable-line
+        const user = {
+            email: 'nzanzu@gmail.com',
+            firstName: 'premices',
+            lastName: 'tuverer',
+            password: 'dddddd4U',
+            type: 'client',
+            isAdmin: 'false',
+        };
+        chai
+            .request(app)
+            .post('/api/v1/auth/signup')
+            .send(user)
+            // eslint-disable-next-line no-unused-vars
+            .end((err, res) => {
+                res.should.have.status(200);
+                done();
+            });
+    });
 
-        it('it should login test user', (done) => {// eslint-disable-line
-            // login and get test user token
-            const user1 = {
-                email: 'premices@gmail.com',
-                password: 'dddddd4U',
-            };
+    it('it should login test user', (done) => {// eslint-disable-line
 
-            chai
-                .request(app)
-                .post('/api/v1/auth/signin')
-                .send(user1)
-                // eslint-disable-next-line no-unused-vars
-                .end((err, res) => {
-                    done();
-                });
-        });
+        // login and get test user token
+        const user1 = {
+            email: 'nzanzu@gmail.com',
+            password: 'dddddd4U',
+        };
 
-        it('it should create an account', (done) => {// eslint-disable-line
-            chai
-                .request(app)
-                .post('/api/v1/accounts')
-                .set('token', environment.adminToken)
-                .send(accountCreationTemp)
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.data.should.be.a('object');
-                    done();
-                });
-        });
+        chai
+            .request(app)
+            .post('/api/v1/auth/signin')
+            .send(user1)
+            .end((err, res) => {
+                res.should.have.status(200);
+                userToken = res.body.data.token;
+                done();
+            });
+    });
+
+    it('it should create an account', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .post('/api/v1/accounts')
+            .set('token', userToken)
+            .send(accountCreationTemp)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.a('object');
+                res.body.data.should.have.property('firstName', 'premices');
+                res.body.data.should.have.property('lastName', 'tuverer');
+                res.body.data.should.have.property('email', 'nzanzu@gmail.com');
+                res.body.data.should.have.property('type', 'current');
+                res.body.data.should.have.property('openingBalance', 0);
+                done();
+            });
+    });
+
+    it('It should login the admin', (done) => {// eslint-disable-line
+        const admin = {
+            email: `${environment.adminEmail}`,
+            password: `${environment.adminPassword}`,
+        };
+        chai
+            .request(app)
+            .post('/api/v1/auth/signin')
+            .send(admin)
+            // eslint-disable-next-line no-unused-vars
+            .end((err, res) => {
+                res.should.have.status(200);
+                done();
+            });
+    });
+
+    it('it should create an account with the admin credetials', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .post('/api/v1/accounts')
+            .set('token', `${environment.adminToken}`)
+            .send(accountCreationTemp)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.a('object');
+                accountNumber1 = res.body.data.accountNumber;
+                done();
+            });
+    });
+
+    it('it should change the status of the created account', (done) => {// eslint-disable-line
+        const accountStatusObj = {
+            status: 'draft',
+        };
+
+        chai
+            .request(app)
+            .patch(`/api/v1/accounts/${accountNumber1}`)
+            .set('token', `${environment.adminToken}`)
+            .send(accountStatusObj)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.a('object');
+                res.body.data.should.have
+                    .property('status', accountStatusObj.status);
+                done();
+            });
     });
 });
