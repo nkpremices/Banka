@@ -97,7 +97,6 @@ export default {
 
                     // Display a custom message if the
                     // status is the same
-                    console.log(verify);
                     if (verify) {
                         result.status = 400;
                         result.data = {
