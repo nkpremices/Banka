@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../index';
+import environment from '../../configs/environnements';
 
 const should = chai.should();// eslint-disable-line
 
@@ -13,17 +14,44 @@ const user = {
     lastName: 'kalimumbalo',
     password: 'R72kal20',
     type: 'client',
+    isAdmin: false,
+};
+
+const staffAdminUser = {
+    email: 'primo4@gmail.com',
+    firstName: 'Yvette',
+    lastName: 'kalimumbalo',
+    password: 'R72kal20',
+    type: 'staff',
     isAdmin: true,
 };
 
-// A user to enable validation tests
+const staffAdminUser1 = {
+    email: 'primo45@gmail.com',
+    firstName: 'Yvette',
+    lastName: 'kalimumbalo',
+    password: 'R72kal20',
+    type: 'staff',
+    isAdmin: true,
+};
+
+const staffAdminUser2 = {
+    email: 'primo45@gmail.com',
+    firstName: 'Yvette',
+    lastName: 'kalimumbalo',
+    password: 'R72kal20',
+    type: 'staff',
+    isAdmin: true,
+};
+
+// Uusers to enable validation tests
 const user1 = {
     email: 'yvettekal@gmail.com',
     firstName: 'Yvette',
     lastName: 'kalimumbalo ',
     password: 'R72kal20',
     type: 'client',
-    isAdmin: true,
+    isAdmin: false,
 };
 
 // Testing the base url
@@ -43,7 +71,7 @@ describe('home', () => {// eslint-disable-line
 // Testing the authentication endpoints
 
 // Testing the signup
-describe('POST - /api/v1/auth/signup', () => {// eslint-disable-line
+describe('Signup', () => {// eslint-disable-line
     it('it should create a new user account', (done) => {// eslint-disable-line
         chai
             .request(app)
@@ -92,9 +120,50 @@ describe('POST - /api/v1/auth/signup', () => {// eslint-disable-line
                     done();
                 });
         });
+
+        it('it should create a staff/admin account when requested by the admin', // eslint-disable-line
+        (done) => {
+            chai
+                .request(app)
+                .post('/api/v1/auth/signup')
+                .set('token', `${environment.adminToken}`)
+                .send(staffAdminUser)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.data.should.be.an('object');
+                    done();
+                });
+        });
+
+        it('it should not create a staff/admin account when a token is not provided', // eslint-disable-line
+        (done) => {
+            chai
+                .request(app)
+                .post('/api/v1/auth/signup')
+                .send(staffAdminUser1)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    res.body.data.should.be.an('object');
+                    done();
+                });
+        });
+
+        it('it should not create a staff/admin account when a invalid token is provided', // eslint-disable-line
+        (done) => {
+            chai
+                .request(app)
+                .post('/api/v1/auth/signup')
+                .set('token', '124dsdg')
+                .send(staffAdminUser2)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    res.body.data.should.be.an('object');
+                    done();
+                });
+        });
 });
 
-describe('POST - /api/v1/auth/signin', () => {// eslint-disable-line
+describe('Signin', () => {// eslint-disable-line
     it('it should login an existing user with valid credentials', (done) => {// eslint-disable-line
         const user2 = {
             email: 'yvettekal@gmail.com',
