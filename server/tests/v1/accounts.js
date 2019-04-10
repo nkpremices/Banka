@@ -115,7 +115,8 @@ describe('Accounts', () => {// eslint-disable-line
             .set('token', `${environment.adminToken}`)
             .send(accountStatusObj)
             .end((err, res) => {
-                res.should.have.status(200);
+                res.should.have.status(400);
+                console.log(res.body);
                 res.body.data.should.be.a('object');
                 res.body.data.should.have
                     .property('status', accountStatusObj.status);
