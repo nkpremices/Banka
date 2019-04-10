@@ -22,7 +22,7 @@ A core banking operations web application
 * ```ACCOUNT_NUMBER_LENGTH```: Length of account number on bank account creation
 * ```JWT_KEY```: String used to creat tokens
 * ```SALTING_ROUNDS```: Integer used to hash passwords
-* ```ADMIN_TOKEN```: Admin token for testing purposes
+* ```ADMIN_TOKEN, ADMIN_EMAIL, ADMIN_PASSWORD```: Admin token email and password for testing purposes
 
 ## Steps for running tests
 
