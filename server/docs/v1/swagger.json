@@ -378,15 +378,6 @@
                 },
                 "type": {
                     "type": "string"
-                },
-                "nationalIdPassport": {
-                    "type": "integer"
-                },
-                "email": {
-                    "type": "integer"
-                },
-                "phoneNumber": {
-                    "type": "integer"
                 }
             }
         }
