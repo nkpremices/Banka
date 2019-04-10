@@ -7,7 +7,7 @@ const createToken = (tempUser) => {
         email: tempUser.email,
     };
     const options = {
-        expiresIn: '30d',
+        expiresIn: '1d',
     };
     const token = jwt.sign(playLoad, environment.jwtKey, options);
     return token;
