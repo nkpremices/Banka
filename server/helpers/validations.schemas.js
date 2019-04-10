@@ -15,8 +15,8 @@ export default {
             .max(30)
             .required(),
         password,
-        type: string.valid('client', 'staff').required(),
-        isAdmin: Bool.required(),
+        type: string.valid('client', 'staff'),
+        isAdmin: Bool,
     }),
     signin: Joi.object().keys({
         email,
