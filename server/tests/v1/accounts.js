@@ -14,9 +14,11 @@ const accountCreationTemp = {
     status: 'active',
 };
 
+let accountNumber1;
+
 describe('Accounts', () => {// eslint-disable-line
     let userToken;
-    let accountNumber1;
+
     before((done) => {// eslint-disable-line
         const user = {
             email: 'nzanzu@gmail.com',
