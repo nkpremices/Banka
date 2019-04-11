@@ -101,9 +101,7 @@ describe('Accounts', () => {// eslint-disable-line
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.data.should.be.a('object');
-                console.log(res.body);
                 accountNumber1 = res.body.data.accountNumber;
-                console.log(accountNumber1);
                 done();
             });
     });
@@ -119,8 +117,7 @@ describe('Accounts', () => {// eslint-disable-line
             .set('token', `${environment.adminToken}`)
             .send(accountStatusObj)
             .end((err, res) => {
-                // res.should.have.status(200);
-                console.log(res.body);
+                res.should.have.status(200);
                 res.body.data.should.be.a('object');
                 res.body.data.should.have
                     .property('status', accountStatusObj.status);
