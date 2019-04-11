@@ -10,7 +10,7 @@ export default {
     createAccount: async (req, res) => {
         // account creation part of the users controller
         const result = {};
-        const resStatus = 200;
+        const resStatus = 201;
         let error;
 
         // getting the body
@@ -53,15 +53,15 @@ export default {
                     }
                 } else {
                     error = 'Account name already in use';
-                    sendError(400, result, res, error);
+                    sendError(204, result, res, error);
                 }
             } else {
                 error = 'The user is not logged in';
-                sendError(400, result, res, error);
+                sendError(403, result, res, error);
             }
         } else {
             error = 'Invalid token provided or the user is not signed up';
-            sendError(404, result, res, error);
+            sendError(403, result, res, error);
         }
     },
     activateDeactivateAccount: async (req, res) => {
@@ -94,7 +94,7 @@ export default {
                     if (verify) {
                         error = 'The provided status is the '
                         + 'same as the current';
-                        sendError(400, result, res, error);
+                        sendError(204, result, res, error);
                     } else {
                         // change the account status
                         accountsModel.changeAccountStatus(tempAccount, status);
@@ -112,11 +112,11 @@ export default {
             } else {
                 error = 'Only a logged in admin can activate/deactivate '
                     + ' an account. Provide an admin token or login';
-                sendError(404, result, res, error);
+                sendError(403, result, res, error);
             }
         } else {
             error = 'Invalid token provided or the admin is not signed up';
-            sendError(404, result, res, error);
+            sendError(403, result, res, error);
         }
     },
     deleteAccount: async (req, res) => {
@@ -157,12 +157,12 @@ export default {
             } else {
                 error = 'Only a logged in admin/staf can delete '
                     + ' an account. Provide an admin/staff token or login';
-                sendError(404, result, res, error);
+                sendError(403, result, res, error);
             }
         } else {
             error = 'Invalid token provided or the '
             + 'admin/staff is not signed up';
-            sendError(404, result, res, error);
+            sendError(403, result, res, error);
         }
     },
 };
