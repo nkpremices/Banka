@@ -16,7 +16,6 @@ const saveAccount = (accountName, currency,
 
     // Storing the account
     dataStructureDb.storages.accountsStorage.push(tempAccount);
-    // console.log(dataStructureDb.storages.accountsStorage);
     resolve(tempAccount);
 });
 
@@ -36,7 +35,11 @@ const findAccount = accountNumber => new Promise((resolve, reject) => {
     // creating a temp account
     const tempAccount = verifyAccount.number(accountNumber);
     if (tempAccount) resolve(tempAccount);
-    else reject(new Error('Account not found'));
+    else {
+        const errorMsg = 'An account with the provided '
+        + 'number was not found';
+        reject(new Error(errorMsg));
+    }
 });
 
 // A function to change an accounts status
@@ -57,13 +60,19 @@ const verifyAccountStatus = (account, status) => {
 };
 
 //  a function to delete an account when requested
-const deleteAccount = (status,
-    // eslint-disable-next-line no-unused-vars
-    accountNumber) => new Promise((resolve, reject) => {
+const deleteAccount = accountNumber => new Promise((resolve, reject) => {
+    const storage = dataStructureDb.storages.accountsStorage;
+
     // creating a temp account
     const tempAccount = verifyAccount.number(accountNumber);
-    if (tempAccount) resolve(tempAccount);
-    else reject(new Error('Account not found'));
+    if (tempAccount) {
+        storage.splice(storage.indexOf(tempAccount), 1);
+        resolve(tempAccount);
+    } else {
+        const errorMsg = 'An account with the provided '
+        + 'number was not found';
+        reject(new Error(errorMsg));
+    }
 });
 
 
