@@ -80,7 +80,6 @@ export default {
         // getting the body and the account number
         const { status } = req.body;
         const accountNumber = parseInt(req.params.accountNumber, 10);
-        console.log(req.params)
         // Getting the token from the header
         // Verifying the token
         const tempUser = verifyToken(req.headers.token);
