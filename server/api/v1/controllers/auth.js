@@ -1,6 +1,7 @@
 import usersModel from '../models/auth';
 import createHash from '../../../helpers/generate.hash';
 import createToken from '../../../helpers/generate.token';
+import sendError from '../../../helpers/send.error';
 
 export default {
 /**
@@ -9,7 +10,8 @@ export default {
     signup: async (req, res) => {
         // sign up part of the users controller
         const result = {};
-        let status = 200;
+        const status = 200;
+        let error;
         const AdminToken = req.headers.token;
 
         // getting the body of the request
@@ -43,8 +45,8 @@ export default {
                     email: tempUser.email,
                 };
                 res.status(status).json(result);
-            } catch (error) {
-                res.status(status = 400).json(`${error}`);
+            } catch (err) {
+                sendError(400, result, res, `${err}`);
             }
         };
 
@@ -59,45 +61,37 @@ export default {
                         userRegister(email, firstName, lastName,
                             password, type, isAdmin);
                     } else {
-                        result.status = 400;
-                        result.data = {
-                            error: 'Invalid token provided'
-                            + ' or the admin is not logged in',
-                        };
-                        res.status(400).json(result);
+                        error = 'Invalid token provided'
+                        + ' or the admin is not logged in';
+                        sendError(400, result, res, error);
                     }
                 } else {
-                    result.status = 400;
-                    result.data = {
-                        error: 'Only an admin can create admin or staff'
-                        + ' accounts.A token must be provided',
-                    };
-                    res.status(400).json(result);
+                    error = 'Only an admin can create admin or staff'
+                    + ' accounts.A token must be provided';
+                    sendError(400, result, res, error);
                 }
             } else {
                 userRegister(email, firstName, lastName,
                     password, 'client', false);
             }
         } else {
-            result.status = 400;
-            result.data = {
-                error: 'Email address already in use',
-            };
-            res.status(400).json(result);
+            error = 'Email address already in use';
+            sendError(400, result, res, error);
         }
     },
     signin: async (req, res) => {
         // Signin part of the users controller
         const result = {};
         let status = 200;
+        let error;
         let tempUser;
         const { email, password } = req.body;
 
         // Trying to fetch the user from the storage
         try {
             tempUser = await usersModel.findUser(email, password);
-        } catch (error) {
-            res.status(status = 400).json(`${error}`);
+        } catch (err) {
+            res.status(status = 400).json(`${err}`);
         }
 
         // Send the required object if the user is found
@@ -121,21 +115,15 @@ export default {
         } else {
             // Send a custom message if the email is not found
             if (!tempUser.foundEmail) {
-                result.status = 400;
-                result.data = {
-                    error: 'A user with that email doesn\'t exist',
-                };
-                res.status(400).json(result);
+                error = 'A user with that email doesn\'t exist';
+                sendError(400, result, res, error);
             }
 
             // Send a custom message if the password is incorect
             if (!tempUser.foundPassword) {
                 if (tempUser.foundEmail) {
-                    result.status = 404;
-                    result.data = {
-                        error: 'Incorect Password',
-                    };
-                    res.status(404).json(result);
+                    error = 'Incorect Password';
+                    sendError(404, result, res, error);
                 }
             }
         }

@@ -1,5 +1,6 @@
 import accountsModel from '../models/accounts';
 import usersModel from '../models/auth';
+import sendError from '../../../helpers/send.error';
 
 
 export default {
@@ -9,7 +10,8 @@ export default {
     createAccount: async (req, res) => {
         // account creation part of the users controller
         const result = {};
-        let resStatus = 200;
+        const resStatus = 200;
+        let error;
 
         // getting the body
         const {
@@ -46,35 +48,27 @@ export default {
                             openingBalance: tempAccount.balance,
                         };
                         res.status(resStatus).json(result);
-                    } catch (error) {
-                        res.status(resStatus = 400).json(`${error}`);
+                    } catch (err) {
+                        sendError(400, result, res, `${err}`);
                     }
                 } else {
-                    result.status = 400;
-                    result.data = {
-                        error: 'Account name already in use',
-                    };
-                    res.status(400).json(result);
+                    error = 'Account name already in use';
+                    sendError(400, result, res, error);
                 }
             } else {
-                result.status = 400;
-                result.data = {
-                    error: 'The user is not logged in',
-                };
-                res.status(400).json(result);
+                error = 'The user is not logged in';
+                sendError(400, result, res, error);
             }
         } else {
-            result.status = 404;
-            result.data = {
-                error: 'Invalid token provided or the user is not signed up',
-            };
-            res.status(404).json(result);
+            error = 'Invalid token provided or the user is not signed up';
+            sendError(404, result, res, error);
         }
     },
     activateDeactivateAccount: async (req, res) => {
-        // account creation part of the users controller
+        // account activation part of the users controller
         const result = {};
         const resStatus = 200;
+        let error;
 
         // getting the body and the account number
         const { status } = req.body;
@@ -91,17 +85,16 @@ export default {
 
                     // Changing the status of the account
                     // if it's different
+                    // Veryfying the status first
                     const verify = accountsModel
                         .verifyAccountStatus(tempAccount, status);
 
                     // Display a custom message if the
                     // status is the same
                     if (verify) {
-                        result.status = 400;
-                        result.data = {
-                            error: 'Same status',
-                        };
-                        res.status(400).json(result);
+                        error = 'The provided status is the '
+                        + 'same as the current';
+                        sendError(400, result, res, error);
                     } else {
                         // change the account status
                         accountsModel.changeAccountStatus(tempAccount, status);
@@ -113,31 +106,63 @@ export default {
                         };
                         res.status(resStatus).json(result);
                     }
-                } catch (error) {
-                    result.status = 404;
-                    result.data = {
-                        error: `${error}`,
-                    };
-                    res.status(404).json(result);
+                } catch (err) {
+                    sendError(404, result, res, `${err}`);
                 }
             } else {
-                result.status = 404;
-                result.data = {
-                    error: 'Only a logged in admin can activate/deactivate '
-                    + ' an account. Provide an admin token or login',
-                };
-                res.status(404).json(result);
+                error = 'Only a logged in admin can activate/deactivate '
+                    + ' an account. Provide an admin token or login';
+                sendError(404, result, res, error);
             }
         } else {
-            result.status = 404;
-            result.data = {
-                error: 'Invalid token provided or the admin is not signed up',
-            };
-            res.status(404).json(result);
+            error = 'Invalid token provided or the admin is not signed up';
+            sendError(404, result, res, error);
         }
     },
-    // eslint-disable-next-line no-unused-vars
     deleteAccount: async (req, res) => {
+        // account deletion part of the users controller
+        const result = {};
+        const resStatus = 200;
+        let error;
 
+        // getting the the account id
+        const accountNumber = parseInt(req.params.accountNumber, 10);
+        // console.log(accountNumber);
+        // Getting the token from the header
+        // Verifying the token
+        const tempUser = usersModel.verifyToken(req.headers.token);
+        if (tempUser) {
+            if ((tempUser.isAdmin || tempUser.type === 'staff')
+                && tempUser.isLoggedIn) {
+                // trying to save an account
+                try {
+                    const tempAccount = await accountsModel
+                        .findAccount(accountNumber);
+
+                    // console.log(tempAccount);
+
+                    // deleting the account
+                    await accountsModel
+                        .deleteAccount(tempAccount.accountNumber);
+
+                    // Sending back the required object
+                    result.status = resStatus;
+                    result.data = {
+                        message: 'Account successfully deleted',
+                    };
+                    res.status(resStatus).json(result);
+                } catch (err) {
+                    sendError(404, result, res, `${err}`);
+                }
+            } else {
+                error = 'Only a logged in admin/staf can delete '
+                    + ' an account. Provide an admin/staff token or login';
+                sendError(404, result, res, error);
+            }
+        } else {
+            error = 'Invalid token provided or the '
+            + 'admin/staff is not signed up';
+            sendError(404, result, res, error);
+        }
     },
 };

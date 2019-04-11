@@ -24,8 +24,8 @@
                 "tags": [
                     "Users"
                 ],
-                "summary": "Sign up new user",
-                "description": "",
+                "summary": "Sign up new client user or new staff/admin user",
+                "description": "To add an admin/staff user add isAdmin and typy on the req body. To add a simple user remove them or set type to client and isAdmin to false",
                 "produces": [
                     "application/json"
                 ],
@@ -33,6 +33,15 @@
                     "application/json"
                 ],
                 "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "The admin token on staff/admin account creation",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
                     {
                         "in": "body",
                         "name": "body",
@@ -99,7 +108,7 @@
                     "Bank accounts"
                 ],
                 "summary": "Create a bank account",
-                "description": "Specify bank account details in the body of the request",
+                "description": "Specify bank account details in the body of the request and provide the user's token in the header",
                 "produces": [
                     "application/json"
                 ],
@@ -108,9 +117,18 @@
                 ],
                 "parameters": [
                     {
+                        "in": "header",
+                        "name": "token",
+                        "description": "The users token on account creation",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "in": "body",
                         "name": "body",
-                        "description": "Send email",
+                        "description": "",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/createBankAccount"
@@ -136,7 +154,7 @@
                     "Bank accounts"
                 ],
                 "summary": "Activate or deactivate an account",
-                "description": "Specify the new ​ status ​ in​ ​ the request body.",
+                "description": "Specify the new ​ status ​ in​ ​ the request body. And provide an admin token in the header",
                 "produces": [
                     "application/json"
                 ],
@@ -154,9 +172,18 @@
                         }
                     },
                     {
+                        "in": "header",
+                        "name": "token",
+                        "description": "The admin token ",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "in": "body",
                         "name": "body",
-                        "description": "Send email",
+                        "description": "",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/cahangeStatusBankAccount"
@@ -180,7 +207,7 @@
                     "Bank accounts"
                 ],
                 "summary": "Delete a specific Bank account",
-                "description": "",
+                "description": "Provide the admin/staff token in the header",
                 "produces": [
                     "application/json"
                 ],
@@ -188,6 +215,15 @@
                     "application/json"
                 ],
                 "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "The admin/staff token ",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
                     {
                         "in": "path",
                         "name": "accountNumber",
@@ -217,7 +253,7 @@
                     "Bank accounts"
                 ],
                 "summary": "Debit a bank account",
-                "description": "Specify the amount in the body of the request",
+                "description": "Specify the amount in the body of the request and provide the staff token in the header",
                 "produces": [
                     "application/json"
                 ],
@@ -237,7 +273,7 @@
                     {
                         "in": "body",
                         "name": "body",
-                        "description": "Send email",
+                        "description": "",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/debitBankAccount"
@@ -263,7 +299,7 @@
                     "Bank accounts"
                 ],
                 "summary": "Credit a bank account",
-                "description": "Specify amount in the body of the request",
+                "description": "Specify amount in the body of the request and provide the staff token in the header",
                 "produces": [
                     "application/json"
                 ],
@@ -283,7 +319,7 @@
                     {
                         "in": "body",
                         "name": "body",
-                        "description": "Send email",
+                        "description": "",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/creditBankAccount"
