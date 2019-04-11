@@ -22,7 +22,7 @@ class UsersSchema {
 class AccountsSchema {
     constructor(id,
         accountName, accountNumber, createdOn, owner,
-        type, status, balance) {
+        type, status, currency, balance) {
         this.id = id;
         this.accountName = accountName;
         this.accountNumber = accountNumber;
@@ -30,6 +30,7 @@ class AccountsSchema {
         this.owner = owner;
         this.type = type;
         this.status = status;
+        this.currency = currency;
         this.balance = balance;
     }
 }

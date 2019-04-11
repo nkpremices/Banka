@@ -7,7 +7,7 @@ export default (useJoiError = false, schema) => {
     const _useJoiError = _.isBoolean(useJoiError) && useJoiError;
 
     // Allowed http methods
-    const _supportedMethods = ['get', 'post', 'put', 'delete'];
+    const _supportedMethods = ['get', 'post', 'patch', 'delete'];
 
     // Joi validation options
     const _validationOptions = {

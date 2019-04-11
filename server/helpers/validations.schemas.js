@@ -15,8 +15,8 @@ export default {
             .max(30)
             .required(),
         password,
-        type: string.valid('client', 'staff').required(),
-        isAdmin: Bool.required(),
+        type: string.valid('client', 'staff'),
+        isAdmin: Bool,
     }),
     signin: Joi.object().keys({
         email,
@@ -26,7 +26,10 @@ export default {
         accountName: string.alphanum().min(3).max(30)
             .required(),
         currency: string.valid('usd', 'eu', 'rwf', 'cdf').required(),
-        type: string.valid('curent', 'savings').required(),
+        type: string.valid('current', 'savings').required(),
+        status: string.valid('draft', 'active', 'dormant').required(),
+    }),
+    activateDeactivateAccount: Joi.object().keys({
         status: string.valid('draft', 'active', 'dormant').required(),
     }),
 };

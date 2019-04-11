@@ -12,6 +12,7 @@ export default {
         // sign up part of the users controller
         const result = {};
         let status = 200;
+        const AdminToken = req.headers.token;
 
         // getting the body of the request
         const {
@@ -23,14 +24,14 @@ export default {
             isAdmin,
         } = req.body;
 
-        // Verifying the availability of the given fields
-        const verify = userVerification(email);
-        if (!verify) {
+        // A function to querry the users model to save a user
+        const userRegister = async (Email, FirstName,
+            LastName, Password, Type, IsAdmin) => {
             try {
-                const hashedPass = await createHash(password);
+                const hashedPass = await createHash(Password);
                 // trying to insert a user
-                const tempUser = await usersModel.saveUser(email,
-                    firstName, lastName, hashedPass, type, isAdmin, false);
+                const tempUser = await usersModel.saveUser(Email,
+                    FirstName, LastName, hashedPass, Type, IsAdmin, false);
 
                 // Creating a token for the user
                 const token = createToken(tempUser);
@@ -47,8 +48,40 @@ export default {
             } catch (error) {
                 res.status(status = 400).json(`${error}`);
             }
+        };
+
+        // Verifying the availability of the given fields
+        const verify = userVerification(email, type, isAdmin, AdminToken);
+        // See the availability of the provided email
+        if (!verify.foundEmail) {
+            // see if it's an admin request
+            if (verify.adminOrStaffReq) {
+                if (verify.foundToken) {
+                    if (verify.foundAdmin) {
+                        userRegister(email, firstName, lastName,
+                            password, type, isAdmin);
+                    } else {
+                        result.status = 400;
+                        result.data = {
+                            error: 'Invalid token provided'
+                            + ' or the admin is not logged in',
+                        };
+                        res.status(400).json(result);
+                    }
+                } else {
+                    result.status = 400;
+                    result.data = {
+                        error: 'Only an admin can create admin or staff'
+                        + ' accounts.A token must be provided',
+                    };
+                    res.status(400).json(result);
+                }
+            } else {
+                userRegister(email, firstName, lastName,
+                    password, 'client', false);
+            }
         } else {
-            result.status = 404;
+            result.status = 400;
             result.data = {
                 error: 'Email address already in use',
             };

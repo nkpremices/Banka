@@ -28,17 +28,18 @@ const findUser = (email, password) => new Promise(async (resolve, reject) => {
         foundPassword: false,
     };
     // finding a user by his email
-    const tempUser = userVerification(email);
-    if (tempUser) {
+    const verify = userVerification(email);
+    if (verify.tempUser) {
         retObj.foundEmail = true;
         let passwordVerification;
         // verifying if the password matches
         try {
-            passwordVerification = await verifyPassword(tempUser, password);
+            passwordVerification = await verifyPassword(verify.tempUser,
+                password);
         } catch (error) {
             reject(error);
         }
-        if (passwordVerification) resolve(tempUser);
+        if (passwordVerification) resolve(verify.tempUser);
         resolve(retObj);
     }
     resolve(retObj);
