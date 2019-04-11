@@ -10,7 +10,7 @@ export default {
     signup: async (req, res) => {
         // sign up part of the users controller
         const result = {};
-        const status = 200;
+        const status = 201;
         let error;
         const AdminToken = req.headers.token;
 
@@ -116,14 +116,14 @@ export default {
             // Send a custom message if the email is not found
             if (!tempUser.foundEmail) {
                 error = 'A user with that email doesn\'t exist';
-                sendError(400, result, res, error);
+                sendError(404, result, res, error);
             }
 
             // Send a custom message if the password is incorect
             if (!tempUser.foundPassword) {
                 if (tempUser.foundEmail) {
                     error = 'Incorect Password';
-                    sendError(404, result, res, error);
+                    sendError(400, result, res, error);
                 }
             }
         }
