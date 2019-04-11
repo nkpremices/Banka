@@ -57,8 +57,8 @@ All the created API endpoints are documented and available [here](https://banka-
    └── js```
 
 ### Server structure
-
- ```|── server
+  
+    |── server
     |    ├── api
     |    │   └── v1
     |    │       ├── controllers
@@ -82,7 +82,8 @@ All the created API endpoints are documented and available [here](https://banka-
     |── .gitignore
     |── .travis.yml
     |── .package.json
-    |── README.md```
+    └── README.md
+```
 
 ## Getting started
 
