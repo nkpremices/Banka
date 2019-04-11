@@ -1,7 +1,6 @@
 import accountsModel from '../models/accounts';
-import verifyToken from '../../../helpers/v1/token.verification';
-import accountVerification from '../../../helpers/v1/account.verification';
-import changeAccountStatus from '../../../helpers/v1/change.account.status';
+import usersModel from '../models/auth';
+
 
 export default {
 /**
@@ -22,12 +21,12 @@ export default {
 
         // Getting the token from the header
         // Verifying the token
-        const tempUser = verifyToken(req.headers.token);
+        const tempUser = usersModel.verifyToken(req.headers.token);
         if (tempUser) {
             // Verifying if the user is logged in
             if (tempUser.isLoggedIn) {
                 // Verifying the availability of the given fields
-                const verify = accountVerification
+                const verify = accountsModel.verifyAccount
                     .name(accountName, tempUser.id);
                 if (!verify) {
                     try {
@@ -82,17 +81,18 @@ export default {
         const accountNumber = parseInt(req.params.accountNumber, 10);
         // Getting the token from the header
         // Verifying the token
-        const tempUser = verifyToken(req.headers.token);
+        const tempUser = usersModel.verifyToken(req.headers.token);
         if (tempUser) {
             if (tempUser.isAdmin && tempUser.isLoggedIn) {
                 // trying to save an account
                 try {
                     const tempAccount = await accountsModel
-                        .activateDeactivateAccount(status, accountNumber);
+                        .findAccount(accountNumber);
 
                     // Changing the status of the account
                     // if it's different
-                    const verify = changeAccountStatus(tempAccount, status);
+                    const verify = accountsModel
+                        .verifyAccountStatus(tempAccount, status);
 
                     // Display a custom message if the
                     // status is the same
@@ -103,6 +103,8 @@ export default {
                         };
                         res.status(400).json(result);
                     } else {
+                        // change the account status
+                        accountsModel.changeAccountStatus(tempAccount, status);
                         // Sending back the required object
                         result.status = resStatus;
                         result.data = {
@@ -133,5 +135,9 @@ export default {
             };
             res.status(404).json(result);
         }
+    },
+    // eslint-disable-next-line no-unused-vars
+    deleteAccount: async (req, res) => {
+
     },
 };
