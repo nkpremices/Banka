@@ -48,41 +48,41 @@ All the created API endpoints are documented and available [here](https://banka-
 
 ### UI templates
 
-UI
-├── assets
-│   └── images
-├── css
-├── html
-├── index.html
-└── js
+```UI
+   ├── assets
+   │   └── images
+   ├── css
+   ├── html
+   ├── index.html
+   └── js```
 
 ### Server structure
 
-|── server
-|    ├── api
-|    │   └── v1
-|    │       ├── controllers
-|    │       ├── models
-|    │       └── routes
-|    ├── configs
-|    ├── docs
-|    │   └── v1
-|    ├── helpers
-|    │   └── v1
-|    ├── middlewares
-|    ├── storage
-|    |── tests
-|    │   └── v1
-|    
-|── .babelrc
-|── .coverals.yml
-|── .env
-|── .env-example
-|── .eslintres.json
-|── .gitignore
-|── .travis.yml
-|── .package.json
-|── README.md
+ ```|── server
+    |    ├── api
+    |    │   └── v1
+    |    │       ├── controllers
+    |    │       ├── models
+    |    │       └── routes
+    |    ├── configs
+    |    ├── docs
+    |    │   └── v1
+    |    ├── helpers
+    |    │   └── v1
+    |    ├── middlewares
+    |    ├── storage
+    |    |── tests
+    |    │   └── v1
+    |    
+    |── .babelrc
+    |── .coverals.yml
+    |── .env
+    |── .env-example
+    |── .eslintres.json
+    |── .gitignore
+    |── .travis.yml
+    |── .package.json
+    |── README.md```
 
 ## Getting started
 
