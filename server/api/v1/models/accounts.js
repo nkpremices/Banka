@@ -25,7 +25,6 @@ const saveAccount = (accountName, currency,
 const activateDeactivateAccount = (status,
     // eslint-disable-next-line no-unused-vars
     accountNumber) => new Promise((resolve, reject) => {
-    console.log(accountNumber);
     // creating a temp account
     const tempAccount = accountVerification.number(accountNumber);
     if (tempAccount) resolve(tempAccount);
