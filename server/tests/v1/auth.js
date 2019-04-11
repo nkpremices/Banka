@@ -78,7 +78,7 @@ describe('Signup', () => {// eslint-disable-line
             .post('/api/v1/auth/signup')
             .send(user)
             .end((err, res) => {
-                res.should.have.status(200);
+                res.should.have.status(201);
                 res.body.data.should.be.an('object');
                 res.body.data.should.have.property('token');
                 res.body.data.should.have.property('id')
@@ -129,7 +129,7 @@ describe('Signup', () => {// eslint-disable-line
                 .set('token', `${environment.adminToken}`)
                 .send(staffAdminUser)
                 .end((err, res) => {
-                    res.should.have.status(200);
+                    res.should.have.status(201);
                     res.body.data.should.be.an('object');
                     done();
                 });
@@ -188,7 +188,7 @@ describe('Signin', () => {// eslint-disable-line
             });
     });
 
-    it('it should not login with invalid email', (done) => {// eslint-disable-line
+    it('it should not login a user with invalid email', (done) => {// eslint-disable-line
         const user3 = {
             email: 'yvettekannl@gmail.com',
             password: 'R72kal20',
@@ -198,7 +198,7 @@ describe('Signin', () => {// eslint-disable-line
             .post('/api/v1/auth/signin')
             .send(user3)
             .end((err, res) => {
-                res.should.have.status(400);
+                res.should.have.status(404);
                 res.body.should.have.property('data')
                     .which.have
                     .property('error', 'A user with that email doesn\'t exist');
@@ -218,7 +218,7 @@ describe('Signin', () => {// eslint-disable-line
             .post('/api/v1/auth/signin')
             .send(user3)
             .end((err, res) => {
-                res.should.have.status(404);
+                res.should.have.status(400);
                 done();
             });
     });
