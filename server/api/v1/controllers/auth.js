@@ -1,8 +1,6 @@
 import usersModel from '../models/auth';
 import createHash from '../../../helpers/generate.hash';
 import createToken from '../../../helpers/generate.token';
-import userVerification from '../../../helpers/v1/auth.verifications';
-import register from '../../../helpers/v1/register.user';
 
 export default {
 /**
@@ -51,7 +49,7 @@ export default {
         };
 
         // Verifying the availability of the given fields
-        const verify = userVerification(email, type, isAdmin, AdminToken);
+        const verify = usersModel.VerifiUser(email, type, isAdmin, AdminToken);
         // See the availability of the provided email
         if (!verify.foundEmail) {
             // see if it's an admin request
@@ -108,7 +106,7 @@ export default {
             const token = createToken(tempUser);
 
             // Changing the state of the user to 'logged in'
-            register.loginUser(tempUser);
+            usersModel.loginUser(tempUser);
 
             // Sending back the required object
             result.status = status;

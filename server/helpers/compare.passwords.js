@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 
-const verifyPassword = (tempUser,
+const comparePasswords = (tempUser,
     password) => new Promise((resolve, reject) => {
     try {
         bcrypt.compare(password, tempUser.password).then((match) => {
@@ -12,4 +12,4 @@ const verifyPassword = (tempUser,
     }
 });
 
-export default verifyPassword;
+export default comparePasswords;

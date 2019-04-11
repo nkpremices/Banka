@@ -6,6 +6,7 @@ const accountsRouter = Router();
 const {
     createAccount,
     activateDeactivateAccount,
+    deleteAccount,
 } = accountsController;
 
 accountsRouter
@@ -13,5 +14,6 @@ accountsRouter
 accountsRouter
     .patch('/:accountNumber', validate(true, 'activateDeactivateAccount'),
         activateDeactivateAccount);
-
+accountsRouter
+    .delete('/:accountNumber', deleteAccount);
 export default accountsRouter;
