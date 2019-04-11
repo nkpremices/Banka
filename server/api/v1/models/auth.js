@@ -31,6 +31,8 @@ const verifyToken = (token) => {
     return tempUser;
 };
 
+// A function to verify if a stored user is an admin
+// on admin/staff account creation
 const VerifiUser = (email, type, isAdmin, AdminToken) => {
     const tempUser = dataStructureDb
         .storages.usersStorage
