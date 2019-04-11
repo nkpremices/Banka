@@ -14,9 +14,11 @@ const accountCreationTemp = {
     status: 'active',
 };
 
+let accountNumber1;
+
 describe('Accounts', () => {// eslint-disable-line
     let userToken;
-    let accountNumber1;
+
     before((done) => {// eslint-disable-line
         const user = {
             email: 'nzanzu@gmail.com',
@@ -99,7 +101,9 @@ describe('Accounts', () => {// eslint-disable-line
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.data.should.be.a('object');
+                console.log(res.body);
                 accountNumber1 = res.body.data.accountNumber;
+                console.log(accountNumber1);
                 done();
             });
     });
@@ -115,7 +119,8 @@ describe('Accounts', () => {// eslint-disable-line
             .set('token', `${environment.adminToken}`)
             .send(accountStatusObj)
             .end((err, res) => {
-                res.should.have.status(200);
+                // res.should.have.status(200);
+                console.log(res.body);
                 res.body.data.should.be.a('object');
                 res.body.data.should.have
                     .property('status', accountStatusObj.status);
