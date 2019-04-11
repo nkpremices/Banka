@@ -34,7 +34,7 @@ describe('Accounts', () => {// eslint-disable-line
             .send(user)
             // eslint-disable-next-line no-unused-vars
             .end((err, res) => {
-                res.should.have.status(200);
+                res.should.have.status(201);
                 done();
             });
     });
@@ -65,7 +65,7 @@ describe('Accounts', () => {// eslint-disable-line
             .set('token', userToken)
             .send(accountCreationTemp)
             .end((err, res) => {
-                res.should.have.status(200);
+                res.should.have.status(201);
                 res.body.data.should.be.a('object');
                 res.body.data.should.have.property('firstName', 'premices');
                 res.body.data.should.have.property('lastName', 'tuverer');
@@ -99,7 +99,7 @@ describe('Accounts', () => {// eslint-disable-line
             .set('token', `${environment.adminToken}`)
             .send(accountCreationTemp)
             .end((err, res) => {
-                res.should.have.status(200);
+                res.should.have.status(201);
                 res.body.data.should.be.a('object');
                 accountNumber1 = res.body.data.accountNumber;
                 done();
