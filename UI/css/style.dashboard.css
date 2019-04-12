@@ -52,10 +52,10 @@ label{
     float: right;
 }
 .header-left{ 
-    width: 30%;  
+    width: 40%;  
 }
 .header-right{
-    width: 70%;
+    width: 60%;
 }
 
 nav div {
@@ -91,7 +91,7 @@ nav:hover div {
 .header-left h1{
     margin: 10px 10px 10px 36%;
     font-weight: 400;
-    font-size: 32px;
+    font-size: 28px;
     cursor: pointer;
     z-index: 1;
 }
