@@ -6,3 +6,13 @@
     margin: 20% 0% 0% 35%;
     width: 400px;
 }
+
+
+/*mobile responsiveness*/
+
+@media screen and (max-width:768px){
+
+    .side-nav{
+        padding-bottom: 15px;
+    }
+}
