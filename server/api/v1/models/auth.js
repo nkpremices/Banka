@@ -91,9 +91,7 @@ const findUser = (email, password) => new Promise(async (resolve, reject) => {
 
 // A function to login a user
 const loginUser = (user) => {
-    const storage = dataStructureDb.storages.usersStorage;
-    storage[storage.indexOf(user)].isLoggedIn = true;
-    // console.log(storage);
+    user.login();
 };
 
 const usersModel = {

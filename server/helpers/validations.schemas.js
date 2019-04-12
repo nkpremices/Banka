@@ -32,4 +32,7 @@ export default {
     activateDeactivateAccount: Joi.object().keys({
         status: string.valid('draft', 'active', 'dormant').required(),
     }),
+    creditAccount: Joi.object().keys({
+        amount: Joi.number().positive().allow(0).required(),
+    }),
 };

@@ -16,6 +16,10 @@ class UsersSchema {
         this.isAdmin = isAdmin;
         this.isLoggedIn = isLoggedIn;
     }
+
+    login() {
+        this.isLoggedIn = true;
+    }
 }
 
 // a schema of all the bank accounts
@@ -33,20 +37,48 @@ class AccountsSchema {
         this.currency = currency;
         this.balance = balance;
     }
+
+    setStatus(status) {
+        this.status = status;
+    }
+
+    credit(amount) {
+        this.balance += amount;
+        return this.balance;
+    }
+}
+
+// a schema of all the transactions
+class TransactionsSchema {
+    constructor(id, createdOn, type,
+        accountNumber, cashier,
+        amount, oldBalance, newBalance) {
+        this.id = id;
+        this.createdOn = createdOn;
+        this.type = type;
+        this.accountNumber = accountNumber;
+        this.cashier = cashier;
+        this.amount = amount;
+        this.oldBalance = oldBalance;
+        this.newBalance = newBalance;
+    }
 }
 
 
 const usersStorage = [];
 const accountsStorage = [];
+const transactionsStorage = [];
 
 const dataStructureDb = {
     schemas: {
         UsersSchema,
         AccountsSchema,
+        TransactionsSchema,
     },
     storages: {
         usersStorage,
         accountsStorage,
+        transactionsStorage,
     },
 };
 

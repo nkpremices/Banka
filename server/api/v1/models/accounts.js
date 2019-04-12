@@ -44,8 +44,7 @@ const findAccount = accountNumber => new Promise((resolve, reject) => {
 
 // A function to change an accounts status
 const changeAccountStatus = (account, status) => {
-    const storage = dataStructureDb.storages.accountsStorage;
-    storage[storage.indexOf(account)].status = status;
+    account.setStatus(status);
 };
 
 const verifyAccountStatus = (account, status) => {
