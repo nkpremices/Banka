@@ -12,7 +12,7 @@ const accountNumberLength = process.env.ACCOUNT_NUMBER_LENGTH;
 const environments = {
     test: {
         app: {
-            port: appPort || 3000,
+            port: appPort,
         },
         saltingRounds,
         jwtKey,
@@ -24,7 +24,7 @@ const environments = {
 
     development: {
         app: {
-            port: appPort || 3000,
+            port: appPort,
         },
         saltingRounds,
         jwtKey,
@@ -33,7 +33,7 @@ const environments = {
 
     staging: {
         app: {
-            port: appPort || 3000,
+            port: appPort,
         },
         saltingRounds,
         jwtKey,
