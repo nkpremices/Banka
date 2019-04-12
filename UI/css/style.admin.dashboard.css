@@ -82,3 +82,12 @@ button[class="action-3"]:hover{
     width: 100%;
     margin-top: 890px;
 }
+
+/*mobile responsiveness*/
+
+@media screen and (max-width:768px){
+
+    .side-nav{
+        padding-bottom: 15px;
+    }
+}
