@@ -6,7 +6,7 @@ import environment from '../../configs/environnements';
 const should = chai.should();// eslint-disable-line
 
 chai.use(chaiHttp);
-
+// Some variables to initialise tests
 const accountCreationTemp = {
     accountName: 'scolarship',
     currency: 'usd',
@@ -14,7 +14,7 @@ const accountCreationTemp = {
     status: 'active',
 };
 
-let accountNumber1;
+let AccountNumber;
 
 describe('Accounts', () => {// eslint-disable-line
     let userToken;
@@ -25,8 +25,6 @@ describe('Accounts', () => {// eslint-disable-line
             firstName: 'premices',
             lastName: 'tuverer',
             password: 'dddddd4U',
-            type: 'client',
-            isAdmin: 'false',
         };
         chai
             .request(app)
@@ -39,24 +37,24 @@ describe('Accounts', () => {// eslint-disable-line
             });
     });
 
-    it('it should login test user', (done) => {// eslint-disable-line
+    it('it should login test user to create an account',// eslint-disable-line
+        (done) => {
+            // login and get test user token
+            const user1 = {
+                email: 'nzanzu@gmail.com',
+                password: 'dddddd4U',
+            };
 
-        // login and get test user token
-        const user1 = {
-            email: 'nzanzu@gmail.com',
-            password: 'dddddd4U',
-        };
-
-        chai
-            .request(app)
-            .post('/api/v1/auth/signin')
-            .send(user1)
-            .end((err, res) => {
-                res.should.have.status(200);
-                userToken = res.body.data.token;
-                done();
-            });
-    });
+            chai
+                .request(app)
+                .post('/api/v1/auth/signin')
+                .send(user1)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    userToken = res.body.data.token;
+                    done();
+                });
+        });
 
     it('it should create an account', (done) => {// eslint-disable-line
         chai
@@ -72,6 +70,7 @@ describe('Accounts', () => {// eslint-disable-line
                 res.body.data.should.have.property('email', 'nzanzu@gmail.com');
                 res.body.data.should.have.property('type', 'current');
                 res.body.data.should.have.property('openingBalance', 0);
+                AccountNumber = res.body.data.accountNumber;
                 done();
             });
     });
@@ -92,20 +91,6 @@ describe('Accounts', () => {// eslint-disable-line
             });
     });
 
-    it('it should create an account with the admin credetials', (done) => {// eslint-disable-line
-        chai
-            .request(app)
-            .post('/api/v1/accounts')
-            .set('token', `${environment.adminToken}`)
-            .send(accountCreationTemp)
-            .end((err, res) => {
-                res.should.have.status(201);
-                res.body.data.should.be.a('object');
-                accountNumber1 = res.body.data.accountNumber;
-                done();
-            });
-    });
-
     it('it should change the status of the created account', (done) => {// eslint-disable-line
         const accountStatusObj = {
             status: 'draft',
@@ -113,7 +98,7 @@ describe('Accounts', () => {// eslint-disable-line
 
         chai
             .request(app)
-            .patch(`/api/v1/accounts/${accountNumber1}`)
+            .patch(`/api/v1/accounts/${AccountNumber}`)
             .set('token', `${environment.adminToken}`)
             .send(accountStatusObj)
             .end((err, res) => {
@@ -128,7 +113,7 @@ describe('Accounts', () => {// eslint-disable-line
     it('it should delete an account', (done) => {// eslint-disable-line
         chai
             .request(app)
-            .delete(`/api/v1/accounts/${accountNumber1}`)
+            .delete(`/api/v1/accounts/${AccountNumber}`)
             .set('token', `${environment.adminToken}`)
             .end((err, res) => {
                 res.should.have.status(200);
