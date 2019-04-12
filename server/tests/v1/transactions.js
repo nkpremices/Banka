@@ -26,6 +26,7 @@ const cashier = {
 
 let AccountNumber;
 let cashierToken;
+let cashierId;
 
 describe('Transactions', () => {// eslint-disable-line
 
@@ -94,6 +95,7 @@ describe('Transactions', () => {// eslint-disable-line
                 res.should.have.status(200);
                 res.body.data.should.be.a('object');
                 cashierToken = res.body.data.token;
+                cashierId = res.body.data.id;
                 done();
             });
     });
@@ -128,9 +130,32 @@ describe('Transactions', () => {// eslint-disable-line
                 res.body.data.should.have
                     .property('accountNumber', AccountNumber);
                 res.body.data.should.have.property('amount', 2500);
-                res.body.data.should.have.property('cashier', 6);
+                res.body.data.should.have.property('cashier', cashierId);
                 res.body.data.should.have.property('transactionType', 'credit');
                 res.body.data.should.have.property('accountBalance', 2500);
+                done();
+            });
+    });
+    it('it should debit the created account', (done) => {// eslint-disable-line
+        const debit = {
+            amount: 2000,
+        };
+
+        chai
+            .request(app)
+            .post(`/api/v1/transactions/${AccountNumber}/debit`)
+            .set('token', cashierToken)
+            .send(debit)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.a('object');
+                res.body.data.should.have.property('transactionId', 2);
+                res.body.data.should.have
+                    .property('accountNumber', AccountNumber);
+                res.body.data.should.have.property('amount', 2000);
+                res.body.data.should.have.property('cashier', cashierId);
+                res.body.data.should.have.property('transactionType', 'debit');
+                res.body.data.should.have.property('accountBalance', 500);
                 done();
             });
     });
