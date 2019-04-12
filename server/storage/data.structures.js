@@ -46,6 +46,11 @@ class AccountsSchema {
         this.balance += amount;
         return this.balance;
     }
+
+    debit(amount) {
+        this.balance -= amount;
+        return this.balance;
+    }
 }
 
 // a schema of all the transactions

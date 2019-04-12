@@ -19,6 +19,26 @@ const saveTransaction = {
         dataStructureDb.storages.transactionsStorage.push(tempTransaction);
         resolve(tempTransaction);
     }),
+    // eslint-disable-next-line no-unused-vars
+    debit: (tempAccount, amount, cashier) => new Promise((resolve, reject) => {
+        // get the old balance of the account
+        const oldBalance = tempAccount.balance;
+        // verify if the account has sufficient balance
+        if (oldBalance < amount) {
+            const errorMsg = 'Insufficient balance for this transaction';
+            reject(new Error(errorMsg));
+        }
+        // Credit the account
+        const newBalance = tempAccount.debit(amount);
+        // creating a temp transaction
+        const tempTransaction = new dataStructureDb.schemas
+            .TransactionsSchema(id += 1, Date.now(), 'debit',
+                tempAccount.accountNumber, cashier.id, amount,
+                oldBalance, newBalance);
+        // Storing the transaction
+        dataStructureDb.storages.transactionsStorage.push(tempTransaction);
+        resolve(tempTransaction);
+    }),
 };
 
 

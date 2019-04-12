@@ -5,10 +5,14 @@ import validate from '../../../middlewares/validation';
 const transactionsRouter = Router();
 const {
     creditAccount,
+    debitAccount,
 } = transactionsController;
 
 transactionsRouter
     .post('/:accountNumber/credit',
-        validate(true, 'creditAccount'), creditAccount);
+        validate(true, 'creditDebitAccount'), creditAccount);
+transactionsRouter
+    .post('/:accountNumber/debit',
+        validate(true, 'creditDebitAccount'), debitAccount);
 
 export default transactionsRouter;
