@@ -53,7 +53,7 @@ export default {
                     }
                 } else {
                     error = 'Account name already in use';
-                    sendError(204, result, res, error);
+                    sendError(400, result, res, error);
                 }
             } else {
                 error = 'The user is not logged in';
