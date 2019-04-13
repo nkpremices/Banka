@@ -42,7 +42,7 @@ The UI is hosted on GitHub pages and available [here](https://nkpremices.github.
 All the created API endpoints are documented and available [here](https://banka-heroku.herokuapp.com/docs/v1/)
 
 ### 3. Under development
-* Two latest endpoints for v1
+* v2 : Api implementation with database
 
 ## Project structure
 
