@@ -90,8 +90,12 @@ All the created API endpoints are documented and available [here](https://banka-
 
 ### 1. Installation steps
 
-* Clone the repo using ```git clone https://github.com/nkpremices/Banka.git```
-* Run ```npm install``` 
+* Clone the repo using
+```git clone https://github.com/nkpremices/Banka.git```
+
+* Install dependecies by runing 
+```npm install``` 
+
 * Create a ```.env``` file at the root of the project and fill out the variables you can find in ```.env.example``` file
 * You need to at least set the ```NODE_ENV``` variable's value before running the command in the next step
 * You can now run ```npm start``` to start the server
@@ -108,4 +112,5 @@ All the created API endpoints are documented and available [here](https://banka-
 ### 3. Steps for running tests
 
 * Change the ```NODE_ENV``` environment variable value to "test"
-* Run ```npm test``` 
+* Run tests
+```npm test``` 
