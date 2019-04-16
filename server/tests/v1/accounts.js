@@ -77,8 +77,8 @@ describe('Accounts', () => {// eslint-disable-line
 
     it('It should login the admin', (done) => {// eslint-disable-line
         const admin = {
-            email: `${environment.adminEmail}`,
-            password: `${environment.adminPassword}`,
+            email: `${environment.admin.email}`,
+            password: `${environment.admin.password}`,
         };
         chai
             .request(app)
@@ -99,7 +99,7 @@ describe('Accounts', () => {// eslint-disable-line
         chai
             .request(app)
             .patch(`/api/v1/accounts/${AccountNumber}`)
-            .set('token', `${environment.adminToken}`)
+            .set('token', `${environment.admin.token}`)
             .send(accountStatusObj)
             .end((err, res) => {
                 res.should.have.status(200);
@@ -114,7 +114,7 @@ describe('Accounts', () => {// eslint-disable-line
         chai
             .request(app)
             .delete(`/api/v1/accounts/${AccountNumber}`)
-            .set('token', `${environment.adminToken}`)
+            .set('token', `${environment.admin.token}`)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.data.should.be.a('object');
