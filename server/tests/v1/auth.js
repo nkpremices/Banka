@@ -126,7 +126,7 @@ describe('Signup', () => {// eslint-disable-line
             chai
                 .request(app)
                 .post('/api/v1/auth/signup')
-                .set('token', `${environment.adminToken}`)
+                .set('token', `${environment.admin.token}`)
                 .send(staffAdminUser)
                 .end((err, res) => {
                     res.should.have.status(201);
