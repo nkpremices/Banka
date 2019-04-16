@@ -9,22 +9,44 @@ const appPort = process.env.PORT;
 const saltingRounds = process.env.SALTING_ROUNDS;
 const jwtKey = process.env.JWT_KEY;
 const accountNumberLength = process.env.ACCOUNT_NUMBER_LENGTH;
+const dbUser = process.env.DB_USER;
+const dbHost = process.env.DB_HOST;
+const dbName = process.env.DB_NAME;
+const dbPasswor = process.env.DB_PASSWORD;
+const dbPort = process.env.DB_PORT;
+
 const environments = {
     test: {
         app: {
             port: appPort,
         },
+        database: {
+            user: dbUser,
+            host: dbHost,
+            name: dbName,
+            password: dbPasswor,
+            port: dbPort,
+        },
+        admin: {
+            token: process.env.ADMIN_TOKEN,
+            email: process.env.ADMIN_EMAIL,
+            password: process.env.ADMIN_PASSWORD,
+        },
         saltingRounds,
         jwtKey,
         accountNumberLength,
-        adminToken: process.env.ADMIN_TOKEN,
-        adminEmail: process.env.ADMIN_EMAIL,
-        adminPassword: process.env.ADMIN_PASSWORD,
     },
 
     development: {
         app: {
             port: appPort,
+        },
+        database: {
+            user: dbUser,
+            host: dbHost,
+            name: dbName,
+            password: dbPasswor,
+            port: dbPort,
         },
         saltingRounds,
         jwtKey,
@@ -34,6 +56,13 @@ const environments = {
     staging: {
         app: {
             port: appPort,
+        },
+        database: {
+            user: dbUser,
+            host: dbHost,
+            name: dbName,
+            password: dbPasswor,
+            port: dbPort,
         },
         saltingRounds,
         jwtKey,
