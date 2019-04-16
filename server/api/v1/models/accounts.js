@@ -75,7 +75,7 @@ const deleteAccount = accountNumber => new Promise((resolve, reject) => {
 });
 
 
-const usersModel = {
+const accountsModel = {
     saveAccount,
     findAccount,
     changeAccountStatus,
@@ -84,4 +84,4 @@ const usersModel = {
     verifyAccountStatus,
 };
 
-export default usersModel;
+export default accountsModel;
