@@ -16,5 +16,5 @@ export default async () => {
     const tempUser = await usersModel.saveUser(admin.email,
         admin.firstName, admin.lastName, hashedPass,
         admin.type, admin.isAdmin, false);
-    console.log('admin created...', tempUser.id);
+    // console.log('admin created...', tempUser.id);
 };

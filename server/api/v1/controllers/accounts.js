@@ -77,7 +77,8 @@ export default {
         // Verifying the token
         const tempUser = usersModel.verifyToken(req.headers.token);
         if (tempUser) {
-            if (tempUser.isAdmin && tempUser.isLoggedIn) {
+            if ((tempUser.isAdmin || tempUser.type === 'staff')
+            && tempUser.isLoggedIn) {
                 // trying to save an account
                 try {
                     const tempAccount = await accountsModel
@@ -110,7 +111,7 @@ export default {
                     sendError(404, result, res, `${err}`);
                 }
             } else {
-                error = 'Only a logged in admin can activate/deactivate '
+                error = 'Only a logged in admin/staff can activate/deactivate '
                     + ' an account. Provide an admin token or login';
                 sendError(403, result, res, error);
             }

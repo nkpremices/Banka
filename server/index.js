@@ -7,6 +7,7 @@ import home from './api/v1/routes/home';
 import environement from './configs/environnements';
 import registerMiddleware from './middlewares/register';
 import createAdmin from './helpers/v1/create.admin';
+import initializeDb from './middlewares/initialize.db';
 
 dotenv.config();
 const app = express();
@@ -14,8 +15,11 @@ const app = express();
 // Register middleware
 registerMiddleware(app);
 
-// Creating the admin
+// Creating the admin v1
 createAdmin();
+
+// Initializing the db
+initializeDb();
 
 app.use('/api/v1', v1);
 app.use('/docs/v1', docs);

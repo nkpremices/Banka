@@ -24,20 +24,29 @@ const makeTransaction = async (Req, Res, operation, ModelFunction) => {
                 const tempAccount = await accountsModel
                     .findAccount(accountNumber);
 
+                // Verify if the account is active
+                const Verify = accountsModel
+                    .verifyAccountStatus(tempAccount, 'active');
+
                 const tempTransaction = await ModelFunction(tempAccount,
                     amount, tempUser);
 
-                // Sending back the required object
-                result.status = resStatus;
-                result.data = {
-                    transactionId: tempTransaction.id,
-                    accountNumber: tempAccount.accountNumber,
-                    amount,
-                    cashier: tempUser.id,
-                    transactionType: tempTransaction.type,
-                    accountBalance: tempTransaction.newBalance,
-                };
-                Res.status(resStatus).json(result);
+                if (Verify) {
+                    // Sending back the required object
+                    result.status = resStatus;
+                    result.data = {
+                        transactionId: tempTransaction.id,
+                        accountNumber: tempAccount.accountNumber,
+                        amount,
+                        cashier: tempUser.id,
+                        transactionType: tempTransaction.type,
+                        accountBalance: tempTransaction.newBalance,
+                    };
+                    Res.status(resStatus).json(result);
+                } else {
+                    error = `Only an active account can be  ${operation}ed`;
+                    sendError(403, result, Res, error);
+                }
             } catch (err) {
                 sendError(404, result, Res, `${err}`);
             }

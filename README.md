@@ -91,9 +91,11 @@ All the created API endpoints are documented and available [here](https://banka-
 ### 1. Installation steps
 
 * Clone the repo using
+
 ```git clone https://github.com/nkpremices/Banka.git```
 
-* Install dependecies by runing 
+* Install dependecies by runing
+
 ```npm install``` 
 
 * Create a ```.env``` file at the root of the project and fill out the variables you can find in ```.env.example``` file
