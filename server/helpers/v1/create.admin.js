@@ -3,10 +3,10 @@ import createHash from '../generate.hash';
 
 export default async () => {
     const admin = {
-        email: 'premices@gmail.com',
-        firstName: 'premices',
-        lastName: 'tuverer',
-        password: 'dddddd4U',
+        email: 'admin@gmail.com',
+        firstName: 'firstName',
+        lastName: 'lastName',
+        password: 'passWord1',
         type: 'staff',
         isAdmin: 'true',
     };
