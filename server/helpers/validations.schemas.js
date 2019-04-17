@@ -9,9 +9,8 @@ const password = string
 export default {
     createUserAccount: Joi.object().keys({
         email,
-        firstName: string.alphanum().min(3).max(30)
-            .required(),
-        lastName: string.alphanum().min(3)
+        firstName: string.regex(/^[A-Za-z]+$/).min(3).max(30).required(),
+        lastName: string.regex(/^[A-Za-z]+$/).min(3)
             .max(30)
             .required(),
         password,

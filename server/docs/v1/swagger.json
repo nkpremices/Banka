@@ -53,7 +53,7 @@
                     }
                 ],
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "User created successfully"
                     },
                     "400": {
@@ -136,7 +136,7 @@
                     }
                 ],
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Account created successfully"
                     },
                     "400": {
@@ -192,7 +192,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Account status successfully changed"
+                        "description": "Account status successfully updated"
                     },
                     "400": {
                         "description": "Invalid entries"

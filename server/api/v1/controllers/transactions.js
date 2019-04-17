@@ -34,6 +34,7 @@ const makeTransaction = async (Req, Res, operation, ModelFunction) => {
                 if (Verify) {
                     // Sending back the required object
                     result.status = resStatus;
+                    result.message = `Account ${operation}ed successfully`;
                     result.data = {
                         transactionId: tempTransaction.id,
                         accountNumber: tempAccount.accountNumber,

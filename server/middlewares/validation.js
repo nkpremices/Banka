@@ -35,15 +35,21 @@ export default (useJoiError = false, schema) => {
                             next();
                         } else {
                             // Build error object
-                            const regexpInEror = '/^(?=.*[a-z])(?=.*[A-Z])'
+                            const regexpInEror1 = '/^(?=.*[a-z])(?=.*[A-Z])'
                             + '(?=.*[0-9])(?=.{6,})/';
+                            const regexpInEror2 = '/^[A-Za-z]+$/';
                             let message = err.details[0].message
                                 .replace(/['"]/g, '');
-                            const errorWithoutRegexp = message
-                                .split(regexpInEror)[0];
-                            if (message !== errorWithoutRegexp) {
-                                message = `${errorWithoutRegexp}`
-                                + ' Numbers, uppercase and lowercase letters';
+                            const errorWithoutRegexp1 = message
+                                .split(regexpInEror1)[0];
+                            const errorWithoutRegexp2 = message
+                                .split(regexpInEror2)[0];
+                            if (message !== errorWithoutRegexp1) {
+                                message = `${errorWithoutRegexp1}`
+                                + 'Numbers, uppercase and lowercase letters';
+                            } else if (message !== errorWithoutRegexp2) {
+                                message = `${errorWithoutRegexp2}`
+                                + 'only letters without spaces are are allowed';
                             }
                             const errorObj = {
                                 status: 400,

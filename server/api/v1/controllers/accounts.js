@@ -39,6 +39,7 @@ export default {
 
                         // Sending back the required object
                         result.status = resStatus;
+                        result.message = 'Account created successfully';
                         result.data = {
                             accountNumber: tempAccount.accountNumber,
                             firstName: tempUser.firstName,
@@ -84,8 +85,6 @@ export default {
                     const tempAccount = await accountsModel
                         .findAccount(accountNumber);
 
-                    // Changing the status of the account
-                    // if it's different
                     // Veryfying the status first
                     const verify = accountsModel
                         .verifyAccountStatus(tempAccount, status);
@@ -101,6 +100,7 @@ export default {
                         accountsModel.changeAccountStatus(tempAccount, status);
                         // Sending back the required object
                         result.status = resStatus;
+                        result.message = 'Account updated successfully';
                         result.data = {
                             accountNumber: tempAccount.accountNumber,
                             status: tempAccount.status,
