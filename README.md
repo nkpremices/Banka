@@ -113,6 +113,14 @@ All the created API endpoints are documented and available [here](https://banka-
 
 ### 3. Notes
 * When the server starts, a script creates the first admin user. He will be the one to create staff users and other admin users as well. 
+* To login the admin, use these credentials: 
+
+```
+{
+	"email": "admin@gmail.com",
+    "password": "passWord1"
+}
+```
 * Every operation inside the banka app requires authentication (login)
 
 ### 3. Steps for running tests
