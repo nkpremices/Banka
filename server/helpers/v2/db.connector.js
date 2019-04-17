@@ -18,7 +18,6 @@ const querryDb = {
         return new Promise((resolve, reject) => {
             pool.query(text, params)
                 .then((res) => {
-                    // console.log(text);
                     resolve(res);
                 })
                 .catch((err) => {
