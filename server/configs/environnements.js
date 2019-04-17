@@ -14,9 +14,11 @@ const dbHost = process.env.DB_HOST;
 const dbName = process.env.DB_NAME;
 const dbPasswor = process.env.DB_PASSWORD;
 const dbPort = process.env.DB_PORT;
+const envName = process.env.NODE_ENV;
 
 const environments = {
     test: {
+        name: envName,
         app: {
             port: appPort,
         },
@@ -38,6 +40,7 @@ const environments = {
     },
 
     development: {
+        name: envName,
         app: {
             port: appPort,
         },
@@ -54,6 +57,7 @@ const environments = {
     },
 
     staging: {
+        name: envName,
         app: {
             port: appPort,
         },
@@ -71,7 +75,7 @@ const environments = {
 };
 
 // Determine which environment we are in
-const currentEnvironment = typeof (process.env.NODE_ENV) === 'string'
+const currentEnvironment = typeof (envName) === 'string'
     ? process.env.NODE_ENV.toLowerCase() : '';
 
 /* Check that the current environment is one the envs
