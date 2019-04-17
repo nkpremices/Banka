@@ -21,7 +21,11 @@ registerMiddleware(app);
 createAdmin();
 
 // Initializing the db v2
-initializeDb.createTables();
+if (environement.name === 'development') {
+    initializeDb.dropTables().then(() => {
+        initializeDb.createTables();
+    });
+} else initializeDb.createTables();
 
 
 // App for v1
