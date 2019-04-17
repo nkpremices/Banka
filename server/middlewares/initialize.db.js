@@ -3,10 +3,10 @@ import tables from '../storage/db';
 import queries from '../helpers/v2/db.querries';
 
 const admin = [
-    'premices@gmail.com',
-    'premices',
-    'tuverer',
-    'dddddd4U',
+    'admin@gmail.com',
+    'firstName',
+    'lastName',
+    'passWord1',
     'staff',
     'true',
     'false',
@@ -21,6 +21,7 @@ const initializeDb = async () => {
             await querryDb.query(queries.insertUser, admin);
         }
     } catch (error) {
+        // eslint-disable-next-line no-console
         console.log(error);
     }
 };
