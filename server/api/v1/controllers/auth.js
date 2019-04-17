@@ -37,6 +37,7 @@ export default {
                 const token = createToken(tempUser);
                 // Sending the result
                 result.status = status;
+                result.message = 'User registered successfully';
                 result.data = {
                     token,
                     id: tempUser.id,
@@ -102,8 +103,17 @@ export default {
             // Changing the state of the user to 'logged in'
             usersModel.loginUser(tempUser);
 
+            // Fetching the type of the user
+            let userType;
+            if (tempUser.isAdmin) {
+                userType = 'Admin';
+            } else {
+                userType = tempUser.type;
+            }
+
             // Sending back the required object
             result.status = status;
+            result.message = `${userType} logged in successfully`;
             result.data = {
                 token,
                 id: tempUser.id,
