@@ -1,0 +1,84 @@
+import usersModel from '../models/auth';
+import createHash from '../../../helpers/generate.hash';
+import createToken from '../../../helpers/generate.token';
+import sendError from '../../../helpers/send.error';
+
+export default {
+/**
+ * POST - /auth/signup Create a new user
+ */
+    signup: async (req, res) => {
+        // sign up part of the users controller
+        const result = {};
+        const status = 201;
+        let error;
+        const AdminToken = req.headers.token;
+
+        // getting the body of the request
+        const {
+            email,
+            firstName,
+            lastName,
+            password,
+            type,
+            isAdmin,
+        } = req.body;
+
+        // A function to querry the users model to save a user
+        const userRegister = async (Email, FirstName,
+            LastName, Password, Type, IsAdmin) => {
+            try {
+                const hashedPass = await createHash(Password);
+                // trying to insert a user
+                const tempUser = await usersModel.saveUser(Email,
+                    FirstName, LastName, hashedPass, Type, IsAdmin, false);
+
+                // Creating a token for the user
+                const token = createToken(tempUser);
+                // Sending the result
+                result.status = status;
+                result.message = 'User registered successfully';
+                result.data = {
+                    token,
+                    id: tempUser.id,
+                    firstName: tempUser.firstname,
+                    lastName: tempUser.lastname,
+                    email: tempUser.email,
+                };
+                res.status(status).json(result);
+            } catch (err) {
+                sendError(400, result, res, `${err}`);
+            }
+        };
+
+        // Verifying the availability of the given fields
+        const verify = await usersModel
+            .VerifyUser(email, type, isAdmin, AdminToken);
+        // See the availability of the provided email
+        if (!verify.foundEmail) {
+            // see if it's an admin request
+            if (verify.adminOrStaffReq) {
+                if (verify.foundToken) {
+                    if (verify.foundAdmin) {
+                        userRegister(email, firstName, lastName,
+                            password, type, isAdmin);
+                    } else {
+                        error = 'Invalid token provided'
+                        + ' or the admin is not logged in';
+                        sendError(400, result, res, error);
+                    }
+                } else {
+                    error = 'Only an admin can create admin or staff'
+                    + ' accounts.A token must be provided';
+                    sendError(400, result, res, error);
+                }
+            } else {
+                userRegister(email, firstName, lastName,
+                    password, 'client', false);
+            }
+        } else {
+            error = 'Email address already in use';
+            sendError(400, result, res, error);
+        }
+    },
+};
