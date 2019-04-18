@@ -141,7 +141,7 @@ describe('Signup v2', () => {// eslint-disable-line
         });
 });
 
-describe('Signin', () => {// eslint-disable-line
+describe('Signin v2', () => {// eslint-disable-line
     it('it should login an existing user with valid credentials', (done) => {// eslint-disable-line
         const user2 = {
             email: 'yvettekal@gmail.com',
