@@ -7,7 +7,7 @@ users(
   password VARCHAR(128) NOT NULL,
   type VARCHAR(128) NULL,
   isadmin BOOLEAN DEFAULT FALSE,
-  islogedIn BOOLEAN DEFAULT FALSE
+  isloggedin BOOLEAN DEFAULT FALSE
 );`;
 
 const tables = {
