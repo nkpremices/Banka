@@ -59,6 +59,7 @@ export default {
             // see if it's an admin request
             if (verify.adminOrStaffReq) {
                 if (verify.foundToken) {
+                    // console.log(verify);
                     if (verify.foundAdmin) {
                         userRegister(email, firstName, lastName,
                             password, type, isAdmin);
@@ -79,6 +80,64 @@ export default {
         } else {
             error = 'Email address already in use';
             sendError(400, result, res, error);
+        }
+    },
+    signin: async (req, res) => {
+        // Signin part of the users controller
+        const result = {};
+        let status = 200;
+        let error;
+        let tempUser;
+        const { email, password } = req.body;
+
+        // Trying to fetch the user from the storage
+        try {
+            tempUser = await usersModel.findUser(email, password);
+        } catch (err) {
+            res.status(status = 400).json(`${err}`);
+        }
+
+        // Send the required object if the user is found
+        if (tempUser.email) {
+            // creating a token
+            const token = createToken(tempUser);
+
+            // Changing the state of the user to 'logged in'
+            usersModel.loginUser(tempUser);
+
+            // Fetching the type of the user
+            let userType;
+            if (tempUser.isadmin) {
+                userType = 'Admin';
+            } else {
+                userType = tempUser.type;
+            }
+
+            // Sending back the required object
+            result.status = status;
+            result.message = `${userType} logged in successfully`;
+            result.data = {
+                token,
+                id: tempUser.id,
+                firstName: tempUser.firstname,
+                lastName: tempUser.lastname,
+                email: tempUser.email,
+            };
+            res.status(status).json(result);
+        } else {
+            // Send a custom message if the email is not found
+            if (!tempUser.foundEmail) {
+                error = 'A user with that email doesn\'t exist';
+                sendError(404, result, res, error);
+            }
+
+            // Send a custom message if the password is incorect
+            if (!tempUser.foundPassword) {
+                if (tempUser.foundEmail) {
+                    error = 'Incorect Password';
+                    sendError(400, result, res, error);
+                }
+            }
         }
     },
 };

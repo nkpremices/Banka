@@ -1,6 +1,7 @@
 import querryDb from '../../../helpers/v2/db.connector';
 import queries from '../../../helpers/v2/db.querries';
 import decodeJwt from '../../../helpers/decode.token';
+import comparePasswords from '../../../helpers/compare.passwords';
 
 
 // a function to save a user when requested
@@ -30,15 +31,16 @@ const saveUser = (email, firstName,
 
 // A fuction to validate the decoded data
 const verifyToken = token => new Promise(async (resolve, reject) => {
-    const userInfo = decodeJwt(token);
     let tempUser;
     try {
+        const userInfo = decodeJwt(token);
         if (userInfo) {
             tempUser = await querryDb
                 .query(queries
                     .findUserByEmailAndId(userInfo.id, userInfo.email));
+            resolve(tempUser.rows[0]);
         }
-        resolve(tempUser.rows[0]);
+        resolve(userInfo);
     } catch (error) {
         reject(new Error('Error on token verification'));
     }
@@ -70,8 +72,9 @@ const VerifyUser = (email, type, isAdmin,
             if (AdminToken) {
                 retObj.foundToken = true;
                 const admin = await verifyToken(AdminToken);
+                // console.log(admin);
                 // See if the provided token is an admin token
-                if (admin && admin.isAdmin && admin.isLoggedIn) {
+                if (admin && admin.isadmin && admin.isloggedin) {
                     retObj.foundAdmin = true;
                 }
             }
@@ -82,9 +85,56 @@ const VerifyUser = (email, type, isAdmin,
     }
 });
 
+// A function to find if a user is stored
+// eslint-disable-next-line no-unused-vars
+const findUser = (email, password) => new Promise(async (resolve, reject) => {
+    // An object to return
+    const retObj = {
+        foundEmail: false,
+        foundPassword: false,
+    };
+
+    try {
+        // finding a user by his email
+        const verify = await VerifyUser(email);
+        if (verify.tempUser) {
+            retObj.foundEmail = true;
+            let passwordVerification;
+            // verifying if the password matches
+            try {
+                passwordVerification = await comparePasswords(verify.tempUser,
+                    password);
+            } catch (error) {
+                reject(new Error('Error on password comparison'));
+            }
+            if (passwordVerification) resolve(verify.tempUser);
+            resolve(retObj);
+        }
+        resolve(retObj);
+    } catch (error) {
+        reject(new Error('Error on trying to find the user'));
+    }
+});
+
+// A function to login a user
+const loginUser = user => new Promise(async (resolve, reject) => {
+    // trying to find the email
+    try {
+        // eslint-disable-next-line no-unused-vars
+        const tempUser = await querryDb
+            .query(queries.setUserLogedIn(user.id));
+        // console.log(tempUser);
+        resolve(tempUser);
+    } catch (error) {
+        reject(new Error('Error on login the user'));
+    }
+});
+
 const usersModel = {
     saveUser,
     VerifyUser,
+    findUser,
+    loginUser,
 };
 
 export default usersModel;

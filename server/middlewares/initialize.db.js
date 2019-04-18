@@ -1,6 +1,7 @@
 import querryDb from '../helpers/v2/db.connector';
 import tables from '../storage/db';
 import queries from '../helpers/v2/db.querries';
+import createHash from '../helpers/generate.hash';
 
 const admin = [
     'admin@gmail.com',
@@ -18,6 +19,8 @@ const createTables = () => new Promise(async (resolve, reject) => {
         const tempUser = await querryDb
             .query(queries.findUserByEmail(admin[0]));
         if (!tempUser.rows[0]) {
+            const hashedPass = await createHash(admin[3]);
+            admin[3] = hashedPass;
             await querryDb.query(queries.insertUser, admin);
         }
         resolve();
