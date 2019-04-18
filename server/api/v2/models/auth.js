@@ -135,6 +135,7 @@ const usersModel = {
     VerifyUser,
     findUser,
     loginUser,
+    verifyToken,
 };
 
 export default usersModel;
