@@ -2,11 +2,11 @@ import express from 'express';
 import swaggerUI from 'swagger-ui-express';
 import swaggerDocument from '../../../docs/v2/swagger.json';
 
-const v1Docs = express();
+const v2Docs = express();
 
 
 // Swagger documentation
-v1Docs.use('', swaggerUI.serve);
-v1Docs.get('', swaggerUI.setup(swaggerDocument));
+v2Docs.use('', swaggerUI.serve);
+v2Docs.get('', swaggerUI.setup(swaggerDocument));
 
-export default v1Docs;
+export default v2Docs;

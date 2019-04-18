@@ -12,7 +12,7 @@ const admin = [
     'false',
 ];
 
-const initializeDb = async () => {
+const createTables = () => new Promise(async (resolve, reject) => {
     try {
         await querryDb.query(tables.usersTable);
         const tempUser = await querryDb
@@ -20,10 +20,27 @@ const initializeDb = async () => {
         if (!tempUser.rows[0]) {
             await querryDb.query(queries.insertUser, admin);
         }
+        resolve();
     } catch (error) {
         // eslint-disable-next-line no-console
-        console.log(error);
+        reject(error);
     }
+});
+
+const dropTables = () => new Promise(async (resolve, reject) => {
+    try {
+        await querryDb
+            .query(queries.dropTables);
+        resolve();
+    } catch (error) {
+        reject(error);
+    }
+});
+
+const initializeDb = {
+    createTables,
+    dropTables,
+
 };
 
 export default initializeDb;
