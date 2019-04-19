@@ -3,7 +3,8 @@
 
 // General queries
 const dropTables = `DROP TABLE IF EXISTS users CASCADE;
-    DROP TABLE IF EXISTS accounts CASCADE;`;
+    DROP TABLE IF EXISTS accounts CASCADE;
+    DROP TABLE IF EXISTS transactions CASCADE;`;
 
 // Auth queries
 const insertUser = `INSERT INTO users (email, firstname, lastname,
@@ -41,6 +42,16 @@ const setAccountStatus = (status, accountNumber) => `UPDATE accounts
 const deleteAccountByNumber = number => `DELETE FROM accounts
     WHERE accountnumber = '${number}'`;
 
+const setAccountBalance = (balance, accountNumber) => `UPDATE accounts 
+    SET balance =  '${balance}' 
+    WHERE accountnumber = ${accountNumber} returning *;`;
+
+// Transactions queries
+const insertTransaction = `INSERT INTO transactions (createdon, type, 
+    accountnumber, cashier, amount, oldbalance, newbalance)
+    VALUES($1, $2, $3, $4, $5, $6, $7) returning *`;
+
+
 const queries = {
     insertUser,
     findUserByEmail,
@@ -53,6 +64,8 @@ const queries = {
     findAccountByNumberAndStatus,
     setAccountStatus,
     deleteAccountByNumber,
+    insertTransaction,
+    setAccountBalance,
 };
 
 export default queries;
