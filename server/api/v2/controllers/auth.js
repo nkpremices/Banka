@@ -47,7 +47,7 @@ export default {
                 };
                 res.status(status).json(result);
             } catch (err) {
-                sendError(400, result, res, `${err}`);
+                sendError(400, result, res, `${err}`.replace('Error', ''));
             }
         };
 
@@ -94,7 +94,7 @@ export default {
         try {
             tempUser = await usersModel.findUser(email, password);
         } catch (err) {
-            res.status(status = 400).json(`${err}`);
+            res.status(status = 400).json(`${err}`.replace('Error', ''));
         }
 
         // Send the required object if the user is found
