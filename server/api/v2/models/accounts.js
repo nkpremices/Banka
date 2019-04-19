@@ -52,9 +52,9 @@ const verifyAccount = {
 };
 
 //  a function to activate/deactivate an account when requested
-const findAccount = accountNumber => new Promise((resolve, reject) => {
+const findAccount = accountNumber => new Promise(async (resolve, reject) => {
     // creating a temp account
-    const tempAccount = verifyAccount.number(accountNumber);
+    const tempAccount = await verifyAccount.number(accountNumber);
     if (tempAccount) resolve(tempAccount);
     else {
         const errorMsg = 'An account with the provided '
@@ -88,12 +88,34 @@ const changeAccountStatus = (account,
     }
 });
 
+//  a function to delete an account when requested
+const deleteAccount = accountNumber => new Promise(async (resolve, reject) => {
+    // creating a temp account
+    const tempAccount = await verifyAccount.number(accountNumber);
+    if (tempAccount) {
+        if (tempAccount.balance === 0) {
+            await querryDb
+                .query(queries.deleteAccountByNumber(accountNumber));
+            resolve(tempAccount);
+        } else {
+            const errorMsg = 'The account has a non zero balance: '
+            + `${tempAccount.balance}. Please, debit it first`;
+            reject(new Error(errorMsg));
+        }
+    } else {
+        const errorMsg = 'An account with the provided '
+        + 'number was not found';
+        reject(new Error(errorMsg));
+    }
+});
+
 const accountsModel = {
     saveAccount,
     verifyAccount,
     findAccount,
     verifyAccountStatus,
     changeAccountStatus,
+    deleteAccount,
 };
 
 export default accountsModel;
