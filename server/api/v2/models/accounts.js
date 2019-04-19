@@ -19,8 +19,15 @@ const saveAccount = (accountName, currency,
         currency,
         0,
     ];
-    const tempAccount = await querryDb.query(queries.insertAccount, details);
-    resolve(tempAccount.rows[0]);
+
+    // Saving the account
+    try {
+        const tempAccount = await querryDb
+            .query(queries.insertAccount, details);
+        resolve(tempAccount.rows[0]);
+    } catch (error) {
+        reject(new Error('Error on account saving'));
+    }
 });
 
 const verifyAccount = {
@@ -28,7 +35,15 @@ const verifyAccount = {
         try {
             const tempAccount = await querryDb
                 .query(queries.findAccountByNameAndOwner(name, owner));
-            // console.log(tempAccount.rows[0]);
+            resolve(tempAccount.rows[0]);
+        } catch (error) {
+            reject(new Error('Error on account verification'));
+        }
+    }),
+    number: number => new Promise(async (resolve, reject) => {
+        try {
+            const tempAccount = await querryDb
+                .query(queries.findAccountByNumber(number));
             resolve(tempAccount.rows[0]);
         } catch (error) {
             reject(new Error('Error on account verification'));
@@ -36,10 +51,49 @@ const verifyAccount = {
     }),
 };
 
+//  a function to activate/deactivate an account when requested
+const findAccount = accountNumber => new Promise((resolve, reject) => {
+    // creating a temp account
+    const tempAccount = verifyAccount.number(accountNumber);
+    if (tempAccount) resolve(tempAccount);
+    else {
+        const errorMsg = 'An account with the provided '
+        + 'number was not found';
+        reject(new Error(errorMsg));
+    }
+});
+
+// A function to verify the account status
+const verifyAccountStatus = (account,
+    status) => new Promise(async (resolve, reject) => {
+    try {
+        const tempAccount = await querryDb
+            .query(queries
+                .findAccountByNumberAndStatus(account.accountnumber, status));
+        resolve(tempAccount.rows[0]);
+    } catch (error) {
+        reject(new Error('Error on account status verification'));
+    }
+});
+
+// A function to change an accounts status
+const changeAccountStatus = (account,
+    status) => new Promise(async (resolve, reject) => {
+    try {
+        const tempAccount = await querryDb
+            .query(queries.setAccountStatus(status, account.accountnumber));
+        resolve(tempAccount.rows[0]);
+    } catch (error) {
+        reject(new Error('Error on trying to change the status'));
+    }
+});
 
 const accountsModel = {
     saveAccount,
     verifyAccount,
+    findAccount,
+    verifyAccountStatus,
+    changeAccountStatus,
 };
 
 export default accountsModel;
