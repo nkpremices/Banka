@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../index';
+import environment from '../../configs/environnements';
 
 const should = chai.should();// eslint-disable-line
 
@@ -12,6 +13,8 @@ const accountCreationTemp = {
     type: 'current',
     status: 'draft',
 };
+
+let AccountNumber;
 
 describe('Accounts v2', () => {// eslint-disable-line
     let userToken;
@@ -67,6 +70,41 @@ describe('Accounts v2', () => {// eslint-disable-line
                 res.body.data.should.have.property('email', 'nzanzu@gmail.com');
                 res.body.data.should.have.property('type', 'current');
                 res.body.data.should.have.property('openingBalance', 0);
+                AccountNumber = res.body.data.accountNumber;
+                done();
+            });
+    });
+    it('It should login the admin', (done) => {// eslint-disable-line
+        const admin = {
+            email: `${environment.admin.email}`,
+            password: `${environment.admin.password}`,
+        };
+        chai
+            .request(app)
+            .post('/api/v2/auth/signin')
+            .send(admin)
+            // eslint-disable-next-line no-unused-vars
+            .end((err, res) => {
+                res.should.have.status(200);
+                done();
+            });
+    });
+
+    it('it should change the status of the created account', (done) => {// eslint-disable-line
+        const accountStatusObj = {
+            status: 'active',
+        };
+
+        chai
+            .request(app)
+            .patch(`/api/v2/accounts/${AccountNumber}`)
+            .set('token', `${environment.admin.token}`)
+            .send(accountStatusObj)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.a('object');
+                res.body.data.should.have
+                    .property('status', accountStatusObj.status);
                 done();
             });
     });
