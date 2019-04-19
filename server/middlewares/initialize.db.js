@@ -17,6 +17,7 @@ const createTables = () => new Promise(async (resolve, reject) => {
     try {
         await querryDb.query(tables.usersTable);
         await querryDb.query(tables.accountsTable);
+        await querryDb.query(tables.transactionsTable);
         const tempUser = await querryDb
             .query(queries.findUserByEmail(admin[0]));
         if (!tempUser.rows[0]) {
