@@ -11,7 +11,7 @@ const accountCreationTemp = {
     accountName: 'scolarship',
     currency: 'usd',
     type: 'current',
-    status: 'active',
+    status: 'draft',
 };
 
 let AccountNumber;
@@ -93,7 +93,7 @@ describe('Accounts', () => {// eslint-disable-line
 
     it('it should change the status of the created account', (done) => {// eslint-disable-line
         const accountStatusObj = {
-            status: 'draft',
+            status: 'active',
         };
 
         chai
