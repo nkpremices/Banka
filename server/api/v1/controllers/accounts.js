@@ -50,7 +50,8 @@ export default {
                         };
                         res.status(resStatus).json(result);
                     } catch (err) {
-                        sendError(400, result, res, `${err}`);
+                        sendError(400, result, res, `${err}`
+                            .replace('Error', ''));
                     }
                 } else {
                     error = 'Account name already in use';
@@ -108,7 +109,7 @@ export default {
                         res.status(resStatus).json(result);
                     }
                 } catch (err) {
-                    sendError(404, result, res, `${err}`);
+                    sendError(404, result, res, `${err}`.replace('Error', ''));
                 }
             } else {
                 error = 'Only a logged in admin/staff can activate/deactivate '
@@ -153,7 +154,7 @@ export default {
                     };
                     res.status(resStatus).json(result);
                 } catch (err) {
-                    sendError(404, result, res, `${err}`);
+                    sendError(404, result, res, `${err}`.replace('Error', ''));
                 }
             } else {
                 error = 'Only a logged in admin/staf can delete '
