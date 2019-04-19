@@ -120,10 +120,8 @@ const findUser = (email, password) => new Promise(async (resolve, reject) => {
 const loginUser = user => new Promise(async (resolve, reject) => {
     // trying to find the email
     try {
-        // eslint-disable-next-line no-unused-vars
         const tempUser = await querryDb
             .query(queries.setUserLogedIn(user.id));
-        // console.log(tempUser);
         resolve(tempUser);
     } catch (error) {
         reject(new Error('Error on login the user'));
