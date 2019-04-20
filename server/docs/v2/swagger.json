@@ -220,6 +220,43 @@
                 }
             }
         },
+        "/api/v2/accounts/?status=dormant": {
+            "get": {
+                "tags": [
+                    "Bank accounts"
+                ],
+                "summary": "Get all dormant Bank accounts records",
+                "description": "Provide the admin/staff token in the header",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "The staff/admin token ",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succes"
+                    },
+                    "400": {
+                        "description": "There are no accounts"
+                    },
+                    "default": {
+                        "description": "Sorry, error occured"
+                    }
+                }
+            }
+        },
         "/api/v2/accounts/{accountNumber}": {
             "patch": {
                 "tags": [
