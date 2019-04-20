@@ -136,6 +136,17 @@ const getAllAccounts = () => new Promise(async (resolve, reject) => {
     }
 });
 
+// A function to get all active accounts
+const getAccountsByStatus = status => new Promise(async (resolve, reject) => {
+    try {
+        const Accounts = await querryDb
+            .query(queries.getAccountsBySttatus(status));
+        resolve(Accounts.rows);
+    } catch (error) {
+        reject(new Error('Error while trying to fetch all accounts'));
+    }
+});
+
 const accountsModel = {
     saveAccount,
     verifyAccount,
@@ -145,6 +156,7 @@ const accountsModel = {
     deleteAccount,
     getSpecifiUsersAccounts,
     getAllAccounts,
+    getAccountsByStatus,
 };
 
 export default accountsModel;
