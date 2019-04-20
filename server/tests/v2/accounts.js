@@ -129,7 +129,18 @@ describe('Accounts v2', () => {// eslint-disable-line
                 res.should.have.status(200);
                 res.body.data.should.be.an('object');
                 res.body.data.should.have
-                    .property('accountNumber', AccountNumber);
+                    .property('accountnumber', AccountNumber);
+                done();
+            });
+    });
+    it('it should get all bank accounts', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .get('/api/v2/accounts/')
+            .set('token', `${environment.admin.token}`)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.an('array');
                 done();
             });
     });
