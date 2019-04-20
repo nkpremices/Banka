@@ -314,16 +314,23 @@ export default {
         // Getting the token from the header
         // Verifying the token
         const tempSuperUser = await usersModel.verifyToken(req.headers.token);
-        // console.log(tempUser);
+        // Getting the queries params
+        const { status } = req.query;
+
         if (tempSuperUser) {
             if ((tempSuperUser.isadmin || tempSuperUser.type === 'staff')
             && tempSuperUser.isloggedin) {
                 // trying to save an account
                 try {
                     // Accessing his accounts if he exists
-
-                    const allAccounts = await accountsModel
-                        .getAllAccounts();
+                    let allAccounts;
+                    if (status) {
+                        allAccounts = await accountsModel
+                            .getAccountsByStatus(status);
+                    } else {
+                        allAccounts = await accountsModel
+                            .getAllAccounts();
+                    }
 
                     if (allAccounts.length === 0) {
                         error = 'There are no bank accounts for now';
