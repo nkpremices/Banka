@@ -13,6 +13,11 @@ const accountCreationTemp = {
     type: 'current',
     status: 'draft',
 };
+// login and get test user token
+const user1 = {
+    email: 'nzanzu@gmail.com',
+    password: 'dddddd4U',
+};
 
 let AccountNumber;
 
@@ -39,12 +44,6 @@ describe('Accounts v2', () => {// eslint-disable-line
 
     it('it should login test user to create an account',// eslint-disable-line
         (done) => {
-            // login and get test user token
-            const user1 = {
-                email: 'nzanzu@gmail.com',
-                password: 'dddddd4U',
-            };
-
             chai
                 .request(app)
                 .post('/api/v2/auth/signin')
@@ -105,6 +104,19 @@ describe('Accounts v2', () => {// eslint-disable-line
                 res.body.data.should.be.a('object');
                 res.body.data.should.have
                     .property('status', accountStatusObj.status);
+                done();
+            });
+    });
+    it('it should get all accounts owned by a specific user', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .get(`/api/v2/user/${user1.email}/accounts`)
+            .set('token', `${environment.admin.token}`)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.an('array');
+                res.body.data.should.have
+                    .property('length', 1);
                 done();
             });
     });
