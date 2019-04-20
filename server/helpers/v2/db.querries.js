@@ -28,11 +28,15 @@ const findAccountByNameAndOwner = (accountname,
     owner) => `SELECT * FROM accounts WHERE 
     (accountname = '${accountname}' AND owner = '${owner}')`;
 
-const findAccountByNumber = accountNumber => `SELECT * FROM 
-    accounts WHERE accountnumber = '${accountNumber}'`;
+const findAccountByNumber = accountNumber => `SELECT createdon, 
+     accountnumber, users.email as ownerEmail,
+    accounts.type, status, balance FROM accounts  
+    inner join users on users.id = accounts.owner
+    WHERE accountnumber = '${accountNumber}'; `;
 
-const findAccountsByOwner = owner => `SELECT * FROM 
-    accounts WHERE owner = '${owner}'`;
+const findAccountsByOwner = owner => `SELECT createdon, 
+     accountnumber, accounts.type, status, balance FROM accounts 
+     WHERE owner = '${owner}'`;
 
 const findAccountByNumberAndStatus = (accountnumber,
     status) => `SELECT * FROM accounts WHERE 
@@ -40,7 +44,7 @@ const findAccountByNumberAndStatus = (accountnumber,
 
 const setAccountStatus = (status, accountNumber) => `UPDATE accounts 
     SET status =  '${status}' 
-    WHERE accountnumber = ${accountNumber} returning *;`;
+    WHERE accountnumber = ${accountNumber} returning accountnumber, status;`;
 
 const deleteAccountByNumber = number => `DELETE FROM accounts
     WHERE accountnumber = '${number}'`;
@@ -48,6 +52,10 @@ const deleteAccountByNumber = number => `DELETE FROM accounts
 const setAccountBalance = (balance, accountNumber) => `UPDATE accounts 
     SET balance =  '${balance}' 
     WHERE accountnumber = ${accountNumber} returning *;`;
+const getAllAccounts = `SELECT createdon, 
+    accountnumber, users.email as ownerEmail,
+    accounts.type, status, balance FROM accounts 
+    inner join users on users.id = accounts.owner;`;
 
 // Transactions queries
 const insertTransaction = `INSERT INTO transactions (createdon, type, 
@@ -77,6 +85,7 @@ const queries = {
     findTransactionsByAcNumber,
     findTransactionById,
     findAccountsByOwner,
+    getAllAccounts,
 };
 
 export default queries;
