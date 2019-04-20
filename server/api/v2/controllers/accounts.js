@@ -232,8 +232,7 @@ export default {
         const tempSuperUser = await usersModel.verifyToken(req.headers.token);
         // console.log(tempUser);
         if (tempSuperUser) {
-            if ((tempSuperUser.isadmin || tempSuperUser.type === 'staff')
-            && tempSuperUser.isloggedin) {
+            if (tempSuperUser.isloggedin) {
                 // trying to save an account
                 try {
                     // Trying to verify the email
@@ -273,6 +272,51 @@ export default {
         } else {
             error = 'Invalid token provided or the '
             + 'admin/staff is not signed up';
+            sendError(403, result, res, error);
+        }
+    },
+    getSpecificAccount: async (req, res) => {
+        // account deletion part of the users controller
+        const result = {};
+        const resStatus = 200;
+        let error;
+
+        // getting the the account id
+        const accountNumber = parseInt(req.params.accountNumber, 10);
+        // console.log(accountNumber);
+        // Getting the token from the header
+        // Verifying the token
+        const tempUser = await usersModel.verifyToken(req.headers.token);
+        // console.log(tempUser);
+        if (tempUser) {
+            if (tempUser.isloggedin) {
+                // trying to save an account
+                try {
+                    const tempAccount = await accountsModel
+                        .findAccount(accountNumber);
+
+                    // Sending back the required object
+                    result.status = resStatus;
+                    result.data = {
+                        createdOn: tempAccount.createdon,
+                        accountNumber: tempAccount.accountnumber,
+                        owneremail: tempUser.email,
+                        type: tempAccount.type,
+                        status: tempAccount.status,
+                        balance: tempAccount.balance,
+                    };
+                    res.status(resStatus).json(result);
+                } catch (err) {
+                    sendError(404, result, res, `${err}`.replace('Error', ''));
+                }
+            } else {
+                error = 'Only a logged in user can get a specific account\'s '
+                    + 'details. Login the user please';
+                sendError(403, result, res, error);
+            }
+        } else {
+            error = 'Invalid token provided or the '
+            + 'user is not signed up';
             sendError(403, result, res, error);
         }
     },
