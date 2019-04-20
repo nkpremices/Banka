@@ -6,6 +6,7 @@ const transactionsRouter = Router();
 const {
     creditAccount,
     debitAccount,
+    getSpecificTransaction,
 } = transactionsController;
 
 transactionsRouter
@@ -14,5 +15,7 @@ transactionsRouter
 transactionsRouter
     .post('/:accountNumber/debit',
         validate(true, 'creditDebitAccount'), debitAccount);
+transactionsRouter
+    .get('/:transactionId', getSpecificTransaction);
 
 export default transactionsRouter;
