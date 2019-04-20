@@ -71,4 +71,46 @@ export default {
         await makeTransaction(req, res, 'debit', transactionsModel
             .saveTransaction.debit);
     },
+    getSpecificTransaction: async (req, res) => {
+        // account activation part of the users controller
+        const result = {};
+        const resStatus = 200;
+        let error;
+
+        const transactionId = parseInt(req.params.transactionId, 10);
+        // Getting the token from the header
+        // Verifying the token
+        const tempUser = await usersModel.verifyToken(req.headers.token);
+        if (tempUser) {
+            if (tempUser.isloggedin) {
+                // trying to save an account
+                try {
+                    // Verify if the account exists
+                    // if not, an exception will be catched up
+                    const transaction = await transactionsModel
+                        .findTransactions.specific(transactionId);
+
+
+                    if (transaction.length === 0) {
+                        error = 'No transactions found for this ID ';
+                        sendError(404, result, res, error);
+                    } else {
+                        // Sending back the required object
+                        result.status = resStatus;
+                        result.data = transaction;
+                        res.status(resStatus).json(result);
+                    }
+                } catch (err) {
+                    sendError(404, result, res, `${err}`.replace('Error', ''));
+                }
+            } else {
+                error = 'Only a logged in user can  get an transaction '
+                    + ' record details';
+                sendError(403, result, res, error);
+            }
+        } else {
+            error = 'Invalid token provided or the user is not signed up';
+            sendError(403, result, res, error);
+        }
+    },
 };
