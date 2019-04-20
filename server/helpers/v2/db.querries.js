@@ -52,10 +52,17 @@ const deleteAccountByNumber = number => `DELETE FROM accounts
 const setAccountBalance = (balance, accountNumber) => `UPDATE accounts 
     SET balance =  '${balance}' 
     WHERE accountnumber = ${accountNumber} returning *;`;
+
 const getAllAccounts = `SELECT createdon, 
     accountnumber, users.email as ownerEmail,
     accounts.type, status, balance FROM accounts 
     inner join users on users.id = accounts.owner;`;
+
+const getAccountsBySttatus = status => `SELECT createdon, 
+    accountnumber, users.email as ownerEmail,
+    accounts.type, status, balance FROM accounts  
+    inner join users on users.id = accounts.owner
+    WHERE status = '${status}';`;
 
 // Transactions queries
 const insertTransaction = `INSERT INTO transactions (createdon, type, 
@@ -86,6 +93,7 @@ const queries = {
     findTransactionById,
     findAccountsByOwner,
     getAllAccounts,
+    getAccountsBySttatus,
 };
 
 export default queries;
