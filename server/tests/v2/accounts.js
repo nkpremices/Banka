@@ -120,6 +120,19 @@ describe('Accounts v2', () => {// eslint-disable-line
                 done();
             });
     });
+    it('it should get a specific bank account', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .get(`/api/v2/accounts/${AccountNumber}`)
+            .set('token', `${userToken}`)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.an('object');
+                res.body.data.should.have
+                    .property('accountNumber', AccountNumber);
+                done();
+            });
+    });
 
     it('it should delete an account', (done) => {// eslint-disable-line
         chai
