@@ -18,7 +18,7 @@ const accountCreationTemp1 = {
     accountName: 'fellowship1',
     currency: 'usd',
     type: 'current',
-    status: 'active',
+    status: 'dormant',
 };
 // login and get test user token
 const user1 = {
@@ -178,7 +178,20 @@ describe('Accounts v2', () => {// eslint-disable-line
                 res.should.have.status(200);
                 res.body.data.should.be.an('array');
                 res.body.data.should.have
-                    .property('length', 3);
+                    .property('length', 2);
+                done();
+            });
+    });
+    it('it should get all active bank accounts', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .get('/api/v2/accounts/?status=dormant')
+            .set('token', `${environment.admin.token}`)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.an('array');
+                res.body.data.should.have
+                    .property('length', 1);
                 done();
             });
     });
