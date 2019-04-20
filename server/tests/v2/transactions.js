@@ -172,7 +172,7 @@ describe('Transactions v2', () => {// eslint-disable-line
                 done();
             });
     });
-    it('it should get an account’s transaction history​', (done) => {// eslint-disable-line
+    it('it should get a specific transaction', (done) => {// eslint-disable-line
         chai
             .request(app)
             .get('/api/v2/transactions/2')
