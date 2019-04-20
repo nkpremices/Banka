@@ -186,14 +186,24 @@ export default {
             if (tempUser.isloggedin) {
                 // trying to save an account
                 try {
-                    // deleting the account
+                    // Finding the account
+                    // eslint-disable-next-line no-unused-vars
+                    const tempAccount = await accountsModel
+                        .findAccount(accountNumber);
+
+                    // Getting the transactions
                     const transactions = await transactionsModel
                         .findTransactions.all(accountNumber);
 
-                    // Sending back the required object
-                    result.status = resStatus;
-                    result.data = transactions;
-                    res.status(resStatus).json(result);
+                    if (transactions.length === 0) {
+                        error = 'No transactions found for this account ';
+                        sendError(403, result, res, error);
+                    } else {
+                        // Sending back the required object
+                        result.status = resStatus;
+                        result.data = transactions;
+                        res.status(resStatus).json(result);
+                    }
                 } catch (err) {
                     sendError(404, result, res, `${err}`.replace('Error', ''));
                 }
