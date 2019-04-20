@@ -53,6 +53,8 @@ const insertTransaction = `INSERT INTO transactions (createdon, type,
 
 const findTransactionsByAcNumber = accountNumber => `SELECT * FROM transactions 
     WHERE accountnumber = '${accountNumber}'`;
+const findTransactionById = transactionId => `SELECT * FROM transactions 
+    WHERE id = '${transactionId}'`;
 
 
 const queries = {
@@ -70,6 +72,7 @@ const queries = {
     insertTransaction,
     setAccountBalance,
     findTransactionsByAcNumber,
+    findTransactionById,
 };
 
 export default queries;
