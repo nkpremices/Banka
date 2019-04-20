@@ -74,9 +74,22 @@ const saveTransaction = {
     }),
 };
 
+// Functions to find transactions
+const findTransactions = {
+    all: async accountNumber => new Promise(async (resolve, reject) => {
+        try {
+            const transactions = await querryDb
+                .query(queries.findTransactionsByAcNumber(accountNumber));
+            resolve(transactions.rows);
+        } catch (error) {
+            reject(error);
+        }
+    }),
+};
 
 const transactionsModel = {
     saveTransaction,
+    findTransactions,
 };
 
 export default transactionsModel;
