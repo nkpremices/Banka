@@ -7,7 +7,8 @@ const {
     createAccount,
     activateDeactivateAccount,
     deleteAccount,
-    viewTransactions,
+    getTransactions,
+    getSpecificUserAccounts,
 } = accountsController;
 
 accountsRouter
@@ -18,6 +19,8 @@ accountsRouter
 accountsRouter
     .delete('/:accountNumber', deleteAccount);
 accountsRouter
-    .get('/:accountNumber/transactions', viewTransactions);
+    .get('/:accountNumber/transactions', getTransactions);
+accountsRouter
+    .get('/:userEmail/accounts', getSpecificUserAccounts);
 
 export default accountsRouter;
