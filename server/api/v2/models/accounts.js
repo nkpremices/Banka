@@ -46,7 +46,7 @@ const verifyAccount = {
                 .query(queries.findAccountByNumber(number));
             resolve(tempAccount.rows[0]);
         } catch (error) {
-            reject(new Error('Error on account verification'));
+            reject(error);
         }
     }),
 };
@@ -54,12 +54,16 @@ const verifyAccount = {
 //  a function to activate/deactivate an account when requested
 const findAccount = accountNumber => new Promise(async (resolve, reject) => {
     // creating a temp account
-    const tempAccount = await verifyAccount.number(accountNumber);
-    if (tempAccount) resolve(tempAccount);
-    else {
-        const errorMsg = 'An account with the provided '
-        + 'number was not found';
-        reject(new Error(errorMsg));
+    try {
+        const tempAccount = await verifyAccount.number(accountNumber);
+        if (tempAccount) resolve(tempAccount);
+        else {
+            const errorMsg = 'An account with the provided '
+            + 'number was not found';
+            reject(new Error(errorMsg));
+        }
+    } catch (error) {
+        reject(error);
     }
 });
 
@@ -117,7 +121,18 @@ const getSpecifiUsersAccounts = owner => new Promise(async (resolve,
             .query(queries.findAccountsByOwner(owner));
         resolve(clientAccounts.rows);
     } catch (error) {
-        reject(new Error('Error on trying to get client accounts'));
+        reject(error);
+    }
+});
+
+// A function to fetch all accounts records
+const getAllAccounts = () => new Promise(async (resolve, reject) => {
+    try {
+        const Accounts = await querryDb
+            .query(queries.getAllAccounts);
+        resolve(Accounts.rows);
+    } catch (error) {
+        reject(new Error('Error while trying to fetch all accounts'));
     }
 });
 
@@ -129,6 +144,7 @@ const accountsModel = {
     changeAccountStatus,
     deleteAccount,
     getSpecifiUsersAccounts,
+    getAllAccounts,
 };
 
 export default accountsModel;
