@@ -7,6 +7,7 @@ const {
     createAccount,
     activateDeactivateAccount,
     deleteAccount,
+    viewTransactions,
 } = accountsController;
 
 accountsRouter
@@ -16,5 +17,7 @@ accountsRouter
         activateDeactivateAccount);
 accountsRouter
     .delete('/:accountNumber', deleteAccount);
+accountsRouter
+    .get('/:accountNumber/transactions', viewTransactions);
 
 export default accountsRouter;
