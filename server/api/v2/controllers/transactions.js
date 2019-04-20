@@ -104,7 +104,7 @@ export default {
                     sendError(404, result, res, `${err}`.replace('Error', ''));
                 }
             } else {
-                error = 'Only a logged in user can  get an transaction '
+                error = 'Only a logged in user can  get a transaction '
                     + ' record details';
                 sendError(403, result, res, error);
             }
