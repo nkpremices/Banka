@@ -51,6 +51,9 @@ const insertTransaction = `INSERT INTO transactions (createdon, type,
     accountnumber, cashier, amount, oldbalance, newbalance)
     VALUES($1, $2, $3, $4, $5, $6, $7) returning *`;
 
+const findTransactionsByAcNumber = accountNumber => `SELECT * FROM transactions 
+    WHERE accountnumber = '${accountNumber}'`;
+
 
 const queries = {
     insertUser,
@@ -66,6 +69,7 @@ const queries = {
     deleteAccountByNumber,
     insertTransaction,
     setAccountBalance,
+    findTransactionsByAcNumber,
 };
 
 export default queries;
