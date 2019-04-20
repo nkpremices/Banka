@@ -293,6 +293,52 @@
                 }
             }
         },
+        "/api/v2/user/{userEmail}/accounts": {
+            "get": {
+                "tags": [
+                    "Bank accounts"
+                ],
+                "summary": "Get all accounts owned by a specific user",
+                "description": " And provide a staff/admin token in the header",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userEmail",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "The staff/admin token ",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succes. Transactions found"
+                    },
+                    "400": {
+                        "description": "No transaction found"
+                    },
+                    "default": {
+                        "description": "Sorry, error occured"
+                    }
+                }
+            }
+        },
         "/api/v2/transactions/{accountNumber}/debit": {
             "post": {
                 "tags": [
@@ -390,7 +436,7 @@
                 "tags": [
                     "Transactions"
                 ],
-                "summary": "Get an account’s transaction history​.",
+                "summary": "Get a specific transaction details.",
                 "description": " And provide a user token in the header",
                 "produces": [
                     "application/json"
