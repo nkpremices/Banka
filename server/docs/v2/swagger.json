@@ -296,7 +296,7 @@
         "/api/v2/transactions/{accountNumber}/debit": {
             "post": {
                 "tags": [
-                    "Bank accounts"
+                    "Transactions"
                 ],
                 "summary": "Debit a bank account",
                 "description": "Specify the amount in the body of the request and provide the staff token in the header",
@@ -342,7 +342,7 @@
         "/api/v2/transactions/{accountNumber}/credit": {
             "post": {
                 "tags": [
-                    "Bank accounts"
+                    "Transactions"
                 ],
                 "summary": "Credit a bank account",
                 "description": "Specify amount in the body of the request and provide the staff token in the header",
@@ -378,6 +378,52 @@
                     },
                     "400": {
                         "description": "The account you are trying to credit doesn't exist"
+                    },
+                    "default": {
+                        "description": "Sorry, error occured"
+                    }
+                }
+            }
+        },
+        "/api/v2/transactions/{transactionId}": {
+            "get": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Get an account’s transaction history​.",
+                "description": " And provide a user token in the header",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "transactionId",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "The user token ",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succes. Transactions found"
+                    },
+                    "400": {
+                        "description": "No transaction found"
                     },
                     "default": {
                         "description": "Sorry, error occured"
