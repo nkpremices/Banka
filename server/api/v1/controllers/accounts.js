@@ -94,7 +94,7 @@ export default {
                     if (verify) {
                         error = 'The provided status is the '
                         + 'same as the current';
-                        sendError(204, result, res, error);
+                        sendError(205, result, res, error);
                     } else {
                         // change the account status
                         accountsModel.changeAccountStatus(tempAccount, status);

@@ -16,6 +16,17 @@ const findAccountByNameAndOwner = (accountname,
     owner) => `SELECT * FROM accounts WHERE 
     (accountname = '${accountname}' AND owner = '${owner}')`;
 
+const findAccountByNumber = accountNumber => `SELECT * FROM 
+    accounts WHERE accountnumber = '${accountNumber}'`;
+
+const findAccountByNumberAndStatus = (accountnumber,
+    status) => `SELECT * FROM accounts WHERE 
+    (accountnumber = '${accountnumber}' AND status = '${status}')`;
+
+const setAccountStatus = (status, accountNumber) => `UPDATE accounts 
+    SET status =  '${status}' 
+    WHERE accountnumber = ${accountNumber} returning *;`;
+
 const dropTables = `DROP TABLE IF EXISTS users CASCADE;
     DROP TABLE IF EXISTS accounts CASCADE;`;
 
@@ -30,6 +41,9 @@ const queries = {
     setUserLogedIn,
     insertAccount,
     findAccountByNameAndOwner,
+    findAccountByNumber,
+    findAccountByNumberAndStatus,
+    setAccountStatus,
 };
 
 export default queries;
