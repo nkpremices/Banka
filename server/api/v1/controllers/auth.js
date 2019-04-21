@@ -135,7 +135,7 @@ export default {
                 if (!tempUser.foundPassword) {
                     if (tempUser.foundEmail) {
                         error = 'Incorect Password';
-                        sendError(400, result, res, error);
+                        sendError(404, result, res, error);
                     }
                 }
             }
