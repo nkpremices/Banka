@@ -197,7 +197,7 @@ export default {
 
                     if (transactions.length === 0) {
                         error = 'No transactions found for this account ';
-                        sendError(403, result, res, error);
+                        sendError(404, result, res, error);
                     } else {
                         // Sending back the required object
                         result.status = resStatus;

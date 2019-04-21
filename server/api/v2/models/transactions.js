@@ -82,7 +82,18 @@ const findTransactions = {
                 .query(queries.findTransactionsByAcNumber(accountNumber));
             resolve(transactions.rows);
         } catch (error) {
-            reject(error);
+            const err = 'Error on trying to find the transaction by Number';
+            reject(new Error(err));
+        }
+    }),
+    specific: async transactionId => new Promise(async (resolve, reject) => {
+        try {
+            const transactions = await querryDb
+                .query(queries.findTransactionById(transactionId));
+            resolve(transactions.rows);
+        } catch (error) {
+            const err = 'Error on trying to find the transaction by Id';
+            reject(new Error(err));
         }
     }),
 };

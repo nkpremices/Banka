@@ -172,4 +172,19 @@ describe('Transactions v2', () => {// eslint-disable-line
                 done();
             });
     });
+    it('it should get an account’s transaction history​', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .get('/api/v2/transactions/2')
+            .set('token', `${userToken}`)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.an('array');
+                res.body.data.should.have
+                    .property('length', 1);
+                res.body.data[0].should.have
+                    .property('id', 2);
+                done();
+            });
+    });
 });
