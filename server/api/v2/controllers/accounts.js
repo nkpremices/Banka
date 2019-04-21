@@ -105,10 +105,7 @@ export default {
                         // Sending back the required object
                         result.status = resStatus;
                         result.message = 'Account updated successfully';
-                        result.data = {
-                            accountNumber: updatedAccount.accountnumber,
-                            status: updatedAccount.status,
-                        };
+                        result.data = updatedAccount;
                         res.status(resStatus).json(result);
                     }
                 } catch (err) {
@@ -169,7 +166,7 @@ export default {
             sendError(403, result, res, error);
         }
     },
-    getTransactions: async (req, res) => {
+    getAccountTransactions: async (req, res) => {
         // account deletion part of the users controller
         const result = {};
         const resStatus = 200;
@@ -250,11 +247,7 @@ export default {
                         } else {
                             // Sending back the required object
                             result.status = resStatus;
-                            result.data = clientAccounts.map((el) => {
-                                const account = el;
-                                delete account.owner;
-                                return account;
-                            });
+                            result.data = clientAccounts;
                             res.status(resStatus).json(result);
                         }
                     } else {
@@ -265,13 +258,13 @@ export default {
                     sendError(404, result, res, `${err}`.replace('Error', ''));
                 }
             } else {
-                error = 'Only a logged in admin/staff can View all accounts '
+                error = 'Only a logged in user can View all accounts '
                     + 'owned by a specific user. Provide a user token or login';
                 sendError(403, result, res, error);
             }
         } else {
             error = 'Invalid token provided or the '
-            + 'admin/staff is not signed up';
+            + 'user is not signed up';
             sendError(403, result, res, error);
         }
     },
@@ -297,14 +290,7 @@ export default {
 
                     // Sending back the required object
                     result.status = resStatus;
-                    result.data = {
-                        createdOn: tempAccount.createdon,
-                        accountNumber: tempAccount.accountnumber,
-                        owneremail: tempUser.email,
-                        type: tempAccount.type,
-                        status: tempAccount.status,
-                        balance: tempAccount.balance,
-                    };
+                    result.data = tempAccount;
                     res.status(resStatus).json(result);
                 } catch (err) {
                     sendError(404, result, res, `${err}`.replace('Error', ''));
@@ -317,6 +303,55 @@ export default {
         } else {
             error = 'Invalid token provided or the '
             + 'user is not signed up';
+            sendError(403, result, res, error);
+        }
+    },
+    getAllAccounts: async (req, res) => {
+        // account deletion part of the users controller
+        const result = {};
+        const resStatus = 200;
+        let error;
+        // Getting the token from the header
+        // Verifying the token
+        const tempSuperUser = await usersModel.verifyToken(req.headers.token);
+        // Getting the queries params
+        const { status } = req.query;
+
+        if (tempSuperUser) {
+            if ((tempSuperUser.isadmin || tempSuperUser.type === 'staff')
+            && tempSuperUser.isloggedin) {
+                // trying to save an account
+                try {
+                    // Accessing his accounts if he exists
+                    let allAccounts;
+                    if (status) {
+                        allAccounts = await accountsModel
+                            .getAccountsByStatus(status);
+                    } else {
+                        allAccounts = await accountsModel
+                            .getAllAccounts();
+                    }
+
+                    if (allAccounts.length === 0) {
+                        error = 'There are no bank accounts for now';
+                        sendError(404, result, res, error);
+                    } else {
+                        // Sending back the required object
+                        result.status = resStatus;
+                        result.data = allAccounts;
+                        res.status(resStatus).json(result);
+                    }
+                } catch (err) {
+                    sendError(404, result, res, `${err}`.replace('Error', ''));
+                }
+            } else {
+                error = 'Only a logged in admin/staff can View all accounts '
+                    + 'owned by a specific user. Provide a user token or login';
+                sendError(403, result, res, error);
+            }
+        } else {
+            error = 'Invalid token provided or the '
+            + 'admin/staff is not signed up';
             sendError(403, result, res, error);
         }
     },

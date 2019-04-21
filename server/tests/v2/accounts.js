@@ -13,6 +13,13 @@ const accountCreationTemp = {
     type: 'current',
     status: 'draft',
 };
+
+const accountCreationTemp1 = {
+    accountName: 'fellowship1',
+    currency: 'usd',
+    type: 'current',
+    status: 'active',
+};
 // login and get test user token
 const user1 = {
     email: 'nzanzu@gmail.com',
@@ -129,7 +136,49 @@ describe('Accounts v2', () => {// eslint-disable-line
                 res.should.have.status(200);
                 res.body.data.should.be.an('object');
                 res.body.data.should.have
-                    .property('accountNumber', AccountNumber);
+                    .property('accountnumber', AccountNumber);
+                done();
+            });
+    });
+    it('it should get all bank accounts', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .get('/api/v2/accounts/')
+            .set('token', `${environment.admin.token}`)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.an('array');
+                done();
+            });
+    });
+    it('it should create another account', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .post('/api/v2/accounts')
+            .set('token', userToken)
+            .send(accountCreationTemp1)
+            .end((err, res) => {
+                res.should.have.status(201);
+                res.body.data.should.be.a('object');
+                res.body.data.should.have.property('firstName', 'premices');
+                res.body.data.should.have.property('lastName', 'tuverer');
+                res.body.data.should.have.property('email', 'nzanzu@gmail.com');
+                res.body.data.should.have.property('type', 'current');
+                res.body.data.should.have.property('openingBalance', 0);
+                AccountNumber = res.body.data.accountNumber;
+                done();
+            });
+    });
+    it('it should get all active bank accounts', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .get('/api/v2/accounts/?status=active')
+            .set('token', `${environment.admin.token}`)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.an('array');
+                res.body.data.should.have
+                    .property('length', 3);
                 done();
             });
     });
