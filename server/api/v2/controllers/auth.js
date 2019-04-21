@@ -4,11 +4,11 @@ import createToken from '../../../helpers/generate.token';
 import sendError from '../../../helpers/send.error';
 
 export default {
-/**
- * POST - /auth/signup Create a new user
- */
     signup: async (req, res) => {
-        // sign up part of the users controller
+        /**
+            * POST - /signup Signup a new user
+        */
+        // Initialising variables
         const result = {};
         const status = 201;
         let error;
@@ -28,8 +28,9 @@ export default {
         const userRegister = async (Email, FirstName,
             LastName, Password, Type, IsAdmin) => {
             try {
+                // Hashing the password before storing it
                 const hashedPass = await createHash(Password);
-                // trying to insert a user
+                // trying to save a user
                 const tempUser = await usersModel.saveUser(Email,
                     FirstName, LastName, hashedPass, Type, IsAdmin, false);
 
@@ -71,7 +72,7 @@ export default {
                 } else {
                     error = 'Only an admin can create admin or staff'
                     + ' accounts.A token must be provided';
-                    sendError(400, result, res, error);
+                    sendError(403, result, res, error);
                 }
             } else {
                 userRegister(email, firstName, lastName,
@@ -79,10 +80,13 @@ export default {
             }
         } else {
             error = 'Email address already in use';
-            sendError(400, result, res, error);
+            sendError(205, result, res, error);
         }
     },
     signin: async (req, res) => {
+        /**
+            * POST - /auth/signin Sign in a new user
+        */
         // Signin part of the users controller
         const result = {};
         let status = 200;
@@ -93,51 +97,52 @@ export default {
         // Trying to fetch the user from the storage
         try {
             tempUser = await usersModel.findUser(email, password);
-        } catch (err) {
-            res.status(status = 400).json(`${err}`.replace('Error', ''));
-        }
+            // Send the required object if the user is found
+            if (tempUser.email) {
+                // creating a token
+                const token = createToken(tempUser);
 
-        // Send the required object if the user is found
-        if (tempUser.email) {
-            // creating a token
-            const token = createToken(tempUser);
+                // Changing the state of the user to 'logged in'
+                usersModel.loginUser(tempUser);
 
-            // Changing the state of the user to 'logged in'
-            usersModel.loginUser(tempUser);
+                // Fetching the type of the user
+                let userType;
+                if (tempUser.isadmin) {
+                    userType = 'Admin';
+                } else {
+                    userType = tempUser.type;
+                }
 
-            // Fetching the type of the user
-            let userType;
-            if (tempUser.isadmin) {
-                userType = 'Admin';
+                // Sending back the required object
+                result.status = status;
+                result.message = `${userType} logged in successfully`;
+                result.data = {
+                    token,
+                    id: tempUser.id,
+                    firstName: tempUser.firstname,
+                    lastName: tempUser.lastname,
+                    email: tempUser.email,
+                };
+                res.status(status).json(result);
             } else {
-                userType = tempUser.type;
-            }
+                // Send a custom message if the email
+                // is not found
+                if (!tempUser.foundEmail) {
+                    error = 'A user with that email doesn\'t exist';
+                    sendError(404, result, res, error);
+                }
 
-            // Sending back the required object
-            result.status = status;
-            result.message = `${userType} logged in successfully`;
-            result.data = {
-                token,
-                id: tempUser.id,
-                firstName: tempUser.firstname,
-                lastName: tempUser.lastname,
-                email: tempUser.email,
-            };
-            res.status(status).json(result);
-        } else {
-            // Send a custom message if the email is not found
-            if (!tempUser.foundEmail) {
-                error = 'A user with that email doesn\'t exist';
-                sendError(404, result, res, error);
-            }
-
-            // Send a custom message if the password is incorect
-            if (!tempUser.foundPassword) {
-                if (tempUser.foundEmail) {
-                    error = 'Incorect Password';
-                    sendError(400, result, res, error);
+                // Send a custom message if the password
+                // is incorect
+                if (!tempUser.foundPassword) {
+                    if (tempUser.foundEmail) {
+                        error = 'Incorect Password';
+                        sendError(404, result, res, error);
+                    }
                 }
             }
+        } catch (err) {
+            res.status(status = 400).json(`${err}`.replace('Error', ''));
         }
     },
 };
