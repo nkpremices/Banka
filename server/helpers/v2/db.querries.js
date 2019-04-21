@@ -4,10 +4,21 @@
 const insertUser = `INSERT INTO users (email, firstname, lastname,
     password, type, isadmin, isloggedin)
     VALUES($1, $2, $3, $4, $5, $6, $7) returning *`;
+const insertAccount = `INSERT INTO accounts (accountname, accountnumber, 
+    createdon, owner, type, status, currency, balance)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8) returning *`;
 const findUserByEmail = email => `SELECT * FROM users WHERE email = '${email}'`;
+
 const findUserByEmailAndId = (id, email) => `SELECT * FROM users WHERE 
     (id = '${id}' AND email = '${email}')`;
-const dropTables = 'DROP TABLE IF EXISTS users CASCADE;';
+
+const findAccountByNameAndOwner = (accountname,
+    owner) => `SELECT * FROM accounts WHERE 
+    (accountname = '${accountname}' AND owner = '${owner}')`;
+
+const dropTables = `DROP TABLE IF EXISTS users CASCADE;
+    DROP TABLE IF EXISTS accounts CASCADE;`;
+
 const setUserLogedIn = id => `UPDATE users SET 
     isloggedin = true WHERE id = ${id};`;
 
@@ -17,6 +28,8 @@ const queries = {
     findUserByEmailAndId,
     dropTables,
     setUserLogedIn,
+    insertAccount,
+    findAccountByNameAndOwner,
 };
 
 export default queries;

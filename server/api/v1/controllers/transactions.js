@@ -10,7 +10,7 @@ const makeTransaction = async (Req, Res, operation, ModelFunction) => {
     let error;
 
     // getting the body and the account number
-    const amount = parseInt(Req.body.amount, 10);
+    const { amount } = Req.body;
     const accountNumber = parseInt(Req.params.accountNumber, 10);
     // Getting the token from the header
     // Verifying the token
