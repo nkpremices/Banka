@@ -1,4 +1,5 @@
 import accountsModel from '../models/accounts';
+import transactionsModel from '../models/transactions';
 import usersModel from '../models/auth';
 import sendError from '../../../helpers/send.error';
 
@@ -165,6 +166,55 @@ export default {
         } else {
             error = 'Invalid token provided or the '
             + 'admin/staff is not signed up';
+            sendError(403, result, res, error);
+        }
+    },
+    viewTransactions: async (req, res) => {
+        // account deletion part of the users controller
+        const result = {};
+        const resStatus = 200;
+        let error;
+
+        // getting the the account id
+        const accountNumber = parseInt(req.params.accountNumber, 10);
+
+        // Getting the token from the header
+        // Verifying the token
+        const tempUser = await usersModel.verifyToken(req.headers.token);
+        // console.log(tempUser);
+        if (tempUser) {
+            if (tempUser.isloggedin) {
+                // trying to save an account
+                try {
+                    // Finding the account
+                    // eslint-disable-next-line no-unused-vars
+                    const tempAccount = await accountsModel
+                        .findAccount(accountNumber);
+
+                    // Getting the transactions
+                    const transactions = await transactionsModel
+                        .findTransactions.all(accountNumber);
+
+                    if (transactions.length === 0) {
+                        error = 'No transactions found for this account ';
+                        sendError(403, result, res, error);
+                    } else {
+                        // Sending back the required object
+                        result.status = resStatus;
+                        result.data = transactions;
+                        res.status(resStatus).json(result);
+                    }
+                } catch (err) {
+                    sendError(404, result, res, `${err}`.replace('Error', ''));
+                }
+            } else {
+                error = 'Only a logged in user can get an account\'s '
+                    + 'transaction history. Provide a user token or login';
+                sendError(403, result, res, error);
+            }
+        } else {
+            error = 'Invalid token provided or the '
+            + 'user is not signed up';
             sendError(403, result, res, error);
         }
     },

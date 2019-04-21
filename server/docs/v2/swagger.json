@@ -25,7 +25,7 @@
                     "Users"
                 ],
                 "summary": "Sign up new client user or new staff/admin user",
-                "description": "To add an admin/staff user add isAdmin and typy on the req body. To add a simple user remove them or set type to client and isAdmin to false",
+                "description": "To add an admin/staff user add isAdmin and type on the req body. To add a simple user remove them or set type to client and isAdmin to false",
                 "produces": [
                     "application/json"
                 ],
@@ -240,6 +240,52 @@
                     },
                     "400": {
                         "description": "The account you are trying to delete doesn't exist"
+                    },
+                    "default": {
+                        "description": "Sorry, error occured"
+                    }
+                }
+            }
+        },
+        "/api/v2/accounts/{accountNumber}/transactions": {
+            "get": {
+                "tags": [
+                    "Bank accounts"
+                ],
+                "summary": "Get an account’s transaction history​.",
+                "description": " And provide a user token in the header",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "accountNumber",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "The user token ",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succes. Transactions found"
+                    },
+                    "400": {
+                        "description": "No transaction found"
                     },
                     "default": {
                         "description": "Sorry, error occured"
