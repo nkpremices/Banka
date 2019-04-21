@@ -219,7 +219,7 @@ describe('Signin', () => {// eslint-disable-line
             .post('/api/v1/auth/signin')
             .send(user3)
             .end((err, res) => {
-                res.should.have.status(400);
+                res.should.have.status(404);
                 done();
             });
     });
