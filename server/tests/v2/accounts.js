@@ -8,7 +8,7 @@ const should = chai.should();// eslint-disable-line
 chai.use(chaiHttp);
 // Some variables to initialise tests
 const accountCreationTemp = {
-    accountName: 'scolarship',
+    accountName: 'fellowship',
     currency: 'usd',
     type: 'current',
     status: 'draft',
