@@ -6,10 +6,10 @@ import sendError from '../../../helpers/send.error';
 
 export default {
 /**
- * POST - /auth/signup Create a new user
+ * POST - / reate a new bank account
  */
     createAccount: async (req, res) => {
-        // account creation part of the users controller
+        // Initializing variables
         const result = {};
         const resStatus = 201;
         let error;
@@ -31,7 +31,7 @@ export default {
                 // Verifying the availability of the given fields
                 const verify = await accountsModel.verifyAccount
                     .name(accountName, tempUser.id);
-                // console.log(verify);
+
                 if (!verify) {
                     try {
                         // trying to save an account
@@ -57,7 +57,7 @@ export default {
                     }
                 } else {
                     error = 'Account name already in use';
-                    sendError(400, result, res, error);
+                    sendError(205, result, res, error);
                 }
             } else {
                 error = 'The user is not logged in';
@@ -69,6 +69,9 @@ export default {
         }
     },
     activateDeactivateAccount: async (req, res) => {
+    /**
+        * PATCH - / change the status of a bank account
+    */
         // account activation part of the users controller
         const result = {};
         const resStatus = 200;
@@ -83,7 +86,7 @@ export default {
         if (tempUser) {
             if ((tempUser.isadmin || tempUser.type === 'staff')
             && tempUser.isloggedin) {
-                // trying to save an account
+                // trying to find if the account exists
                 try {
                     const tempAccount = await accountsModel
                         .findAccount(accountNumber);
@@ -122,6 +125,9 @@ export default {
         }
     },
     deleteAccount: async (req, res) => {
+    /**
+        * DELETE - /<account-number> delete a bank account
+    */
         // account deletion part of the users controller
         const result = {};
         const resStatus = 200;
@@ -129,7 +135,7 @@ export default {
 
         // getting the the account id
         const accountNumber = parseInt(req.params.accountNumber, 10);
-        // console.log(accountNumber);
+
         // Getting the token from the header
         // Verifying the token
         const tempUser = await usersModel.verifyToken(req.headers.token);
@@ -137,7 +143,7 @@ export default {
         if (tempUser) {
             if ((tempUser.isadmin || tempUser.type === 'staff')
                 && tempUser.isloggedin) {
-                // trying to save an account
+                // trying to find the account vefore to delete
                 try {
                     const tempAccount = await accountsModel
                         .findAccount(accountNumber);
@@ -167,6 +173,10 @@ export default {
         }
     },
     getAccountTransactions: async (req, res) => {
+    /**
+        * Get - /<account-number>/transactions
+        * get all transactions regarding to an account
+    */
         // account deletion part of the users controller
         const result = {};
         const resStatus = 200;
@@ -178,10 +188,10 @@ export default {
         // Getting the token from the header
         // Verifying the token
         const tempUser = await usersModel.verifyToken(req.headers.token);
-        // console.log(tempUser);
+
         if (tempUser) {
             if (tempUser.isloggedin) {
-                // trying to save an account
+                // trying to fetch data
                 try {
                     // Finding the account
                     // eslint-disable-next-line no-unused-vars
@@ -216,7 +226,11 @@ export default {
         }
     },
     getSpecificUserAccounts: async (req, res) => {
-        // account deletion part of the users controller
+    /**
+        * Get - user/<email>/accounts
+        * get all accounts of a specific user
+    */
+        // Initializing variables
         const result = {};
         const resStatus = 200;
         let error;
@@ -227,10 +241,9 @@ export default {
         // Getting the token from the header
         // Verifying the token
         const tempSuperUser = await usersModel.verifyToken(req.headers.token);
-        // console.log(tempUser);
+
         if (tempSuperUser) {
             if (tempSuperUser.isloggedin) {
-                // trying to save an account
                 try {
                     // Trying to verify the email
                     const verify = await usersModel.VerifyUser(userEmail);
@@ -269,21 +282,25 @@ export default {
         }
     },
     getSpecificAccount: async (req, res) => {
-        // account deletion part of the users controller
+    /**
+        * Get - /<account-number>
+        * Get a specific account’s details
+    */
+        // Initializing variables
         const result = {};
         const resStatus = 200;
         let error;
 
         // getting the the account id
         const accountNumber = parseInt(req.params.accountNumber, 10);
-        // console.log(accountNumber);
+
         // Getting the token from the header
         // Verifying the token
         const tempUser = await usersModel.verifyToken(req.headers.token);
         // console.log(tempUser);
         if (tempUser) {
             if (tempUser.isloggedin) {
-                // trying to save an account
+                // trying to find the account
                 try {
                     const tempAccount = await accountsModel
                         .findAccount(accountNumber);
@@ -307,7 +324,11 @@ export default {
         }
     },
     getAllAccounts: async (req, res) => {
-        // account deletion part of the users controller
+    /**
+        * Get - / get all accounts records
+        * Get - /?status get all accounts records by status
+    */
+        // Initializing variables
         const result = {};
         const resStatus = 200;
         let error;
@@ -320,9 +341,8 @@ export default {
         if (tempSuperUser) {
             if ((tempSuperUser.isadmin || tempSuperUser.type === 'staff')
             && tempSuperUser.isloggedin) {
-                // trying to save an account
+                // trying to fetch data
                 try {
-                    // Accessing his accounts if he exists
                     let allAccounts;
                     if (status) {
                         allAccounts = await accountsModel
