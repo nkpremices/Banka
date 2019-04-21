@@ -92,7 +92,7 @@ describe('Signup v2', () => {// eslint-disable-line
                 .post('/api/v2/auth/signup')
                 .send(user)
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    res.should.have.status(205);
                     res.body.data.should.be.an('object');
                     res.body.data.should.have
                         .property('error', 'Email address already in use');
@@ -120,7 +120,7 @@ describe('Signup v2', () => {// eslint-disable-line
                 .post('/api/v2/auth/signup')
                 .send(staffAdminUser1)
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    res.should.have.status(403);
                     res.body.data.should.be.an('object');
                     done();
                 });
@@ -196,7 +196,7 @@ describe('Signin v2', () => {// eslint-disable-line
             .post('/api/v2/auth/signin')
             .send(user3)
             .end((err, res) => {
-                res.should.have.status(400);
+                res.should.have.status(404);
                 done();
             });
     });
