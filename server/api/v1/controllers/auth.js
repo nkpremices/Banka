@@ -87,7 +87,7 @@ export default {
     signin: async (req, res) => {
         // Initializing variables
         const result = {};
-        let status = 200;
+        const status = 200;
         let error;
         let tempUser;
         const { email, password } = req.body;
@@ -95,51 +95,52 @@ export default {
         // Trying to fetch the user from the storage
         try {
             tempUser = await usersModel.findUser(email, password);
-        } catch (err) {
-            res.status(status = 400).json(`${err}`.replace('Error', ''));
-        }
+            // Send the required object if the user is found
+            if (tempUser.email) {
+                // creating a token
+                const token = createToken(tempUser);
 
-        // Send the required object if the user is found
-        if (tempUser.email) {
-            // creating a token
-            const token = createToken(tempUser);
+                // Changing the state of the user to 'logged in'
+                usersModel.loginUser(tempUser);
 
-            // Changing the state of the user to 'logged in'
-            usersModel.loginUser(tempUser);
+                // Fetching the type of the user
+                let userType;
+                if (tempUser.isAdmin) {
+                    userType = 'Admin';
+                } else {
+                    userType = tempUser.type;
+                }
 
-            // Fetching the type of the user
-            let userType;
-            if (tempUser.isAdmin) {
-                userType = 'Admin';
+                // Sending back the required object
+                result.status = status;
+                result.message = `${userType} logged in successfully`;
+                result.data = {
+                    token,
+                    id: tempUser.id,
+                    firstName: tempUser.firstName,
+                    lastName: tempUser.lastName,
+                    email: tempUser.email,
+                };
+                res.status(status).json(result);
             } else {
-                userType = tempUser.type;
-            }
+                // Send a custom message if the email
+                // is not found
+                if (!tempUser.foundEmail) {
+                    error = 'A user with that email doesn\'t exist';
+                    sendError(404, result, res, error);
+                }
 
-            // Sending back the required object
-            result.status = status;
-            result.message = `${userType} logged in successfully`;
-            result.data = {
-                token,
-                id: tempUser.id,
-                firstName: tempUser.firstName,
-                lastName: tempUser.lastName,
-                email: tempUser.email,
-            };
-            res.status(status).json(result);
-        } else {
-            // Send a custom message if the email is not found
-            if (!tempUser.foundEmail) {
-                error = 'A user with that email doesn\'t exist';
-                sendError(404, result, res, error);
-            }
-
-            // Send a custom message if the password is incorect
-            if (!tempUser.foundPassword) {
-                if (tempUser.foundEmail) {
-                    error = 'Incorect Password';
-                    sendError(400, result, res, error);
+                // Send a custom message if the password
+                // is incorect
+                if (!tempUser.foundPassword) {
+                    if (tempUser.foundEmail) {
+                        error = 'Incorect Password';
+                        sendError(400, result, res, error);
+                    }
                 }
             }
+        } catch (err) {
+            sendError(400, result, res, `${err}`.replace('Error', ''));
         }
     },
 };
