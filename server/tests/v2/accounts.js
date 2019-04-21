@@ -108,4 +108,18 @@ describe('Accounts v2', () => {// eslint-disable-line
                 done();
             });
     });
+
+    it('it should delete an account', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .delete(`/api/v2/accounts/${AccountNumber}`)
+            .set('token', `${environment.admin.token}`)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.a('object');
+                res.body.data.should.have
+                    .property('message', 'Account successfully deleted');
+                done();
+            });
+    });
 });

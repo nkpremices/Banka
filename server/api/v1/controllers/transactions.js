@@ -49,7 +49,7 @@ const makeTransaction = async (Req, Res, operation, ModelFunction) => {
                     sendError(403, result, Res, error);
                 }
             } catch (err) {
-                sendError(404, result, Res, `${err}`);
+                sendError(404, result, Res, `${err}`.replace('Error', ''));
             }
         } else {
             error = `Only a logged in staff(cashier) can  ${operation} `

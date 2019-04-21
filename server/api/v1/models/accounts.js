@@ -65,8 +65,14 @@ const deleteAccount = accountNumber => new Promise((resolve, reject) => {
     // creating a temp account
     const tempAccount = verifyAccount.number(accountNumber);
     if (tempAccount) {
-        storage.splice(storage.indexOf(tempAccount), 1);
-        resolve(tempAccount);
+        if (tempAccount.balance === 0) {
+            storage.splice(storage.indexOf(tempAccount), 1);
+            resolve(tempAccount);
+        } else {
+            const errorMsg = 'The account has a non zero balance: '
+            + `${tempAccount.balance}. Please, debit it first`;
+            reject(new Error(errorMsg));
+        }
     } else {
         const errorMsg = 'An account with the provided '
         + 'number was not found';

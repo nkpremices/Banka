@@ -51,7 +51,8 @@ export default {
                         };
                         res.status(resStatus).json(result);
                     } catch (err) {
-                        sendError(400, result, res, `${err}`);
+                        sendError(400, result, res, `${err}`
+                            .replace('Error', ''));
                     }
                 } else {
                     error = 'Account name already in use';
@@ -110,7 +111,7 @@ export default {
                         res.status(resStatus).json(result);
                     }
                 } catch (err) {
-                    sendError(404, result, res, `${err}`);
+                    sendError(404, result, res, `${err}`.replace('Error', ''));
                 }
             } else {
                 error = 'Only a logged in admin/staff can activate/deactivate '
@@ -119,6 +120,51 @@ export default {
             }
         } else {
             error = 'Invalid token provided or the admin is not signed up';
+            sendError(403, result, res, error);
+        }
+    },
+    deleteAccount: async (req, res) => {
+        // account deletion part of the users controller
+        const result = {};
+        const resStatus = 200;
+        let error;
+
+        // getting the the account id
+        const accountNumber = parseInt(req.params.accountNumber, 10);
+        // console.log(accountNumber);
+        // Getting the token from the header
+        // Verifying the token
+        const tempUser = await usersModel.verifyToken(req.headers.token);
+        // console.log(tempUser);
+        if (tempUser) {
+            if ((tempUser.isadmin || tempUser.type === 'staff')
+                && tempUser.isloggedin) {
+                // trying to save an account
+                try {
+                    const tempAccount = await accountsModel
+                        .findAccount(accountNumber);
+
+                    // deleting the account
+                    await accountsModel
+                        .deleteAccount(tempAccount.accountnumber);
+
+                    // Sending back the required object
+                    result.status = resStatus;
+                    result.data = {
+                        message: 'Account successfully deleted',
+                    };
+                    res.status(resStatus).json(result);
+                } catch (err) {
+                    sendError(404, result, res, `${err}`.replace('Error', ''));
+                }
+            } else {
+                error = 'Only a logged in admin/staf can delete '
+                    + ' an account. Provide an admin/staff token or login';
+                sendError(403, result, res, error);
+            }
+        } else {
+            error = 'Invalid token provided or the '
+            + 'admin/staff is not signed up';
             sendError(403, result, res, error);
         }
     },
