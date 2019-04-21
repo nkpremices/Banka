@@ -4,7 +4,6 @@ import queries from '../../../helpers/v2/db.querries';
 
 // a function to save an account when requested
 const saveAccount = (accountName, currency,
-    // eslint-disable-next-line no-unused-vars
     type, status, user) => new Promise(async (resolve, reject) => {
     // creating a temp account
     const accountNumber = generateRandomNumber();
@@ -30,7 +29,9 @@ const saveAccount = (accountName, currency,
     }
 });
 
+// A function to verify if an account is already stored
 const verifyAccount = {
+    // By name
     name: (name, owner) => new Promise(async (resolve, reject) => {
         try {
             const tempAccount = await querryDb
@@ -40,6 +41,7 @@ const verifyAccount = {
             reject(new Error('Error on account verification'));
         }
     }),
+    // By account number
     number: number => new Promise(async (resolve, reject) => {
         try {
             const tempAccount = await querryDb
@@ -113,7 +115,7 @@ const deleteAccount = accountNumber => new Promise(async (resolve, reject) => {
     }
 });
 
-// A specific user accounts
+// A function to get a specific user accounts
 const getSpecifiUsersAccounts = owner => new Promise(async (resolve,
     reject) => {
     try {
@@ -136,7 +138,7 @@ const getAllAccounts = () => new Promise(async (resolve, reject) => {
     }
 });
 
-// A function to get all active accounts
+// A function to get all accounts by status
 const getAccountsByStatus = status => new Promise(async (resolve, reject) => {
     try {
         const Accounts = await querryDb

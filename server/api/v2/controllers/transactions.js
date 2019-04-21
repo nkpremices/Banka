@@ -64,14 +64,26 @@ const makeTransaction = async (Req, Res, operation, ModelFunction) => {
 
 export default {
     creditAccount: async (req, res) => {
+    /**
+        * POST - /<account-number>/credit
+        * Credit an account
+    */
         await makeTransaction(req, res, 'credit', transactionsModel
             .saveTransaction.credit);
     },
     debitAccount: async (req, res) => {
+    /**
+        * POST - /<account-number>/debit
+        * Debit an account
+    */
         await makeTransaction(req, res, 'debit', transactionsModel
             .saveTransaction.debit);
     },
     getSpecificTransaction: async (req, res) => {
+    /**
+        * Get - /<transactio-id>/debit
+        * Debit an account
+    */
         // account activation part of the users controller
         const result = {};
         const resStatus = 200;

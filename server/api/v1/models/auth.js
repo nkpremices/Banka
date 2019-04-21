@@ -6,17 +6,20 @@ import decodeJwt from '../../../helpers/decode.token';
 let id = 0;
 
 // a function to save a user when requested
-const saveUser = (email, firstName,
-    lastName, password, type, // eslint-disable-next-line no-unused-vars
+const saveUser = (email, firstName, lastName, password, type,
     isAdmin, isLoggedIn) => new Promise((resolve, reject) => {
-    // creating a temp user
-    const tempUser = new dataStructureDb.schemas.UsersSchema(id += 1,
-        email, firstName, lastName, password, type, isAdmin, isLoggedIn);
+    try {
+        // creating a temp user
+        const tempUser = new dataStructureDb.schemas.UsersSchema(id += 1,
+            email, firstName, lastName, password, type, isAdmin, isLoggedIn);
 
-    // Storing the user
-    dataStructureDb.storages.usersStorage.push(tempUser);
-    // console.log(dataStructureDb.storages.usersStorage);
-    resolve(tempUser);
+        // Storing the user
+        dataStructureDb.storages.usersStorage.push(tempUser);
+        // console.log(dataStructureDb.storages.usersStorage);
+        resolve(tempUser);
+    } catch (error) {
+        reject(new Error('Error on trying to store the user'));
+    }
 });
 
 // A fuction to validate the decoded data
@@ -81,7 +84,7 @@ const findUser = (email, password) => new Promise(async (resolve, reject) => {
             passwordVerification = await comparePasswords(verify.tempUser,
                 password);
         } catch (error) {
-            reject(error);
+            reject(new Error('Error when trying to compare passwords'));
         }
         if (passwordVerification) resolve(verify.tempUser);
         resolve(retObj);

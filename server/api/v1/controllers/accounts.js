@@ -5,10 +5,10 @@ import sendError from '../../../helpers/send.error';
 
 export default {
 /**
- * POST - /auth/signup Create a new user
+ * POST - / Create a new bank account
  */
     createAccount: async (req, res) => {
-        // account creation part of the users controller
+        // Initializing variables
         const result = {};
         const resStatus = 201;
         let error;
@@ -27,12 +27,12 @@ export default {
         if (tempUser) {
             // Verifying if the user is logged in
             if (tempUser.isLoggedIn) {
-                // Verifying the availability of the given fields
+                // Checking the availability of the given fields
                 const verify = accountsModel.verifyAccount
                     .name(accountName, tempUser.id);
                 if (!verify) {
                     try {
-                        // trying to save an account
+                        // Requesting to save the account
                         const tempAccount = await accountsModel
                             .saveAccount(accountName, currency,
                                 type, status, tempUser);
@@ -55,7 +55,7 @@ export default {
                     }
                 } else {
                     error = 'Account name already in use';
-                    sendError(400, result, res, error);
+                    sendError(205, result, res, error);
                 }
             } else {
                 error = 'The user is not logged in';
@@ -67,7 +67,10 @@ export default {
         }
     },
     activateDeactivateAccount: async (req, res) => {
-        // account activation part of the users controller
+    /**
+        * PATCH - /<account-number> Create a new bank account
+    */
+        // Initializing variables
         const result = {};
         const resStatus = 200;
         let error;
@@ -81,8 +84,9 @@ export default {
         if (tempUser) {
             if ((tempUser.isAdmin || tempUser.type === 'staff')
             && tempUser.isLoggedIn) {
-                // trying to save an account
+                // trying to save the status
                 try {
+                    // See first if the account exists
                     const tempAccount = await accountsModel
                         .findAccount(accountNumber);
 
@@ -97,7 +101,7 @@ export default {
                         + 'same as the current';
                         sendError(205, result, res, error);
                     } else {
-                        // change the account status
+                        // changing the account status
                         accountsModel.changeAccountStatus(tempAccount, status);
                         // Sending back the required object
                         result.status = resStatus;
@@ -122,26 +126,28 @@ export default {
         }
     },
     deleteAccount: async (req, res) => {
-        // account deletion part of the users controller
+        /**
+            * DELETE- /<account-number> Delete a bank account
+        */
+        // Initializing variables
         const result = {};
         const resStatus = 200;
         let error;
 
         // getting the the account id
         const accountNumber = parseInt(req.params.accountNumber, 10);
-        // console.log(accountNumber);
+
         // Getting the token from the header
         // Verifying the token
         const tempUser = usersModel.verifyToken(req.headers.token);
         if (tempUser) {
             if ((tempUser.isAdmin || tempUser.type === 'staff')
                 && tempUser.isLoggedIn) {
-                // trying to save an account
+                // trying to delete the account
                 try {
+                    // Trying to see if the account exists
                     const tempAccount = await accountsModel
                         .findAccount(accountNumber);
-
-                    // console.log(tempAccount);
 
                     // deleting the account
                     await accountsModel

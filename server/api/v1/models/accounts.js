@@ -6,19 +6,23 @@ let id = 0;
 
 // a function to save an account when requested
 const saveAccount = (accountName, currency,
-    // eslint-disable-next-line no-unused-vars
     type, status, user) => new Promise((resolve, reject) => {
-    // creating a temp account
-    const accountNumber = generateRandomNumber();
-    const tempAccount = new dataStructureDb.schemas
-        .AccountsSchema(id += 1, accountName, accountNumber,
-            Date.now(), user.id, type, status, currency, 0);
+    try {
+        // creating a temp account
+        const accountNumber = generateRandomNumber();
+        const tempAccount = new dataStructureDb.schemas
+            .AccountsSchema(id += 1, accountName, accountNumber,
+                Date.now(), user.id, type, status, currency, 0);
 
-    // Storing the account
-    dataStructureDb.storages.accountsStorage.push(tempAccount);
-    resolve(tempAccount);
+        // Storing the account
+        dataStructureDb.storages.accountsStorage.push(tempAccount);
+        resolve(tempAccount);
+    } catch (error) {
+        reject(new Error('Error when trying to save the account'));
+    }
 });
 
+// A function to verify if an account exists
 const verifyAccount = {
     name: (name, owner) => dataStructureDb.storages
         .accountsStorage
@@ -42,11 +46,12 @@ const findAccount = accountNumber => new Promise((resolve, reject) => {
     }
 });
 
-// A function to change an accounts status
+// A function to change the satus of an account
 const changeAccountStatus = (account, status) => {
     account.setStatus(status);
 };
 
+// A function to verify the status of an account
 const verifyAccountStatus = (account, status) => {
     const storage = dataStructureDb.storages.accountsStorage;
     let retObj = false;

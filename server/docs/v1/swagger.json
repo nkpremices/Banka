@@ -25,7 +25,7 @@
                     "Users"
                 ],
                 "summary": "Sign up new client user or new staff/admin user",
-                "description": "To add an admin/staff user add isAdmin and typy on the req body. To add a simple user remove them or set type to client and isAdmin to false",
+                "description": "To add an \"admin/staff\" user add \"isAdmin\" and \"type\" on the req body. To add a simple user remove them or set \"type\" to \"client\" and \"isAdmin\" to \"false\"",
                 "produces": [
                     "application/json"
                 ],
@@ -236,7 +236,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Account has been deleted successfully"
+                        "description": "Account deleted successfully"
                     },
                     "400": {
                         "description": "The account you are trying to delete doesn't exist"
@@ -250,7 +250,7 @@
         "/api/v1/transactions/{accountNumber}/debit": {
             "post": {
                 "tags": [
-                    "Bank accounts"
+                    "Transactions"
                 ],
                 "summary": "Debit a bank account",
                 "description": "Specify the amount in the body of the request and provide the staff token in the header",
@@ -282,7 +282,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Debit a specific account record"
+                        "description": "Account debited successfullly"
                     },
                     "400": {
                         "description": "The account you are trying to debit doesn't exist"
@@ -296,7 +296,7 @@
         "/api/v1/transactions/{accountNumber}/credit": {
             "post": {
                 "tags": [
-                    "Bank accounts"
+                    "Transactions"
                 ],
                 "summary": "Credit a bank account",
                 "description": "Specify amount in the body of the request and provide the staff token in the header",
@@ -328,7 +328,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Credit a specific account record"
+                        "description": "Account credited successfullly"
                     },
                     "400": {
                         "description": "The account you are trying to credit doesn't exist"

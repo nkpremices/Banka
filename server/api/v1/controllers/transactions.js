@@ -3,8 +3,12 @@ import accountsModel from '../models/accounts';
 import usersModel from '../models/auth';
 import sendError from '../../../helpers/send.error';
 
+/**
+    * A function to execute a transactiion
+    * whether it is credit or debit
+*/
 const makeTransaction = async (Req, Res, operation, ModelFunction) => {
-    // account activation part of the users controller
+    // Initializing variables
     const result = {};
     const resStatus = 200;
     let error;
@@ -17,7 +21,7 @@ const makeTransaction = async (Req, Res, operation, ModelFunction) => {
     const tempUser = usersModel.verifyToken(Req.headers.token);
     if (tempUser) {
         if (tempUser.type === 'staff' && tempUser.isLoggedIn) {
-            // trying to save an account
+            // trying to save the transaction
             try {
                 // Verify if the account exists
                 // if not, an exception will be catched up
@@ -64,10 +68,16 @@ const makeTransaction = async (Req, Res, operation, ModelFunction) => {
 
 export default {
     creditAccount: async (req, res) => {
+    /**
+        * POST - /<account-number>/credit Credit a bank account.
+    */
         await makeTransaction(req, res, 'credit', transactionsModel
             .saveTransaction.credit);
     },
     debitAccount: async (req, res) => {
+    /**
+        * POST - /<account-number>/debit Debit a bank account.
+    */
         await makeTransaction(req, res, 'debit', transactionsModel
             .saveTransaction.debit);
     },
