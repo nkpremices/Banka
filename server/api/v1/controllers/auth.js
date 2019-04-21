@@ -70,7 +70,7 @@ export default {
                 } else {
                     error = 'Only an admin can create admin or staff'
                     + ' accounts.A token must be provided';
-                    sendError(400, result, res, error);
+                    sendError(403, result, res, error);
                 }
             } else {
                 userRegister(email, firstName, lastName,
@@ -78,7 +78,7 @@ export default {
             }
         } else {
             error = 'Email address already in use';
-            sendError(400, result, res, error);
+            sendError(205, result, res, error);
         }
     },
     /**
