@@ -31,6 +31,9 @@ const findAccountByNameAndOwner = (accountname,
 const findAccountByNumber = accountNumber => `SELECT * FROM 
     accounts WHERE accountnumber = '${accountNumber}'`;
 
+const findAccountsByOwner = owner => `SELECT * FROM 
+    accounts WHERE owner = '${owner}'`;
+
 const findAccountByNumberAndStatus = (accountnumber,
     status) => `SELECT * FROM accounts WHERE 
     (accountnumber = '${accountnumber}' AND status = '${status}')`;
@@ -73,6 +76,7 @@ const queries = {
     setAccountBalance,
     findTransactionsByAcNumber,
     findTransactionById,
+    findAccountsByOwner,
 };
 
 export default queries;

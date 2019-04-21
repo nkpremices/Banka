@@ -109,6 +109,18 @@ const deleteAccount = accountNumber => new Promise(async (resolve, reject) => {
     }
 });
 
+// A specific user accounts
+const getSpecifiUsersAccounts = owner => new Promise(async (resolve,
+    reject) => {
+    try {
+        const clientAccounts = await querryDb
+            .query(queries.findAccountsByOwner(owner));
+        resolve(clientAccounts.rows);
+    } catch (error) {
+        reject(new Error('Error on trying to get client accounts'));
+    }
+});
+
 const accountsModel = {
     saveAccount,
     verifyAccount,
@@ -116,6 +128,7 @@ const accountsModel = {
     verifyAccountStatus,
     changeAccountStatus,
     deleteAccount,
+    getSpecifiUsersAccounts,
 };
 
 export default accountsModel;

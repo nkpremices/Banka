@@ -9,5 +9,6 @@ const v2 = express();
 v2.use('/auth', authRouter);
 v2.use('/accounts', accountsRouter);
 v2.use('/transactions', transactionsRouter);
+v2.use('/user', accountsRouter);
 
 export default v2;

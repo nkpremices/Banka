@@ -169,13 +169,13 @@ export default {
             sendError(403, result, res, error);
         }
     },
-    viewTransactions: async (req, res) => {
+    getTransactions: async (req, res) => {
         // account deletion part of the users controller
         const result = {};
         const resStatus = 200;
         let error;
 
-        // getting the the account id
+        // getting the the account number
         const accountNumber = parseInt(req.params.accountNumber, 10);
 
         // Getting the token from the header
@@ -215,6 +215,64 @@ export default {
         } else {
             error = 'Invalid token provided or the '
             + 'user is not signed up';
+            sendError(403, result, res, error);
+        }
+    },
+    getSpecificUserAccounts: async (req, res) => {
+        // account deletion part of the users controller
+        const result = {};
+        const resStatus = 200;
+        let error;
+
+        // getting the the user email
+        const { userEmail } = req.params;
+
+        // Getting the token from the header
+        // Verifying the token
+        const tempSuperUser = await usersModel.verifyToken(req.headers.token);
+        // console.log(tempUser);
+        if (tempSuperUser) {
+            if ((tempSuperUser.isadmin || tempSuperUser.type === 'staff')
+            && tempSuperUser.isloggedin) {
+                // trying to save an account
+                try {
+                    // Trying to verify the email
+                    const verify = await usersModel.VerifyUser(userEmail);
+                    const tempClient = verify.tempUser;
+
+                    // Accessing his accounts if he exists
+                    if (verify.foundEmail) {
+                        const clientAccounts = await accountsModel
+                            .getSpecifiUsersAccounts(tempClient.id);
+
+                        if (clientAccounts.length === 0) {
+                            error = 'No accounts found for this client ';
+                            sendError(404, result, res, error);
+                        } else {
+                            // Sending back the required object
+                            result.status = resStatus;
+                            result.data = clientAccounts.map((el) => {
+                                const account = el;
+                                delete account.owner;
+                                return account;
+                            });
+                            res.status(resStatus).json(result);
+                        }
+                    } else {
+                        error = 'A user with the provided email was not found ';
+                        sendError(404, result, res, error);
+                    }
+                } catch (err) {
+                    sendError(404, result, res, `${err}`.replace('Error', ''));
+                }
+            } else {
+                error = 'Only a logged in admin/staff can View all accounts '
+                    + 'owned by a specific user. Provide a user token or login';
+                sendError(403, result, res, error);
+            }
+        } else {
+            error = 'Invalid token provided or the '
+            + 'admin/staff is not signed up';
             sendError(403, result, res, error);
         }
     },
