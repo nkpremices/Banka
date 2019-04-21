@@ -72,7 +72,7 @@ const VerifyUser = (email, type, isAdmin,
             if (AdminToken) {
                 retObj.foundToken = true;
                 const admin = await verifyToken(AdminToken);
-                // console.log(admin);
+
                 // See if the provided token is an admin token
                 if (admin && admin.isadmin && admin.isloggedin) {
                     retObj.foundAdmin = true;
@@ -86,7 +86,6 @@ const VerifyUser = (email, type, isAdmin,
 });
 
 // A function to find if a user is stored
-// eslint-disable-next-line no-unused-vars
 const findUser = (email, password) => new Promise(async (resolve, reject) => {
     // An object to return
     const retObj = {
@@ -118,7 +117,6 @@ const findUser = (email, password) => new Promise(async (resolve, reject) => {
 
 // A function to login a user
 const loginUser = user => new Promise(async (resolve, reject) => {
-    // trying to find the email
     try {
         const tempUser = await querryDb
             .query(queries.setUserLogedIn(user.id));
