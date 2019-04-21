@@ -4,11 +4,11 @@ import createToken from '../../../helpers/generate.token';
 import sendError from '../../../helpers/send.error';
 
 export default {
-/**
- * POST - /auth/signup Create a new user
- */
     signup: async (req, res) => {
-        // sign up part of the users controller
+    /**
+        * POST - /auth/signup Create a new user
+    */
+        // Initializing variables
         const result = {};
         const status = 201;
         let error;
@@ -28,6 +28,7 @@ export default {
         const userRegister = async (Email, FirstName,
             LastName, Password, Type, IsAdmin) => {
             try {
+                // Hashing the password before to store the user
                 const hashedPass = await createHash(Password);
                 // trying to insert a user
                 const tempUser = await usersModel.saveUser(Email,
@@ -80,8 +81,11 @@ export default {
             sendError(400, result, res, error);
         }
     },
+    /**
+        * POST - /auth/signin singin a user
+    */
     signin: async (req, res) => {
-        // Signin part of the users controller
+        // Initializing variables
         const result = {};
         let status = 200;
         let error;
