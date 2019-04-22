@@ -5,6 +5,7 @@ const hide = fromHome[1];
 
 // A variable to fetch actions on the registration page
 let registration;
+let state;
 //a variable to fetch variables coming from the reset password page
 let resetSuccess;
 let fromReset;
@@ -23,8 +24,11 @@ const signIn = () => {
     document.getElementById('signup-nav').className = 'li nav-inactive';
 
     //shifting to the sign in part
-    document.querySelector('.signup-form').className = 'hide';
+    if (document.querySelector('.signup-form')) {
+        document.querySelector('.signup-form').className = 'hide';
+    }
     document.querySelector('.signin-form').className = 'signin-form';
+    state = 'signin';
 
     registration = true;
 };
@@ -36,8 +40,11 @@ const signUp = () => {
     document.getElementById('signup-nav').className = 'li nav-active';
 
     //shifting to the signup part
-    document.querySelector('.form .hide').className = 'signup-form';
-    document.querySelector('.signin-form').className = 'signin-form hide';
+    if (state === 'signin') {
+        document.querySelector('.form .hide').className = 'signup-form';
+        document.querySelector('.signin-form').className = 'signin-form hide';
+    }
+    state = 'signup';
 
     registration = true;
 };
