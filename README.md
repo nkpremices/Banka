@@ -36,13 +36,14 @@ The UI is hosted on GitHub pages and available [here](https://nkpremices.github.
 
 ##### Version
 * V1 : API implementation with datastructures
+* V2 : API implementation with a database
 
 ##### Documentation
 
-All the created API endpoints are documented and available [here](https://banka-heroku.herokuapp.com/docs/v1/)
+All the created API endpoints are documented and available [here](https://banka-heroku.herokuapp.com/docs/v2/)
 
 ### 3. Under development
-* Two latest endpoints for v1
+* Front end implementation
 
 ## Project structure
 
@@ -62,18 +63,25 @@ All the created API endpoints are documented and available [here](https://banka-
     |── server
     |    ├── api
     |    │   └── v1
+    |    │   │   ├── controllers
+    |    │   │   ├── models
+    |    │   │   └── routes
+    |    │   └── v2
     |    │       ├── controllers
     |    │       ├── models
     |    │       └── routes
     |    ├── configs
     |    ├── docs
     |    │   └── v1
+    |    │   └── v2
     |    ├── helpers
     |    │   └── v1
+    |    │   └── v2
     |    ├── middlewares
     |    ├── storage
     |    |── tests
-    |    │   └── v1
+    |        └── v1
+    |        └── v2
     |    
     |── .babelrc
     |── .coverals.yml
