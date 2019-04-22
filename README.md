@@ -44,6 +44,7 @@ All the created API endpoints are documented and available [here](https://banka-
 
 ### 3. Under development
 * Front end implementation
+ 
 
 ## Project structure
 
