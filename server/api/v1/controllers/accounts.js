@@ -18,7 +18,6 @@ export default {
             accountName,
             currency,
             type,
-            status,
         } = req.body;
 
         // Getting the token from the header
@@ -35,7 +34,7 @@ export default {
                         // Requesting to save the account
                         const tempAccount = await accountsModel
                             .saveAccount(accountName, currency,
-                                type, status, tempUser);
+                                type, 'draft', tempUser);
 
                         // Sending back the required object
                         result.status = resStatus;
