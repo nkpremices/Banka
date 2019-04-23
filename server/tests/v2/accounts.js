@@ -180,7 +180,25 @@ describe('Accounts v2', () => {// eslint-disable-line
                 done();
             });
     });
-    it('it should get all active bank accounts', (done) => {// eslint-disable-line
+    it('it should change the status of an account to dormant', (done) => {// eslint-disable-line
+        const accountStatusObj = {
+            status: 'dormant',
+        };
+
+        chai
+            .request(app)
+            .patch(`/api/v2/accounts/${AccountNumber}`)
+            .set('token', `${environment.admin.token}`)
+            .send(accountStatusObj)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.a('object');
+                res.body.data.should.have
+                    .property('status', accountStatusObj.status);
+                done();
+            });
+    });
+    it('it should get all dormant bank accounts', (done) => {// eslint-disable-line
         chai
             .request(app)
             .get('/api/v2/accounts/?status=dormant')
