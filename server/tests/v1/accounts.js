@@ -11,7 +11,6 @@ const accountCreationTemp = {
     accountName: 'scolarship',
     currency: 'usd',
     type: 'current',
-    status: 'draft',
 };
 
 let AccountNumber;
