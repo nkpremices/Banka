@@ -11,14 +11,12 @@ const accountCreationTemp = {
     accountName: 'fellowship',
     currency: 'usd',
     type: 'current',
-    status: 'draft',
 };
 
 const accountCreationTemp1 = {
     accountName: 'fellowship1',
     currency: 'usd',
     type: 'current',
-    status: 'dormant',
 };
 // login and get test user token
 const user1 = {
