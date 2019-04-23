@@ -115,9 +115,8 @@ describe('Signup', () => {// eslint-disable-line
                     res.should.have.status(400);
                     res.body.error.should.be.an('object');
                     res.body.error.should.have
-                        .property('message', 'lastName with value kalimumbalo  '
-                        + 'fails to match the required pattern: only letters '
-                        + 'without spaces are are allowed');
+                        .property('message', 'Last name must not contain '
+                        + 'spaces and must be at least 3 characters');
                     done();
                 });
         });
