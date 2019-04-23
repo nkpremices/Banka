@@ -112,6 +112,24 @@ describe('Transactions', () => {// eslint-disable-line
                     done();
                 });
         });
+        it('it should change the status of the created account', (done) => {// eslint-disable-line
+        const accountStatusObj = {
+            status: 'active',
+        };
+
+        chai
+            .request(app)
+            .patch(`/api/v1/accounts/${AccountNumber}`)
+            .set('token', `${environment.admin.token}`)
+            .send(accountStatusObj)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.data.should.be.a('object');
+                res.body.data.should.have
+                    .property('status', accountStatusObj.status);
+                done();
+            });
+    });
     it('it should credit the created account', (done) => {// eslint-disable-line
         const credit = {
             amount: 2500,
