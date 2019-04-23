@@ -4,7 +4,7 @@ const string = Joi.string();
 const Bool = Joi.boolean();
 const email = string.email().lowercase().required();
 const password = string
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/).required();
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/).min(5).required();
 
 export default {
     createUserAccount: Joi.object().keys({
@@ -14,7 +14,7 @@ export default {
             .max(30)
             .required(),
         password,
-        type: string.valid('client', 'staff'),
+        type: string.lowercase().valid('client', 'staff'),
         isAdmin: Bool,
     }),
     signin: Joi.object().keys({
@@ -24,12 +24,13 @@ export default {
     createBankAccount: Joi.object().keys({
         accountName: string.alphanum().min(3).max(30)
             .required(),
-        currency: string.valid('usd', 'eu', 'rwf', 'cdf').required(),
-        type: string.valid('current', 'savings').required(),
-        status: string.valid('draft', 'active', 'dormant').required(),
+        currency: string.lowercase().valid('usd', 'eu', 'rwf', 'cdf')
+            .required(),
+        type: string.lowercase().valid('current', 'savings').required(),
     }),
     activateDeactivateAccount: Joi.object().keys({
-        status: string.valid('draft', 'active', 'dormant').required(),
+        status: string.lowercase().valid('draft', 'active', 'dormant')
+            .required(),
     }),
     creditDebitAccount: Joi.object().keys({
         amount: Joi.number().positive().allow(0).required(),
