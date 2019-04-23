@@ -16,6 +16,13 @@ export default (useJoiError = false, schema) => {
         stripUnknown: true,
     };
 
+    // Vlidation error messages build
+    const passwordFieldError = 'Password must be at least 5 letters containing'
+    + ' at least a number a Lowercase letter and an Uppercase letter';
+
+    const nameFieldErrorMessage = ' name must not contain '
+    + 'spaces and must be at least 3 characters';
+
     // validation middleware
     // eslint-disable-next-line consistent-return
     return (req, res, next) => {
@@ -35,21 +42,14 @@ export default (useJoiError = false, schema) => {
                             next();
                         } else {
                             // Build error object
-                            const regexpInEror1 = '/^(?=.*[a-z])(?=.*[A-Z])'
-                            + '(?=.*[0-9])(?=.{6,})/';
-                            const regexpInEror2 = '/^[A-Za-z]+$/';
                             let message = err.details[0].message
                                 .replace(/['"]/g, '');
-                            const errorWithoutRegexp1 = message
-                                .split(regexpInEror1)[0];
-                            const errorWithoutRegexp2 = message
-                                .split(regexpInEror2)[0];
-                            if (message !== errorWithoutRegexp1) {
-                                message = `${errorWithoutRegexp1}`
-                                + 'Numbers, uppercase and lowercase letters';
-                            } else if (message !== errorWithoutRegexp2) {
-                                message = `${errorWithoutRegexp2}`
-                                + 'only letters without spaces are are allowed';
+                            if (message.includes('password')) {
+                                message = passwordFieldError;
+                            } else if (message.includes('firstName')) {
+                                message = `First${nameFieldErrorMessage}`;
+                            } else if (message.includes('lastName')) {
+                                message = `Last${nameFieldErrorMessage}`;
                             }
                             const errorObj = {
                                 status: 400,
