@@ -36,7 +36,39 @@ The UI is hosted on GitHub pages and available [here](https://nkpremices.github.
 
 ##### Version
 * V1 : API implementation with datastructures
+###### Endpoints 
+_
+| Ressource URL | Methods  | Description  |
+| ------- | --- | --- |
+| / | GET | The index page |
+| /api/v1/auth/signup| POST | Sign up a new user(client, staff or admin) |
+| /api/v1/auth/signin| POST | Sign in |
+| /api/v1/accounts| POST | Create a user bank account |
+| /api/v1/accounts/:accountNumber| PATCH| Update specific bank account's status |
+| /api/v1/accounts/:accountNumber| DELETE| Delete specific bank account |
+| /api/v1/transactions/:accountNumber/debit| POST| Debit specific user bank account |
+| /api/v1/transactions/:accountNumber/credit| POST| Credit specific user bank account |
+
 * V2 : API implementation with a database
+###### Endpoints 
+_
+| Ressource URL | Methods  | Description  |
+| ------- | --- | --- |
+| / | GET | The index page |
+| /api/v2/auth/signup| POST | Sign up a new user(client, staff or admin) |
+| /api/v2/auth/signin| POST | Sign in |
+| /api/v2/accounts| POST | Create a user bank account |
+| /api/v2/accounts/:accountNumber| PATCH| Update specific bank account's status |
+| /api/v2/accounts/:accountNumber| DELETE| Delete specific bank account |
+| /api/v2/transactions/:accountNumber/debit| POST| Debit specific user bank account |
+| /api/v2/transactions/:accountNumber/credit| POST| Credit specific user bank account |
+| /api/v2/accounts/:accountNumber/transactions | GET| View an account’s transaction history |
+| /api/v2/transactions/:transactionIid | GET| View a specific transaction |
+| /api/v2/user/:email/accounts | GET| View all accounts owned by a specific user (client)|
+| /api/v2/accounts/:accountNumber| GET| View a specific account’s details |
+| /api/v2/accounts | GET| View a list of all bank accounts |
+| /api/v2/accounts?status=active | GET| View a list of all active bank accounts |
+| /api/v2/accounts?status=dormant | GET| View a list of all dormant bank accounts |
 
 ##### Documentation
 
@@ -119,6 +151,7 @@ All the created API endpoints are documented and available [here](https://banka-
 * ```JWT_KEY```: String used to creat tokens
 * ```SALTING_ROUNDS```: Integer used to hash passwords
 * ```ADMIN_TOKEN, ADMIN_EMAIL, ADMIN_PASSWORD```: Admin token email and password for testing purposes
+* ```DB_USER, DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT```: Database connection variables
 
 ### 3. Notes
 * When the server starts, a script creates the first admin user. He will be the one to create staff users and other admin users as well. 
@@ -130,6 +163,7 @@ All the created API endpoints are documented and available [here](https://banka-
     "password": "passWord1"
 }
 ```
+* The ```ADMIN_TOKEN, ADMIN_EMAIL, ADMIN_PASSWORD``` environnement variables will the credentials above
 * Every operation inside the banka app requires authentication (login)
 
 ### 3. Steps for running tests

@@ -14,8 +14,6 @@ const user = {
     firstName: 'Yvette',
     lastName: 'kalimumbalo',
     password: 'R72kal20',
-    type: 'client',
-    isAdmin: false,
 };
 
 const staffAdminUser = {
