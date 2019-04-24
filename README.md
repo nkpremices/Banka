@@ -37,7 +37,7 @@ The UI is hosted on GitHub pages and available [here](https://nkpremices.github.
 ##### Version
 * V1 : API implementation with datastructures
 ###### Endpoints 
-_
+
 | Ressource URL | Methods  | Description  |
 | ------- | --- | --- |
 | / | GET | The index page |
@@ -51,7 +51,7 @@ _
 
 * V2 : API implementation with a database
 ###### Endpoints 
-_
+
 | Ressource URL | Methods  | Description  |
 | ------- | --- | --- |
 | / | GET | The index page |
