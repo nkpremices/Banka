@@ -162,11 +162,10 @@ All the created API endpoints are documented and available [here](https://banka-
     "password": "passWord1"
 }
 ```
-* The ```ADMIN_TOKEN, ADMIN_EMAIL, ADMIN_PASSWORD``` environnement variables will the credentials above
+* The ```ADMIN_EMAIL, ADMIN_PASSWORD``` environnement variables will be the credentials above
 * Every operation inside the banka app requires authentication (login)
 
 ### 3. Steps for running tests
 
-* Change the ```NODE_ENV``` environment variable value to "test"
 * Run tests
 ```npm test``` 
