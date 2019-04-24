@@ -15,7 +15,7 @@ const saveUser = (email, firstName, lastName, password, type,
 
         // Storing the user
         dataStructureDb.storages.usersStorage.push(tempUser);
-        // console.log(dataStructureDb.storages.usersStorage);
+
         resolve(tempUser);
     } catch (error) {
         reject(new Error('Error on trying to store the user'));
