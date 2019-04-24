@@ -138,7 +138,7 @@ export default {
         // Getting the token from the header
         // Verifying the token
         const tempUser = await usersModel.verifyToken(req.headers.token);
-        // console.log(tempUser);
+
         if (tempUser) {
             if ((tempUser.isadmin || tempUser.type === 'staff')
                 && tempUser.isloggedin) {
@@ -296,7 +296,7 @@ export default {
         // Getting the token from the header
         // Verifying the token
         const tempUser = await usersModel.verifyToken(req.headers.token);
-        // console.log(tempUser);
+
         if (tempUser) {
             if (tempUser.isloggedin) {
                 // trying to find the account
