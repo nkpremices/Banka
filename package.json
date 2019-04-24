@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node ./server/index.js",
-    "test": "NODE_ENV=test nyc --reporter=html --reporter=text ./node_modules/.bin/mocha --recursive ./server/tests/v2/* --exit --require @babel/register",
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text ./node_modules/.bin/mocha --recursive ./server/tests/* --exit --require @babel/register",
     "lint": "eslint ./",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov  | coveralls "
   },
