@@ -1,3 +1,8 @@
+/**
+ * Validation Schemas description file
+ * @name validationSchemas
+ */
+
 import Joi from 'joi';
 
 const string = Joi.string();
@@ -6,6 +11,21 @@ const email = string.email().lowercase().required();
 const password = string
     .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/).min(5).required();
 
+/**
+ * An object to define all the validation schemas
+ * @property {object}  createUserAccount - The object  to
+ * describe the validation for the signup endpoint
+ * @property {object}  signin - The object  to describe the
+ * validation for the signin endpoint.
+ * @property {object}  createBankAccount - The object  to
+ * describe the validation for the create bank Account endpoint.
+ * @property {object}  activateDeactivateAccount- The object to
+ * describe the validation for Account activation/deactivation
+ *  endpoint.
+ * @property {object}  creditDebitAccount - The object to
+ * describe the validation for the Account transactions
+ *  endpoint.
+ */
 export default {
     createUserAccount: Joi.object().keys({
         email,
@@ -22,7 +42,7 @@ export default {
         password,
     }),
     createBankAccount: Joi.object().keys({
-        accountName: string.alphanum().min(3).max(30)
+        accountName: string.regex(/^[A-Za-z0-9 .-]+$/).min(3).max(30)
             .required(),
         currency: string.lowercase().valid('usd', 'eu', 'rwf', 'cdf')
             .required(),
