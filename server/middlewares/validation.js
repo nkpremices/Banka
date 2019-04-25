@@ -1,8 +1,19 @@
+/**
+ * Schemas description file
+ * @name validationMiddleware
+ */
 /* eslint-disable no-underscore-dangle */
 import _ from 'lodash';
 import Joi from 'joi';
 import Schemas from '../helpers/validations.schemas';
 
+/**
+ * A function to save an account when requested by the controller
+ * @param {boolean} [useJoiError=false] indicates that Joi
+ * validation errors should be used
+ * @param {object} schema - The validation schema comming from
+ * the helper @ref validationSchemas
+ */
 export default (useJoiError = false, schema) => {
     const _useJoiError = _.isBoolean(useJoiError) && useJoiError;
 
@@ -11,9 +22,9 @@ export default (useJoiError = false, schema) => {
 
     // Joi validation options
     const _validationOptions = {
-        abortEarly: false,
-        allowUnknown: true,
-        stripUnknown: true,
+        abortEarly: false, // abort after the last validation error
+        allowUnknown: true, // allow unknown keys that will be ignored
+        stripUnknown: true, // remove unknown keys from the validated data
     };
 
     // Vlidation error messages build
@@ -24,6 +35,12 @@ export default (useJoiError = false, schema) => {
     + 'spaces and must be at least 3 characters';
 
     // validation middleware
+    /**
+     * A function to validate schemas
+     * @param {object} req - the request object
+     * @param {object} res - the result object
+     * @param {function} next - callBack function
+    */
     // eslint-disable-next-line consistent-return
     return (req, res, next) => {
         const method = req.method.toLowerCase();
