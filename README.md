@@ -150,8 +150,8 @@ All the created API endpoints are documented and available [here](https://banka-
 * ```ACCOUNT_NUMBER_LENGTH```: Length of account number on bank account creation
 * ```JWT_KEY```: String used to creat tokens
 * ```SALTING_ROUNDS```: Integer used to hash passwords
-* ```ADMIN_TOKEN, ADMIN_EMAIL, ADMIN_PASSWORD```: Admin token email and password for testing purposes
-* ```DB_USER, DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT```: Database connection variables
+* ```ADMIN_TOKEN, ADMIN_EMAIL, ADMIN_PASSWORD, TEST_DB_NAME```: Admin token email, password, and test database name for testing purposes
+* ```DB_USER, DB_HOST, DEV_DB_NAME, DB_PASSWORD, DB_PORT```: Database connection variables
 
 ### 3. Notes
 * When the server starts, a script creates the first admin user. He will be the one to create staff users and other admin users as well. 
@@ -163,11 +163,10 @@ All the created API endpoints are documented and available [here](https://banka-
     "password": "passWord1"
 }
 ```
-* The ```ADMIN_TOKEN, ADMIN_EMAIL, ADMIN_PASSWORD``` environnement variables will the credentials above
+* The ```ADMIN_EMAIL, ADMIN_PASSWORD``` environnement variables will be the credentials above
 * Every operation inside the banka app requires authentication (login)
 
 ### 3. Steps for running tests
 
-* Change the ```NODE_ENV``` environment variable value to "test"
 * Run tests
 ```npm test``` 

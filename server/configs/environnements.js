@@ -11,7 +11,8 @@ const jwtKey = process.env.JWT_KEY;
 const accountNumberLength = process.env.ACCOUNT_NUMBER_LENGTH;
 const dbUser = process.env.DB_USER;
 const dbHost = process.env.DB_HOST;
-const dbName = process.env.DB_NAME;
+const devDbName = process.env.DEV_DB_NAME;
+const testDbName = process.env.TEST_DB_NAME;
 const dbPasswor = process.env.DB_PASSWORD;
 const dbPort = process.env.DB_PORT;
 const envName = process.env.NODE_ENV;
@@ -25,7 +26,7 @@ const environments = {
         database: {
             user: dbUser,
             host: dbHost,
-            name: dbName,
+            name: testDbName,
             password: dbPasswor,
             port: dbPort,
         },
@@ -47,7 +48,7 @@ const environments = {
         database: {
             user: dbUser,
             host: dbHost,
-            name: dbName,
+            name: devDbName,
             password: dbPasswor,
             port: dbPort,
         },
@@ -64,7 +65,7 @@ const environments = {
         database: {
             user: dbUser,
             host: dbHost,
-            name: dbName,
+            name: devDbName,
             password: dbPasswor,
             port: dbPort,
         },
