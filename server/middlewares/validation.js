@@ -9,7 +9,7 @@ import Schemas from '../helpers/validations.schemas';
 
 /**
  * A function to save an account when requested by the controller
- * @param {boolean} [useJoiError=false] indicates that Joi
+ * @param {boolean} [useJoiError=false] - indicates that Joi
  * validation errors should be used
  * @param {object} schema - The validation schema comming from
  * the helper @ref validationSchemas
