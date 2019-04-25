@@ -60,7 +60,6 @@ export default {
             // see if it's an admin request
             if (verify.adminOrStaffReq) {
                 if (verify.foundToken) {
-                    // console.log(verify);
                     if (verify.foundAdmin) {
                         userRegister(email, firstName, lastName,
                             password, type, isAdmin);
