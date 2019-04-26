@@ -1,7 +1,9 @@
+/**
+    * GET - / Gets the welcome message
+    * @param {object} req - the request object
+    * @param {object} res - the result object
+*/
 export default {
-    /**
-   * GET- / welcome message
-   */
     Home: (req, res) => {
         const status = 200;
         const result = {
