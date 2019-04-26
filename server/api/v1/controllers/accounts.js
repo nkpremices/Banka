@@ -18,7 +18,6 @@ import checkNumber from '../../../helpers/check.number';
  * controller used for deleting an account's status
  */
 
-
 export default {
 /**
  * POST - / Create a new bank account
