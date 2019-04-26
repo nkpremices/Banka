@@ -2,6 +2,11 @@ import bcrypt from 'bcrypt';
 import environment from '../configs/environnements';
 
 
+/**
+ * A function to hash a password given as parameter
+ *
+ * @param {String} password - The password to hash
+ */
 const createHash = password => new Promise((resolve, reject) => {
     bcrypt.hash(password, parseInt(environment.saltingRounds, 10),
         (err, hash) => {
