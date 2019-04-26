@@ -1,13 +1,29 @@
+/**
+ * The v2 users controller file
+ * @name usersController
+ */
+
 import usersModel from '../models/auth';
 import createHash from '../../../helpers/generate.hash';
 import createToken from '../../../helpers/generate.token';
 import sendError from '../../../helpers/send.error';
 
+/**
+ * An object to contain all the controllers functions
+ * @property {function} signup - The controller used
+ * for signup
+ * @property {function} signin - The controller used
+ * for login users
+ */
+
 export default {
+    /**
+        * POST - /auth/signup Create a new user
+        * @param {object} req - the request object
+        * @param {object} res - the result object
+        * @returns {Promise}
+    */
     signup: async (req, res) => {
-        /**
-            * POST - /signup Signup a new user
-        */
         // Initialising variables
         const result = {};
         const status = 201;
@@ -82,11 +98,14 @@ export default {
             sendError(205, result, res, error);
         }
     },
+    /**
+        * POST - /auth/signin singin a user
+        * @param {object} req - the request object
+        * @param {object} res - the result object
+        * @returns {Promise}
+    */
     signin: async (req, res) => {
-        /**
-            * POST - /auth/signin Sign in a new user
-        */
-        // Signin part of the users controller
+        // initializing variables
         const result = {};
         let status = 200;
         let error;
