@@ -47,6 +47,8 @@ export default {
         currency: string.lowercase().valid('usd', 'eu', 'rwf', 'cdf')
             .required(),
         type: string.lowercase().valid('current', 'savings').required(),
+        status: string.lowercase().valid('draft', 'active', 'dormant')
+            .required(),
     }),
     activateDeactivateAccount: Joi.object().keys({
         status: string.lowercase().valid('draft', 'active', 'dormant')
