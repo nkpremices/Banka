@@ -149,7 +149,7 @@ All the created API endpoints are documented and available [here](https://banka-
 * ```ACCOUNT_NUMBER_LENGTH```: Length of account number on bank account creation
 * ```JWT_KEY```: String used to creat tokens
 * ```SALTING_ROUNDS```: Integer used to hash passwords
-* ```ADMIN_TOKEN, ADMIN_EMAIL, ADMIN_PASSWORD, TEST_DB_NAME```: Admin token email, password, and test database name for testing purposes
+* ```ADMIN_TOKEN, ADMIN_EMAIL, ADMIN_PASSWORD, TEST_DB_NAME, TEST_USER_TOKEN```: Admin token email, password, test database name and test user token for testing purposes
 * ```DB_USER, DB_HOST, DEV_DB_NAME, DB_PASSWORD, DB_PORT```: Database connection variables
 
 ### 3. Notes
