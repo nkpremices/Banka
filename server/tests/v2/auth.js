@@ -16,6 +16,13 @@ const user = {
     password: 'R72kal20',
 };
 
+const user4 = {
+    email: 'user2@gmail.com',
+    firstName: 'Yvette',
+    lastName: 'kalimumbalo',
+    password: 'R72kal20',
+};
+
 const staffAdminUser = {
     email: 'primo4@gmail.com',
     firstName: 'Yvette',
@@ -82,6 +89,33 @@ describe('Signup v2', () => {// eslint-disable-line
                 done();
             });
     });
+
+    it('it should create a second new user account', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .post('/api/v2/auth/signup')
+            .send(user4)
+            .end((err, res) => {
+                res.should.have.status(201);
+                done();
+            });
+    });
+    it('it should login the second user', (done) => {// eslint-disable-line
+        const user4LoginTemp = {
+            email: user4.email,
+            password: user4.password,
+        };
+
+        chai
+            .request(app)
+            .post('/api/v2/auth/signin')
+            .send(user4LoginTemp)
+            .end((err, res) => {
+                res.should.have.status(200);
+                done();
+            });
+    });
+
 
     it('it should return an error message when the email is entered two times', // eslint-disable-line
         (done) => {
