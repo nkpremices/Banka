@@ -1,8 +1,13 @@
+/**
+ * A module to initialize the database every time it's needed
+ * @name initializeDb
+ */
 import querryDb from '../helpers/v2/db.connector';
 import tables from '../storage/db';
 import queries from '../helpers/v2/db.querries';
 import createHash from '../helpers/generate.hash';
 
+// The first admin credentials
 const admin = [
     'admin@gmail.com',
     'firstName',
@@ -13,6 +18,12 @@ const admin = [
     'false',
 ];
 
+/**
+ * A function to create tables and insert the first admin
+ * every time it's needed
+ * @returns {Promise}
+ *
+ */
 const createTables = () => new Promise(async (resolve, reject) => {
     try {
         await querryDb.query(tables.usersTable);
@@ -32,6 +43,12 @@ const createTables = () => new Promise(async (resolve, reject) => {
     }
 });
 
+/**
+ * A function to drop all the tables from the database
+ * every time it's needed
+ * @returns {Promise}
+ *
+ */
 const dropTables = () => new Promise(async (resolve, reject) => {
     try {
         await querryDb
