@@ -1,10 +1,26 @@
+/**
+ * The v2 users model file
+ * Conataining all the functions interacting with the users table
+ * @name usersModelV2
+ */
 import querryDb from '../../../helpers/v2/db.connector';
 import queries from '../../../helpers/v2/db.querries';
 import decodeJwt from '../../../helpers/decode.token';
 import comparePasswords from '../../../helpers/compare.passwords';
 
 
-// a function to save a user when requested
+/**
+ * A function to save a user when requested
+ *
+ * @param {String} email - The email of the user
+ * @param {String} firstName - The first name of the user
+ * @param {String} lastName - The last name of the user
+ * @param {String} password - The password of the user
+ * @param {String} type - The type of the user
+ * @param {boolean} isAdmin - True if it's an admin user
+ * @param {boolean} isLoggedIn - True if the user is logged in
+ * @returns {Promise}
+ */
 const saveUser = (email, firstName,
     lastName, password, type,
     isAdmin, isLoggedIn) => new Promise(async (resolve, reject) => {
@@ -29,7 +45,15 @@ const saveUser = (email, firstName,
     }
 });
 
-// A fuction to validate the decoded data
+/**
+ * A function to validate a token. It decodes it
+ * then see if there is a user that matches in the database
+ *
+ * @param {String} token - The provided token
+ * @returns {Object} tempUsr - The object containing the users
+ * informations
+ * @returns {Promise}
+ */
 const verifyToken = token => new Promise(async (resolve, reject) => {
     let tempUser;
     try {
@@ -46,8 +70,15 @@ const verifyToken = token => new Promise(async (resolve, reject) => {
     }
 });
 
-// A function to verify if a stored user is an admin
-// on admin/staff account creation
+/**
+ * A function to verify if a stored user is an admin
+ * on admin/staff account creation
+ * @param {String} email - The provided email from the client
+ * @param {String} type - The provided type from the client
+ * @param {Boolean} isAdmin - True if it's an admin
+ * @param {String} AdminToken - The  token of the user
+ * @returns {Promise}
+ */
 const VerifyUser = (email, type, isAdmin,
     AdminToken) => new Promise(async (resolve, reject) => {
     try {
@@ -85,7 +116,13 @@ const VerifyUser = (email, type, isAdmin,
     }
 });
 
-// A function to find if a user is stored
+/**
+ * A function to check users credentials on login
+ *
+ * @param {String} email - The providded email
+ * @param {String} password - The provided password
+ * @returns {Promise}
+ */
 const findUser = (email, password) => new Promise(async (resolve, reject) => {
     // An object to return
     const retObj = {
@@ -115,7 +152,12 @@ const findUser = (email, password) => new Promise(async (resolve, reject) => {
     }
 });
 
-// A function to login a user
+/**
+ * A function to login a user
+ *
+ * @param {Object} user - The user to login
+ * @returns {Promise}
+ */
 const loginUser = user => new Promise(async (resolve, reject) => {
     try {
         const tempUser = await querryDb
