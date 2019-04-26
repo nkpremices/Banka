@@ -1,3 +1,8 @@
+/**
+ * Library for all the tables of the database
+ * @name db
+ */
+// The users table
 const usersTable = `CREATE TABLE IF NOT EXISTS
 users(
   id SERIAL PRIMARY KEY,
@@ -9,6 +14,8 @@ users(
   isadmin BOOLEAN DEFAULT FALSE,
   isloggedin BOOLEAN DEFAULT FALSE
 );`;
+
+// The accounts table
 const accountsTable = `CREATE TABLE IF NOT EXISTS
 accounts(
   id SERIAL PRIMARY KEY,
@@ -22,6 +29,7 @@ accounts(
   balance FLOAT NOT NULL
 );`;
 
+// The transactions table
 const transactionsTable = `CREATE TABLE IF NOT EXISTS
 transactions(
   id SERIAL PRIMARY KEY,
