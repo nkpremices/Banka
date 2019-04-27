@@ -1,55 +1,80 @@
+/**
+ * The v1 transactions controller file
+ * @name transactionsControllerV2
+ */
+
 import transactionsModel from '../models/transactions';
 import accountsModel from '../models/accounts';
 import usersModel from '../models/auth';
 import sendError from '../../../helpers/send.error';
+import checkNumber from '../../../helpers/check.number';
+
+/**
+    * A function to execute a transactiion
+    * whether it is credit or debit
+    * @param {object} Req - the request object
+    * @param {object} Res - the result object
+    * @param {function} A function comming from the model
+    * it can be for crediting or for debiting
+    * @returns {Promise}
+*/
 
 const makeTransaction = async (Req, Res, operation, ModelFunction) => {
-    // account activation part of the users controller
+    // initializing variables
     const result = {};
     const resStatus = 200;
     let error;
 
     // getting the body and the account number
     const { amount } = Req.body;
-    const accountNumber = parseInt(Req.params.accountNumber, 10);
+    let { accountNumber } = Req.params;
+
+    // Validate the accountNumber
+    accountNumber = checkNumber(Req.params
+        .accountNumber) ? parseInt(accountNumber, 10) : false;
     // Getting the token from the header
     // Verifying the token
     const tempUser = await usersModel.verifyToken(Req.headers.token);
     if (tempUser) {
         if (tempUser.type === 'staff' && tempUser.isloggedin) {
-            // trying to save an account
-            try {
-                // Verify if the account exists
-                // if not, an exception will be catched up
-                const tempAccount = await accountsModel
-                    .findAccount(accountNumber);
+            if (accountNumber) {
+                // trying to save an account
+                try {
+                    // Verify if the account exists
+                    // if not, an exception will be catched up
+                    const tempAccount = await accountsModel
+                        .findAccount(accountNumber);
 
-                // Verify if the account is active
-                const Verify = await accountsModel
-                    .verifyAccountStatus(tempAccount, 'active');
+                    // Verify if the account is active
+                    const Verify = await accountsModel
+                        .verifyAccountStatus(tempAccount, 'active');
 
-                const tempTransaction = await ModelFunction(tempAccount,
-                    amount, tempUser);
+                    const tempTransaction = await ModelFunction(tempAccount,
+                        amount, tempUser);
 
-                if (Verify) {
-                    // Sending back the required object
-                    result.status = resStatus;
-                    result.message = `Account ${operation}ed successfully`;
-                    result.data = {
-                        transactionId: tempTransaction.id,
-                        accountNumber: tempAccount.accountnumber,
-                        amount,
-                        cashier: tempUser.id,
-                        transactionType: tempTransaction.type,
-                        accountBalance: tempTransaction.newbalance,
-                    };
-                    Res.status(resStatus).json(result);
-                } else {
-                    error = `Only an active account can be  ${operation}ed`;
-                    sendError(403, result, Res, error);
+                    if (Verify) {
+                        // Sending back the required object
+                        result.status = resStatus;
+                        result.message = `Account ${operation}ed successfully`;
+                        result.data = {
+                            transactionId: tempTransaction.id,
+                            accountNumber: tempAccount.accountnumber,
+                            amount,
+                            cashier: tempUser.id,
+                            transactionType: tempTransaction.type,
+                            accountBalance: tempTransaction.newbalance,
+                        };
+                        Res.status(resStatus).json(result);
+                    } else {
+                        error = `Only an active account can be  ${operation}ed`;
+                        sendError(403, result, Res, error);
+                    }
+                } catch (err) {
+                    sendError(404, result, Res, `${err}`.replace('Error', ''));
                 }
-            } catch (err) {
-                sendError(404, result, Res, `${err}`.replace('Error', ''));
+            } else {
+                error = 'Invalid account number provided';
+                sendError(400, result, Res, error);
             }
         } else {
             error = `Only a logged in staff(cashier) can  ${operation} `
@@ -62,58 +87,126 @@ const makeTransaction = async (Req, Res, operation, ModelFunction) => {
     }
 };
 
+/**
+ * An object to contain all the controllers functions
+ * @property {function} creditAccount - The controller used
+ * for crediting bank accounts
+ * @property {function} debitAccount - The
+ * controller used for for crediting bank accounts
+ * @property {function} debitAccount - The
+ * controller used for for crediting bank accounts
+ * @property {function} getSpecificTransaction - The
+ * controller used for getting a specific transaction
+ */
+
 export default {
-    creditAccount: async (req, res) => {
     /**
-        * POST - /<account-number>/credit
-        * Credit an account
+        * POST - /<account-number>/credit Credit a bank account.
+        * @param {object} req - the request object
+        * @param {object} res - the result object
+        * @returns {Promise}
     */
+    creditAccount: async (req, res) => {
         await makeTransaction(req, res, 'credit', transactionsModel
             .saveTransaction.credit);
     },
-    debitAccount: async (req, res) => {
     /**
-        * POST - /<account-number>/debit
-        * Debit an account
+        * POST - /<account-number>/debit Debit a bank account.
+        * @param {object} req - the request object
+        * @param {object} res - the result object
+        * @returns {Promise}
     */
+    debitAccount: async (req, res) => {
         await makeTransaction(req, res, 'debit', transactionsModel
             .saveTransaction.debit);
     },
-    getSpecificTransaction: async (req, res) => {
     /**
-        * Get - /<transactio-id>/debit
-        * Debit an account
+        * GET - /<transactio-id>
+        * @param {object} req - the request object
+        * @param {object} res - the result object
+        * @returns {Promise}
     */
+    getSpecificTransaction: async (req, res) => {
         // account activation part of the users controller
         const result = {};
         const resStatus = 200;
         let error;
 
-        const transactionId = parseInt(req.params.transactionId, 10);
+        let { transactionId } = req.params;
+
+        // Validate the accountNumber
+        transactionId = checkNumber(req.params
+            .transactionId) ? parseInt(transactionId, 10) : false;
         // Getting the token from the header
         // Verifying the token
         const tempUser = await usersModel.verifyToken(req.headers.token);
         if (tempUser) {
             if (tempUser.isloggedin) {
-                // trying to save an account
-                try {
-                    // Verify if the account exists
-                    // if not, an exception will be catched up
-                    const transaction = await transactionsModel
-                        .findTransactions.specific(transactionId);
-
-
-                    if (transaction.length === 0) {
-                        error = 'No transactions found for this ID ';
-                        sendError(404, result, res, error);
-                    } else {
-                        // Sending back the required object
-                        result.status = resStatus;
-                        result.data = transaction;
-                        res.status(resStatus).json(result);
+                if (transactionId) {
+                // trying to save the transaction
+                    try {
+                        // Verify if the account exists
+                        // if not, an exception will be catched
+                        // up
+                        const transaction = await transactionsModel
+                            .findTransactions.specific(transactionId);
+                        if ((tempUser.isadmin || tempUser.type === 'staff')
+                        && !(transaction.length === 0)) {
+                            // Sending back the required
+                            // object
+                            result.status = resStatus;
+                            result.data = transaction.map((el) => {
+                                const tempTransaction = {
+                                    transactionId: el.id,
+                                    createdOn: new Date(el.createdon),
+                                    type: el.type,
+                                    accountNumber: el.accountnumber,
+                                    amount: el.amount,
+                                    oldBalance: el.oldbalance,
+                                    newBalance: el.newbalance,
+                                };
+                                return tempTransaction;
+                            });
+                            res.status(resStatus).json(result);
+                        } else if (tempUser.type === 'client'
+                        && !(transaction.length === 0)) {
+                            // console.log(transaction);
+                            const tempAccount = await accountsModel
+                                .findAccount(transaction[0].accountnumber);
+                            if (tempAccount.owneremail === tempUser.email) {
+                            // Sending back the required
+                            // object
+                                result.status = resStatus;
+                                result.data = transaction.map((el) => {
+                                    const tempTransaction = {
+                                        transactionId: el.id,
+                                        createdOn: new Date(el.createdon),
+                                        type: el.type,
+                                        accountNumber: el.accountnumber,
+                                        amount: el.amount,
+                                        oldBalance: el.oldbalance,
+                                        newBalance: el.newbalance,
+                                    };
+                                    return tempTransaction;
+                                });
+                                res.status(resStatus).json(result);
+                            } else {
+                                error = 'A user only see transactions '
+                                + 'related to his accounts';
+                                sendError(403, result, res, error);
+                            }
+                        } else {
+                            error = 'No transactions found for ID '
+                            + `${transactionId}`;
+                            sendError(404, result, res, error);
+                        }
+                    } catch (err) {
+                        sendError(404, result, res, `${err}`
+                            .replace('Error', ''));
                     }
-                } catch (err) {
-                    sendError(404, result, res, `${err}`.replace('Error', ''));
+                } else {
+                    error = 'Invalid transaction Id provided';
+                    sendError(400, result, res, error);
                 }
             } else {
                 error = 'Only a logged in user can  get a transaction '

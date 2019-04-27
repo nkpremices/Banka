@@ -37,13 +37,13 @@ app.use('/docs/v1', v1Docs);
 app.use('/api/v2', v2);
 app.use('/docs/v2', v2Docs);
 
+app.use('/', home);
+
 // default error messages
 app.get('*', defaultErrorController);
 app.post('*', defaultErrorController);
 app.delete('*', defaultErrorController);
 app.patch('*', defaultErrorController);
-
-app.use('/', home);
 
 app.listen(`${environement.app.port}`, () => {
     // eslint-disable-next-line

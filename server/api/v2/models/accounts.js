@@ -1,6 +1,22 @@
+/**
+ * The v1 users model file
+ * @name usersModelV1
+ */
+
 import generateRandomNumber from '../../../helpers/generate.random.number';
 import querryDb from '../../../helpers/v2/db.connector';
 import queries from '../../../helpers/v2/db.querries';
+
+/**
+ * A function to save an account when requested by the controller
+ * @param {String} accountName - the name of the account
+ * @param {String} currency - the account currency
+ * @param {String} type - the account type
+ * @param {String} status - the account status
+ * @param {Object} user - an object containing all information
+ *  about a user
+ * @returns {Promise}
+ */
 
 // a function to save an account when requested
 const saveAccount = (accountName, currency,
@@ -25,13 +41,27 @@ const saveAccount = (accountName, currency,
             .query(queries.insertAccount, details);
         resolve(tempAccount.rows[0]);
     } catch (error) {
-        reject(new Error('Error on account saving'));
+        reject(error);
     }
 });
 
+/**
+ * An object to contain fuctions to call to get a record from
+ * the database to verify it exists
+ * @property {function} name - A function to get an account from
+ * the database by the account name
+ * @property {function} number - A function to get an account
+ * from the database by acount number
+ */
 // A function to verify if an account is already stored
 const verifyAccount = {
-    // By name
+    /**
+     * A function to get an account from the database
+     * by the account name
+     * @param {String} name - The account name of the account
+     * @param {Number} owner - The Id of the owner
+     * @returns {Promise}
+     */
     name: (name, owner) => new Promise(async (resolve, reject) => {
         try {
             const tempAccount = await querryDb
@@ -41,7 +71,13 @@ const verifyAccount = {
             reject(new Error('Error on account verification'));
         }
     }),
-    // By account number
+    /**
+     * A function to get an account from the database
+     * by acount number
+     * @param {Number} number - The account number of
+     * the account
+     * @returns {Promise}
+     */
     number: number => new Promise(async (resolve, reject) => {
         try {
             const tempAccount = await querryDb
@@ -53,7 +89,12 @@ const verifyAccount = {
     }),
 };
 
-//  a function to activate/deactivate an account when requested
+/**
+ * A function to call to find an account for doing further
+ * updates on it
+ * @param {Number} accountNumber
+ * @returns {Promise}
+ */
 const findAccount = accountNumber => new Promise(async (resolve, reject) => {
     // creating a temp account
     try {
@@ -69,6 +110,15 @@ const findAccount = accountNumber => new Promise(async (resolve, reject) => {
     }
 });
 
+/**
+ * A function to verify the status of an account
+ *
+ * @param {Object} account - The account whose status is going
+ * to be verified
+ * @param {string} status - The status to check
+ * @returns {boolean} retObj - True if the status is the same
+ */
+
 // A function to verify the account status
 const verifyAccountStatus = (account,
     status) => new Promise(async (resolve, reject) => {
@@ -82,7 +132,13 @@ const verifyAccountStatus = (account,
     }
 });
 
-// A function to change an accounts status
+/**
+ * A function to change the satus of an account
+ * @param {Object} account - the account whose status
+ * is going to be changed
+ * @param {String} status - The new status
+ * @returns {Promise}
+ */
 const changeAccountStatus = (account,
     status) => new Promise(async (resolve, reject) => {
     try {
@@ -94,7 +150,12 @@ const changeAccountStatus = (account,
     }
 });
 
-//  a function to delete an account when requested
+/**
+ * a function to delete an account when requested by
+ * the controller
+ * @param {Number} accountNumber
+ * @returns {Promise}
+ */
 const deleteAccount = accountNumber => new Promise(async (resolve, reject) => {
     // creating a temp account
     const tempAccount = await verifyAccount.number(accountNumber);
@@ -115,7 +176,12 @@ const deleteAccount = accountNumber => new Promise(async (resolve, reject) => {
     }
 });
 
-// A function to get a specific user accounts
+/**
+ * A function to get  all the accounts of a
+ * specific user
+ * @param {owner} owner - the owner of the accounts
+ * @returns {Promise}
+ */
 const getSpecifiUsersAccounts = owner => new Promise(async (resolve,
     reject) => {
     try {
@@ -127,7 +193,11 @@ const getSpecifiUsersAccounts = owner => new Promise(async (resolve,
     }
 });
 
-// A function to fetch all accounts records
+
+/**
+ * A function to fetch all accounts records
+ * @returns {Promise}
+ */
 const getAllAccounts = () => new Promise(async (resolve, reject) => {
     try {
         const Accounts = await querryDb
@@ -137,8 +207,11 @@ const getAllAccounts = () => new Promise(async (resolve, reject) => {
         reject(new Error('Error while trying to fetch all accounts'));
     }
 });
-
-// A function to get all accounts by status
+/**
+ * A function to get all accounts by status
+ * @param {String} status - the status of the accounts
+ * @returns {Promise}
+ */
 const getAccountsByStatus = status => new Promise(async (resolve, reject) => {
     try {
         const Accounts = await querryDb

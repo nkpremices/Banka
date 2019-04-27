@@ -1,6 +1,15 @@
+/**
+ * Create the first admin of v1
+ * @name createAdminV1
+ */
+
 import usersModel from '../../api/v1/models/auth';
 import createHash from '../generate.hash';
 
+/**
+ * A function to create the first v1 admin
+ * @returns {Promise}
+ */
 export default async () => {
     const admin = {
         email: 'admin@gmail.com',

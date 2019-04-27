@@ -200,7 +200,30 @@ describe('Transactions v2', () => {// eslint-disable-line
                 res.body.data.should.have
                     .property('length', 1);
                 res.body.data[0].should.have
-                    .property('id', 2);
+                    .property('transactionId', 2);
+                done();
+            });
+    });
+    it('it should\'t get a specific transaction with letters in id', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .get('/api/v2/transactions/2jhh')
+            .set('token', `${userToken}`)
+            .end((err, res) => {
+                res.should.have.status(400);
+                res.body.data.should.be.an('object');
+                res.body.data.should.have
+                    .property('error', 'Invalid transaction Id provided');
+                done();
+            });
+    });
+    it('it shouldn\'t get a specific transaction with another user\'s token', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .get('/api/v2/transactions/2')
+            .set('token', `${environment.user.token}`)
+            .end((err, res) => {
+                res.should.have.status(403);
                 done();
             });
     });

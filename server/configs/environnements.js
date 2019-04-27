@@ -1,10 +1,13 @@
-import dotenv from 'dotenv';
 /**
  * Create and export environment variables
+ * @name environments
  */
+
+import dotenv from 'dotenv';
 
 dotenv.config();
 
+// Initializing env variables
 const appPort = process.env.PORT;
 const saltingRounds = process.env.SALTING_ROUNDS;
 const jwtKey = process.env.JWT_KEY;
@@ -16,7 +19,14 @@ const testDbName = process.env.TEST_DB_NAME;
 const dbPasswor = process.env.DB_PASSWORD;
 const dbPort = process.env.DB_PORT;
 const envName = process.env.NODE_ENV;
+const userToken = process.env.TEST_USER_TOKEN;
 
+/**
+ * An object to contain all the needed environements
+ * @property {object} test - The test env object
+ * @property {object} development - The development env object
+ * @property {object} staging - The staging env object
+ */
 const environments = {
     test: {
         name: envName,
@@ -34,6 +44,9 @@ const environments = {
             token: process.env.ADMIN_TOKEN,
             email: process.env.ADMIN_EMAIL,
             password: process.env.ADMIN_PASSWORD,
+        },
+        user: {
+            token: userToken,
         },
         saltingRounds,
         jwtKey,

@@ -1,9 +1,30 @@
+/**
+ * The v2 transactions model file
+ * @name transactionsModelV2
+ */
+
 import querryDb from '../../../helpers/v2/db.connector';
 import queries from '../../../helpers/v2/db.querries';
 
 
-// a function to save a transaction when requested
+/**
+ * An obect to contain methods to save a
+ * transaction wether it's credit or debit
+ * @property {function} credit - The function
+ * to credit an account
+ * @property {function} debit - The function
+ * to debit an account
+ */
 const saveTransaction = {
+    /**
+     * A fuction to credit an account
+     *
+     * @param {Object} tempAccount - The account to credit
+     * @param {Number} amount - The amount of money to credit
+     * @param {Number} cashier - The id of the cashier who
+     * executes the transaction
+     * @returns {Promise}
+     */
     credit: (tempAccount,
         amount, cashier) => new Promise(async (resolve, reject) => {
         // get the old balance of the account
@@ -35,6 +56,15 @@ const saveTransaction = {
         }
         resolve(tempTransaction.rows[0]);
     }),
+    /**
+     * A fuction to debit an account
+     *
+     * @param {Object} tempAccount - The account to debit
+     * @param {Number} amount - The amount of money to debit
+     * @param {Number} cashier - The id of the cashier who
+     * executes the transaction
+     * @returns {Promise}
+     */
     debit: (tempAccount,
         amount, cashier) => new Promise(async (resolve, reject) => {
         // get the old balance of the account
@@ -74,8 +104,20 @@ const saveTransaction = {
     }),
 };
 
-// Functions to find transactions
+/**
+ * An object to contain all fuctions to find transactions records
+ * @property {function} all - A function for geting all records
+ * @property {function} specific - A function for geting a
+ * specific reccord
+ */
 const findTransactions = {
+    /**
+     * A function for geting all records
+     *
+     * @param {String} accountNumber - The account mumber of the
+     * requested account
+     * @returns {Promise}
+     */
     all: async accountNumber => new Promise(async (resolve, reject) => {
         try {
             const transactions = await querryDb
@@ -86,6 +128,13 @@ const findTransactions = {
             reject(new Error(err));
         }
     }),
+    /**
+     * A function for geting a specific transaction
+     *
+     * @param {String} transactionId - The Id of the
+     * transaction
+     * @returns {Promise}
+     */
     specific: async transactionId => new Promise(async (resolve, reject) => {
         try {
             const transactions = await querryDb
