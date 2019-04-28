@@ -7,7 +7,6 @@ import accountsModel from '../models/accounts';
 import transactionsModel from '../models/transactions';
 import usersModel from '../models/auth';
 import sendError from '../../../helpers/send.error';
-import checkNumber from '../../../helpers/check.number';
 
 /**
  * An object to contain all the controllers functions
@@ -37,6 +36,7 @@ export default {
         const result = {};
         const resStatus = 201;
         let error;
+        let tempUser;
 
         // getting the body
         const {
@@ -45,9 +45,13 @@ export default {
             type,
         } = req.body;
 
-        // Getting the token from the header
+        // Getting the token from headers
+        const { authorization } = req.headers;
         // Verifying the token
-        const tempUser = await usersModel.verifyToken(req.headers.token);
+        if (authorization) {
+            tempUser = await usersModel
+                .verifyToken(authorization.split(' ')[1]);
+        }
         if (tempUser) {
             // Verifying if the user is logged in
             if (tempUser.isloggedin) {
@@ -76,7 +80,7 @@ export default {
                         res.status(resStatus).json(result);
                     } catch (err) {
                         sendError(400, result, res, `${err}`
-                            .replace('Error', ''));
+                            .replace('Error:', ''));
                     }
                 } else {
                     error = 'Account name already in use';
@@ -102,56 +106,52 @@ export default {
         const result = {};
         const resStatus = 200;
         let error;
+        let tempUser;
 
         // getting the body and the account number
         const { status } = req.body;
-        let { accountNumber } = req.params;
+        const { accountNumber } = req.params;
 
-        // Validate the accountNumber
-        accountNumber = checkNumber(req.params
-            .accountNumber) ? accountNumber : false;
-        // Getting the token from the header
+        const { authorization } = req.headers;
         // Verifying the token
-        const tempUser = await usersModel.verifyToken(req.headers.token);
+        if (authorization) {
+            tempUser = await usersModel
+                .verifyToken(authorization.split(' ')[1]);
+        }
         if (tempUser) {
             if ((tempUser.isadmin || tempUser.type === 'staff')
             && tempUser.isloggedin) {
-                if (accountNumber) {
-                    // trying to find if the account exists
-                    try {
-                        const tempAccount = await accountsModel
-                            .findAccount(accountNumber);
+                // trying to find if the account exists
+                try {
+                    const tempAccount = await accountsModel
+                        .findAccount(accountNumber);
 
-                        // Veryfying the status first
-                        const verify = await accountsModel
-                            .verifyAccountStatus(tempAccount, status);
+                    // Veryfying the status first
+                    const verify = await accountsModel
+                        .verifyAccountStatus(tempAccount, status);
 
-                        // Display a custom message if the
-                        // status is the same
-                        if (verify) {
-                            error = `Account ${tempAccount.accountnumber} `
-                            + `is already ${status}`;
-                            sendError(205, result, res, error);
-                        } else {
-                            // change the account status
-                            const updatedAccount = await accountsModel
-                                .changeAccountStatus(tempAccount, status);
-                            // Sending back the required object
-                            result.status = resStatus;
-                            result.message = 'Account updated successfully';
-                            result.data = {
-                                accountNumber: updatedAccount.accountnumber,
-                                status: updatedAccount.status,
-                            };
-                            res.status(resStatus).json(result);
-                        }
-                    } catch (err) {
-                        sendError(404, result, res, `${err}`
-                            .replace('Error', ''));
+                    // Display a custom message if the
+                    // status is the same
+                    if (verify) {
+                        error = `Account ${tempAccount.accountnumber} `
+                        + `is already ${status}`;
+                        sendError(205, result, res, error);
+                    } else {
+                        // change the account status
+                        const updatedAccount = await accountsModel
+                            .changeAccountStatus(tempAccount, status);
+                        // Sending back the required object
+                        result.status = resStatus;
+                        result.message = 'Account updated successfully';
+                        result.data = {
+                            accountNumber: updatedAccount.accountnumber,
+                            status: updatedAccount.status,
+                        };
+                        res.status(resStatus).json(result);
                     }
-                } else {
-                    error = 'Invalid account number provided';
-                    sendError(400, result, res, error);
+                } catch (err) {
+                    sendError(404, result, res, `${err}`
+                        .replace('Error:', ''));
                 }
             } else {
                 error = 'Only a logged in admin/staff can activate/deactivate '
@@ -175,45 +175,41 @@ export default {
         const result = {};
         const resStatus = 200;
         let error;
+        let tempUser;
 
         // getting the the account number
-        let { accountNumber } = req.params;
+        const { accountNumber } = req.params;
 
-        // Validate the accountNumber
-        accountNumber = checkNumber(req.params
-            .accountNumber) ? accountNumber : false;
-
-        // Getting the token from the header
+        // Getting the token from headers
+        const { authorization } = req.headers;
         // Verifying the token
-        const tempUser = await usersModel.verifyToken(req.headers.token);
+        if (authorization) {
+            tempUser = await usersModel
+                .verifyToken(authorization.split(' ')[1]);
+        }
 
         if (tempUser) {
             if ((tempUser.isadmin || tempUser.type === 'staff')
                 && tempUser.isloggedin) {
-                if (accountNumber) {
-                    // trying to find the account vefore to
-                    // delete
-                    try {
-                        const tempAccount = await accountsModel
-                            .findAccount(accountNumber);
+                // trying to find the account vefore to
+                // delete
+                try {
+                    const tempAccount = await accountsModel
+                        .findAccount(accountNumber);
 
-                        // deleting the account
-                        await accountsModel
-                            .deleteAccount(tempAccount.accountnumber);
+                    // deleting the account
+                    await accountsModel
+                        .deleteAccount(tempAccount.accountnumber);
 
-                        // Sending back the required object
-                        result.status = resStatus;
-                        result.data = {
-                            message: 'Account successfully deleted',
-                        };
-                        res.status(resStatus).json(result);
-                    } catch (err) {
-                        sendError(404, result, res, `${err}`
-                            .replace('Error', ''));
-                    }
-                } else {
-                    error = 'Invalid account number provided';
-                    sendError(400, result, res, error);
+                    // Sending back the required object
+                    result.status = resStatus;
+                    result.data = {
+                        message: 'Account successfully deleted',
+                    };
+                    res.status(resStatus).json(result);
+                } catch (err) {
+                    sendError(404, result, res, `${err}`
+                        .replace('Error:', ''));
                 }
             } else {
                 error = 'Only a logged in admin/staf can delete '
@@ -238,66 +234,62 @@ export default {
         const result = {};
         const resStatus = 200;
         let error;
+        let tempUser;
 
         // getting the the account number
-        let { accountNumber } = req.params;
+        const { accountNumber } = req.params;
 
-        // Validate the accountNumber
-        accountNumber = checkNumber(req.params
-            .accountNumber) ? accountNumber : false;
-
-        // Getting the token from the header
+        // Getting the token from headers
+        const { authorization } = req.headers;
         // Verifying the token
-        const tempUser = await usersModel.verifyToken(req.headers.token);
+        if (authorization) {
+            tempUser = await usersModel
+                .verifyToken(authorization.split(' ')[1]);
+        }
 
         if (tempUser) {
             if (tempUser.isloggedin) {
-                if (accountNumber) {
-                    // trying to fetch data
-                    try {
-                        // Finding the account
-                        // eslint-disable-next-line
-                        const tempAccount = await accountsModel
-                            .findAccount(accountNumber);
-                        if (tempUser.email === tempAccount.owneremail) {
-                            // Getting the transactions
-                            const transactions = await transactionsModel
-                                .findTransactions.all(accountNumber);
+                // trying to fetch data
+                try {
+                    // Finding the account
+                    // eslint-disable-next-line
+                    const tempAccount = await accountsModel
+                        .findAccount(accountNumber);
+                    if (tempUser.email === tempAccount.owneremail) {
+                        // Getting the transactions
+                        const transactions = await transactionsModel
+                            .findTransactions.all(accountNumber);
 
-                            if (transactions.length === 0) {
-                                error = 'No transactions found for '
-                                + 'this account ';
-                                sendError(404, result, res, error);
-                            } else {
-                                // Sending back the
-                                // required object
-                                result.status = resStatus;
-                                result.data = transactions.map((el) => {
-                                    const transaction = {
-                                        transactionId: el.id,
-                                        createdOn: new Date(el.createdon),
-                                        type: el.type,
-                                        accountNumber: el.accountnumber,
-                                        amount: el.amount,
-                                        oldBalance: el.oldbalance,
-                                        newBalance: el.newbalance,
-                                    };
-                                    return transaction;
-                                });
-                                res.status(resStatus).json(result);
-                            }
+                        if (transactions.length === 0) {
+                            error = 'No transactions found for '
+                            + 'this account ';
+                            sendError(404, result, res, error);
                         } else {
-                            error = 'A user can view only the transactions '
-                            + 'related to his own accounts';
-                            sendError(403, result, res, error);
+                            // Sending back the
+                            // required object
+                            result.status = resStatus;
+                            result.data = transactions.map((el) => {
+                                const transaction = {
+                                    transactionId: el.id,
+                                    createdOn: new Date(el.createdon),
+                                    type: el.type,
+                                    accountNumber: el.accountnumber,
+                                    amount: el.amount,
+                                    oldBalance: el.oldbalance,
+                                    newBalance: el.newbalance,
+                                };
+                                return transaction;
+                            });
+                            res.status(resStatus).json(result);
                         }
-                    } catch (err) {
-                        sendError(404, result, res, `${err}`
-                            .replace('Error', ''));
+                    } else {
+                        error = 'A user can view only the transactions '
+                        + 'related to his own accounts';
+                        sendError(403, result, res, error);
                     }
-                } else {
-                    error = 'Invalid account number provided';
-                    sendError(400, result, res, error);
+                } catch (err) {
+                    sendError(404, result, res, `${err}`
+                        .replace('Error:', ''));
                 }
             } else {
                 error = 'Only a logged in user can get an account\'s '
@@ -322,68 +314,69 @@ export default {
         const result = {};
         const resStatus = 200;
         let error;
+        let tempUser;
 
         // getting the the user email
         const { userEmail } = req.params;
 
-        // Getting the token from the header
+        // Getting the token from headers
+        const { authorization } = req.headers;
         // Verifying the token
-        const tempUser = await usersModel.verifyToken(req.headers.token);
+        if (authorization) {
+            tempUser = await usersModel
+                .verifyToken(authorization.split(' ')[1]);
+        }
 
         if (tempUser) {
-            if (tempUser.isloggedin) {
-                if (userEmail === tempUser.email
-                    || (tempUser.isadmin || tempUser.type === 'staff')) {
-                    try {
-                        // Trying to verify the email
-                        const verify = await usersModel.VerifyUser(userEmail);
-                        const tempClient = verify.tempUser;
+            if (tempUser.isloggedin
+                && (tempUser.isadmin || tempUser.type === 'staff')) {
+                try {
+                    // Trying to verify the email
+                    const verify = await usersModel.VerifyUser(userEmail);
+                    const tempClient = verify.tempUser;
 
-                        // Accessing his accounts if he exists
-                        if (verify.foundEmail) {
-                            const clientAccounts = await accountsModel
-                                .getSpecifiUsersAccounts(tempClient.id);
+                    // Accessing his accounts if he exists
+                    if (verify.foundEmail) {
+                        const clientAccounts = await accountsModel
+                            .getSpecifiUsersAccounts(tempClient.id);
 
-                            if (clientAccounts.length === 0) {
-                                error = 'No accounts found for this client ';
-                                sendError(404, result, res, error);
-                            } else {
-                                // Sending back the
-                                // required object
-                                result.status = resStatus;
-                                result.data = clientAccounts.map((el) => {
-                                    const tempTransaction = {
-                                        createdOn: new Date(el.createdon),
-                                        accountNumber: el.accountnumber,
-                                        type: el.type,
-                                        status: el.status,
-                                        balance: el.balance,
-                                    };
-                                    return tempTransaction;
-                                });
-                                res.status(resStatus).json(result);
-                            }
-                        } else {
-                            error = 'A user with the provided '
-                            + 'email was not found ';
+                        if (clientAccounts.length === 0) {
+                            error = 'No accounts found for this client ';
                             sendError(404, result, res, error);
+                        } else {
+                            // Sending back the
+                            // required object
+                            result.status = resStatus;
+                            result.data = clientAccounts.map((el) => {
+                                const tempTransaction = {
+                                    createdOn: new Date(el.createdon),
+                                    accountNumber: el.accountnumber,
+                                    type: el.type,
+                                    status: el.status,
+                                    balance: el.balance,
+                                };
+                                return tempTransaction;
+                            });
+                            res.status(resStatus).json(result);
                         }
-                    } catch (err) {
-                        sendError(404, result, res, `${err}`
-                            .replace('Error', ''));
+                    } else {
+                        error = 'A user with the provided '
+                        + 'email was not found ';
+                        sendError(404, result, res, error);
                     }
-                } else {
-                    error = 'A user can view only his own accounts';
-                    sendError(403, result, res, error);
+                } catch (err) {
+                    sendError(404, result, res, `${err}`
+                        .replace('Error:', ''));
                 }
             } else {
-                error = 'Only a logged in user can View all accounts '
-                    + 'owned by a specific user. Provide a user token or login';
+                error = 'Only a logged in Admin/staff can View all accounts '
+                    + 'owned by a specific user. Provide a Admin/staff token '
+                    + 'or login';
                 sendError(403, result, res, error);
             }
         } else {
             error = 'Invalid token provided or the '
-            + 'user is not signed up';
+            + 'Admin/staff is not signed up';
             sendError(403, result, res, error);
         }
     },
@@ -399,48 +392,44 @@ export default {
         const result = {};
         const resStatus = 200;
         let error;
+        let tempUser;
 
         // getting the the account id
-        let { accountNumber } = req.params;
+        const { accountNumber } = req.params;
 
-        // Validate the accountNumber
-        accountNumber = checkNumber(req.params
-            .accountNumber) ? accountNumber : false;
-
-        // Getting the token from the header
+        // Getting the token from headers
+        const { authorization } = req.headers;
         // Verifying the token
-        const tempUser = await usersModel.verifyToken(req.headers.token);
+        if (authorization) {
+            tempUser = await usersModel
+                .verifyToken(authorization.split(' ')[1]);
+        }
 
         if (tempUser) {
             if (tempUser.isloggedin) {
-                if (accountNumber) {
-                    // trying to find the account
-                    try {
-                        const tempAccount = await accountsModel
-                            .findAccount(accountNumber);
-                        if (tempUser.email === tempAccount.owneremail) {
-                            // Sending back the required object
-                            result.status = resStatus;
-                            result.data = {
-                                createdOn: new Date(tempAccount.createdon),
-                                accountNumber: tempAccount.accountnumber,
-                                ownerEmail: tempAccount.owneremail,
-                                type: tempAccount.type,
-                                status: tempAccount.status,
-                                balance: tempAccount.balance,
-                            };
-                            res.status(resStatus).json(result);
-                        } else {
-                            error = 'A user can view only his own acccounts';
-                            sendError(403, result, res, error);
-                        }
-                    } catch (err) {
-                        sendError(404, result, res, `${err}`
-                            .replace('Error', ''));
+                // trying to find the account
+                try {
+                    const tempAccount = await accountsModel
+                        .findAccount(accountNumber);
+                    if (tempUser.email === tempAccount.owneremail) {
+                        // Sending back the required object
+                        result.status = resStatus;
+                        result.data = {
+                            createdOn: new Date(tempAccount.createdon),
+                            accountNumber: tempAccount.accountnumber,
+                            ownerEmail: tempAccount.owneremail,
+                            type: tempAccount.type,
+                            status: tempAccount.status,
+                            balance: tempAccount.balance,
+                        };
+                        res.status(resStatus).json(result);
+                    } else {
+                        error = 'A user can view only his own acccounts';
+                        sendError(403, result, res, error);
                     }
-                } else {
-                    error = 'Invalid account number provided';
-                    sendError(400, result, res, error);
+                } catch (err) {
+                    sendError(404, result, res, `${err}`
+                        .replace('Error:', ''));
                 }
             } else {
                 error = 'Only a logged in user can get a specific account\'s '
@@ -465,9 +454,15 @@ export default {
         const result = {};
         const resStatus = 200;
         let error;
-        // Getting the token from the header
+        let tempSuperUser;
+
+        // Getting the token from headers
+        const { authorization } = req.headers;
         // Verifying the token
-        const tempSuperUser = await usersModel.verifyToken(req.headers.token);
+        if (authorization) {
+            tempSuperUser = await usersModel
+                .verifyToken(authorization.split(' ')[1]);
+        }
         // Getting the queries params
         const { status } = req.query;
 
@@ -477,40 +472,51 @@ export default {
                 // trying to fetch data
                 try {
                     let allAccounts;
-                    if (status) {
+                    if (status === 'active' || status === 'dormant') {
                         allAccounts = await accountsModel
                             .getAccountsByStatus(status);
-                    } else {
+                    } else if (Object.keys(req.query).length === 0) {
                         allAccounts = await accountsModel
                             .getAllAccounts();
                     }
 
-                    if (allAccounts.length === 0) {
-                        error = 'There are no bank accounts for now';
-                        sendError(404, result, res, error);
+                    if (allAccounts) {
+                        if (allAccounts.length === 0) {
+                            const queryParam = status === 'dormant'
+                                ? 'dormant' : 'draft';
+                            error = `There are no ${queryParam} `
+                            + 'bank accounts for now';
+                            sendError(404, result, res, error);
+                        } else {
+                            // Sending back the required object
+                            result.status = resStatus;
+                            result.data = allAccounts.map((el) => {
+                                const account = {
+                                    createdOn: new Date(el.createdon),
+                                    accountNumber: el.accountnumber,
+                                    ownerEmail: el.owneremail,
+                                    type: el.type,
+                                    status: el.status,
+                                    balance: el.balance,
+                                };
+                                return account;
+                            });
+                            res.status(resStatus).json(result);
+                        }
+                    } else if ((status && Object.keys(req.query).length > 0)
+                        || status === '') {
+                        error = 'Invalid status provided';
+                        sendError(403, result, res, error);
                     } else {
-                        // Sending back the required object
-                        result.status = resStatus;
-                        result.data = allAccounts.map((el) => {
-                            const account = {
-                                createdOn: new Date(el.createdon),
-                                accountNumber: el.accountnumber,
-                                ownerEmail: el.owneremail,
-                                type: el.type,
-                                status: el.status,
-                                balance: el.balance,
-                            };
-                            return account;
-                        });
-                        res.status(resStatus).json(result);
+                        error = 'Invalid querry parameter';
+                        sendError(403, result, res, error);
                     }
                 } catch (err) {
-                    sendError(404, result, res, `${err}`.replace('Error', ''));
+                    sendError(404, result, res, `${err}`.replace('Error:', ''));
                 }
             } else {
                 error = 'Only a logged in admin/staff can View all accounts '
-                    + 'owned by a specific user. Provide a admin/staff token '
-                    + 'or login';
+                    + ' Provide a admin/staff token or login';
                 sendError(403, result, res, error);
             }
         } else {
