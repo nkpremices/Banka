@@ -1,6 +1,5 @@
 import '@babel/polyfill';
 import express from 'express';
-import dotenv from 'dotenv';
 import defaultErrorController from './api/v2/controllers/default';
 import v1 from './api/v1/routes/index';
 import v1Docs from './api/v1/routes/docs';
@@ -12,7 +11,7 @@ import registerMiddleware from './middlewares/register';
 import createAdmin from './helpers/v1/create.admin';
 import initializeDb from './middlewares/initialize.db';
 
-dotenv.config();
+
 const app = express({ strict: true });
 
 // Register middleware
