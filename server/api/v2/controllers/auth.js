@@ -28,8 +28,14 @@ export default {
         const result = {};
         const status = 201;
         let error;
-        const AdminToken = req.headers.token;
+        let AdminToken;
 
+        const { authorization } = req.headers;
+
+        if (authorization) {
+            // eslint-disable-next-line prefer-destructuring
+            AdminToken = authorization.split(' ')[1];
+        }
         // getting the body of the request
         const {
             email,
@@ -64,7 +70,7 @@ export default {
                 };
                 res.status(status).json(result);
             } catch (err) {
-                sendError(400, result, res, `${err}`.replace('Error', ''));
+                sendError(400, result, res, `${err}`.replace('Error:', ''));
             }
         };
 
@@ -160,7 +166,7 @@ export default {
                 }
             }
         } catch (err) {
-            res.status(status = 400).json(`${err}`.replace('Error', ''));
+            res.status(status = 400).json(`${err}`.replace('Error:', ''));
         }
     },
 };
