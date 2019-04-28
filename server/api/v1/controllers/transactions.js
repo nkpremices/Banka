@@ -23,6 +23,7 @@ const makeTransaction = async (Req, Res, operation, ModelFunction) => {
     const result = {};
     const resStatus = 200;
     let error;
+    let tempUser;
 
     // getting the body and the account number
     const { amount } = Req.body;
@@ -31,9 +32,12 @@ const makeTransaction = async (Req, Res, operation, ModelFunction) => {
     // Validate the accountNumber
     accountNumber = checkNumber(Req.params
         .accountNumber) ? parseInt(accountNumber, 10) : false;
-    // Getting the token from the header
+    const { authorization } = Req.headers;
     // Verifying the token
-    const tempUser = usersModel.verifyToken(Req.headers.token);
+    if (authorization) {
+        tempUser = await usersModel
+            .verifyToken(authorization.split(' ')[1]);
+    }
     if (tempUser) {
         if (tempUser.type === 'staff' && tempUser.isLoggedIn) {
             if (accountNumber) {
@@ -69,7 +73,7 @@ const makeTransaction = async (Req, Res, operation, ModelFunction) => {
                         sendError(403, result, Res, error);
                     }
                 } catch (err) {
-                    sendError(404, result, Res, `${err}`.replace('Error', ''));
+                    sendError(404, result, Res, `${err}`.replace('Error:', ''));
                 }
             } else {
                 error = 'Invalid account number provided';
