@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import accountsController from '../controllers/accounts';
-import validate from '../../../middlewares/validation';
+import validateBody from '../../../middlewares/validation';
+import validateRoute from '../../../middlewares/validate.routes';
 
 const accountsRouter = Router();
 const {
@@ -14,18 +15,20 @@ const {
 } = accountsController;
 
 accountsRouter
-    .post('', validate(true, 'createBankAccount'), createAccount);
+    .post('', validateBody(true, 'createBankAccount'), createAccount);
 accountsRouter
-    .patch('/:accountNumber', validate(true, 'activateDeactivateAccount'),
-        activateDeactivateAccount);
+    .patch('/:accountNumber', validateBody(true, 'activateDeactivateAccount'),
+        validateRoute.checkAccountNumber, activateDeactivateAccount);
 accountsRouter
-    .delete('/:accountNumber', deleteAccount);
+    .delete('/:accountNumber', validateRoute.checkAccountNumber, deleteAccount);
 accountsRouter
-    .get('/:accountNumber/transactions', getAccountTransactions);
+    .get('/:accountNumber/transactions', validateRoute.checkAccountNumber,
+        getAccountTransactions);
 accountsRouter
     .get('/:userEmail/accounts', getSpecificUserAccounts);
 accountsRouter
-    .get('/:accountNumber', getSpecificAccount);
+    .get('/:accountNumber', validateRoute.checkAccountNumber,
+        getSpecificAccount);
 accountsRouter
     .get('', getAllAccounts);
 
