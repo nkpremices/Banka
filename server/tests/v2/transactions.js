@@ -72,7 +72,7 @@ describe('Transactions v2', () => {// eslint-disable-line
         chai
             .request(app)
             .post('/api/v2/auth/signup')
-            .set('token', `${environment.admin.token}`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .send(cashier)
             .end((err, res) => {
                 res.should.have.status(201);
@@ -103,7 +103,7 @@ describe('Transactions v2', () => {// eslint-disable-line
             chai
                 .request(app)
                 .post('/api/v2/accounts')
-                .set('token', userToken)
+                .set('authorization', `Bearer ${userToken}`)
                 .send(accountCreationTemp)
                 .end((err, res) => {
                     res.should.have.status(201);
@@ -120,7 +120,7 @@ describe('Transactions v2', () => {// eslint-disable-line
         chai
             .request(app)
             .patch(`/api/v2/accounts/${AccountNumber}`)
-            .set('token', `${environment.admin.token}`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .send(accountStatusObj)
             .end((err, res) => {
                 res.should.have.status(200);
@@ -138,7 +138,7 @@ describe('Transactions v2', () => {// eslint-disable-line
         chai
             .request(app)
             .post(`/api/v2/transactions/${AccountNumber}/credit`)
-            .set('token', cashierToken)
+            .set('authorization', `Bearer ${cashierToken}`)
             .send(credit)
             .end((err, res) => {
                 res.should.have.status(200);
@@ -161,7 +161,7 @@ describe('Transactions v2', () => {// eslint-disable-line
         chai
             .request(app)
             .post(`/api/v2/transactions/${AccountNumber}/debit`)
-            .set('token', cashierToken)
+            .set('authorization', `Bearer ${cashierToken}`)
             .send(debit)
             .end((err, res) => {
                 res.should.have.status(200);
@@ -180,7 +180,7 @@ describe('Transactions v2', () => {// eslint-disable-line
         chai
             .request(app)
             .get(`/api/v2/accounts/${AccountNumber}/transactions`)
-            .set('token', `${userToken}`)
+            .set('authorization', `Bearer ${userToken}`)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.data.should.be.an('array');
@@ -193,7 +193,7 @@ describe('Transactions v2', () => {// eslint-disable-line
         chai
             .request(app)
             .get('/api/v2/transactions/2')
-            .set('token', `${userToken}`)
+            .set('authorization', `Bearer ${userToken}`)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.data.should.be.an('array');
@@ -208,12 +208,12 @@ describe('Transactions v2', () => {// eslint-disable-line
         chai
             .request(app)
             .get('/api/v2/transactions/2jhh')
-            .set('token', `${userToken}`)
+            .set('authorization', `Bearer ${userToken}`)
             .end((err, res) => {
                 res.should.have.status(400);
-                res.body.data.should.be.an('object');
-                res.body.data.should.have
-                    .property('error', 'Invalid transaction Id provided');
+                res.body.error.should.be.an('object');
+                res.body.error.should.have
+                    .property('message', 'Invalid transaction Id provided');
                 done();
             });
     });
@@ -221,7 +221,7 @@ describe('Transactions v2', () => {// eslint-disable-line
         chai
             .request(app)
             .get('/api/v2/transactions/2')
-            .set('token', `${environment.user.token}`)
+            .set('authorization', `Bearer ${environment.user.token}`)
             .end((err, res) => {
                 res.should.have.status(403);
                 done();
