@@ -35,7 +35,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "name": "token",
+                        "name": "authorization",
                         "description": "The admin token on staff/admin account creation",
                         "required": true,
                         "schema": {
@@ -118,7 +118,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "name": "token",
+                        "name": "authorization",
                         "description": "The users token on account creation",
                         "required": true,
                         "schema": {
@@ -162,7 +162,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "name": "token",
+                        "name": "authorization",
                         "description": "The staff/admin token ",
                         "required": true,
                         "schema": {
@@ -199,7 +199,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "name": "token",
+                        "name": "authorization",
                         "description": "The staff/admin token ",
                         "required": true,
                         "schema": {
@@ -236,7 +236,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "name": "token",
+                        "name": "authorization",
                         "description": "The staff/admin token ",
                         "required": true,
                         "schema": {
@@ -282,7 +282,7 @@
                     },
                     {
                         "in": "header",
-                        "name": "token",
+                        "name": "authorization",
                         "description": "The admin token ",
                         "required": true,
                         "schema": {
@@ -326,7 +326,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "name": "token",
+                        "name": "authorization",
                         "description": "The admin/staff token ",
                         "required": true,
                         "schema": {
@@ -370,7 +370,7 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "name": "token",
+                        "name": "authorization",
                         "description": "The user token ",
                         "required": true,
                         "schema": {
@@ -426,7 +426,7 @@
                     },
                     {
                         "in": "header",
-                        "name": "token",
+                        "name": "authorization",
                         "description": "The user token ",
                         "required": true,
                         "schema": {
@@ -472,7 +472,7 @@
                     },
                     {
                         "in": "header",
-                        "name": "token",
+                        "name": "authorization",
                         "description": "The staff/admin token ",
                         "required": true,
                         "schema": {
@@ -610,7 +610,7 @@
                     },
                     {
                         "in": "header",
-                        "name": "token",
+                        "name": "authorization",
                         "description": "The user token ",
                         "required": true,
                         "schema": {
