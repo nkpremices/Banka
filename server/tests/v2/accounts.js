@@ -72,7 +72,7 @@ describe('Accounts v2', () => {// eslint-disable-line
         chai
             .request(app)
             .post('/api/v2/accounts')
-            .set('token', userToken)
+            .set('authorization', `Bearer ${userToken}`)
             .send(accountCreationTemp)
             .end((err, res) => {
                 res.should.have.status(201);
@@ -110,7 +110,7 @@ describe('Accounts v2', () => {// eslint-disable-line
         chai
             .request(app)
             .patch(`/api/v2/accounts/${AccountNumber}`)
-            .set('token', `${environment.admin.token}`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .send(accountStatusObj)
             .end((err, res) => {
                 res.should.have.status(200);
@@ -128,13 +128,13 @@ describe('Accounts v2', () => {// eslint-disable-line
         chai
             .request(app)
             .patch(`/api/v2/accounts/${AccountNumber}fff`)
-            .set('token', `${environment.admin.token}`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .send(accountStatusObj)
             .end((err, res) => {
                 res.should.have.status(400);
-                res.body.data.should.be.a('object');
-                res.body.data.should.have
-                    .property('error', 'Invalid account number provided');
+                res.body.error.should.be.a('object');
+                res.body.error.should.have
+                    .property('message', 'Invalid account number provided');
                 done();
             });
     });
@@ -142,7 +142,7 @@ describe('Accounts v2', () => {// eslint-disable-line
         chai
             .request(app)
             .get(`/api/v2/user/${user1.email}/accounts`)
-            .set('token', `${userToken}`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.data.should.be.an('array');
@@ -155,7 +155,7 @@ describe('Accounts v2', () => {// eslint-disable-line
         chai
             .request(app)
             .post('/api/v2/accounts')
-            .set('token', environment.user.token)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .send(accountCreationTemp2)
             .end((err, res) => {
                 res.should.have.status(201);
@@ -171,7 +171,7 @@ describe('Accounts v2', () => {// eslint-disable-line
         chai
             .request(app)
             .patch(`/api/v2/accounts/${AccountNumber2}`)
-            .set('token', `${environment.admin.token}`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .send(accountStatusObj)
             .end((err, res) => {
                 res.should.have.status(200);
@@ -182,7 +182,7 @@ describe('Accounts v2', () => {// eslint-disable-line
         chai
             .request(app)
             .get(`/api/v2/accounts/${AccountNumber}`)
-            .set('token', `${userToken}`)
+            .set('authorization', `Bearer ${userToken}`)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.data.should.be.an('object');
@@ -195,12 +195,12 @@ describe('Accounts v2', () => {// eslint-disable-line
         chai
             .request(app)
             .get(`/api/v2/accounts/${AccountNumber2}`)
-            .set('token', `${userToken}`)
+            .set('authorization', `Bearer ${userToken}`)
             .end((err, res) => {
                 res.should.have.status(403);
-                res.body.data.should.be.an('object');
-                res.body.data.should.have
-                    .property('error', 'A user can view only his '
+                res.body.error.should.be.an('object');
+                res.body.error.should.have
+                    .property('message', 'A user can view only his '
                     + 'own acccounts');
                 done();
             });
@@ -209,12 +209,12 @@ describe('Accounts v2', () => {// eslint-disable-line
         chai
             .request(app)
             .get(`/api/v2/accounts/${AccountNumber}fffff`)
-            .set('token', `${userToken}`)
+            .set('authorization', `Bearer ${userToken}`)
             .end((err, res) => {
                 res.should.have.status(400);
-                res.body.data.should.be.an('object');
-                res.body.data.should.have
-                    .property('error', 'Invalid account number provided');
+                res.body.error.should.be.an('object');
+                res.body.error.should.have
+                    .property('message', 'Invalid account number provided');
                 done();
             });
     });
@@ -222,7 +222,7 @@ describe('Accounts v2', () => {// eslint-disable-line
         chai
             .request(app)
             .get('/api/v2/accounts/')
-            .set('token', `${environment.admin.token}`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.data.should.be.an('array');
@@ -233,7 +233,7 @@ describe('Accounts v2', () => {// eslint-disable-line
         chai
             .request(app)
             .post('/api/v2/accounts')
-            .set('token', userToken)
+            .set('authorization', `Bearer ${userToken}`)
             .send(accountCreationTemp1)
             .end((err, res) => {
                 res.should.have.status(201);
@@ -251,7 +251,7 @@ describe('Accounts v2', () => {// eslint-disable-line
         chai
             .request(app)
             .get('/api/v2/accounts/?status=active')
-            .set('token', `${environment.admin.token}`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.data.should.be.an('array');
@@ -268,7 +268,7 @@ describe('Accounts v2', () => {// eslint-disable-line
         chai
             .request(app)
             .patch(`/api/v2/accounts/${AccountNumber}`)
-            .set('token', `${environment.admin.token}`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .send(accountStatusObj)
             .end((err, res) => {
                 res.should.have.status(200);
@@ -282,7 +282,7 @@ describe('Accounts v2', () => {// eslint-disable-line
         chai
             .request(app)
             .get('/api/v2/accounts/?status=dormant')
-            .set('token', `${environment.admin.token}`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.data.should.be.an('array');
@@ -296,7 +296,7 @@ describe('Accounts v2', () => {// eslint-disable-line
         chai
             .request(app)
             .delete(`/api/v2/accounts/${AccountNumber}`)
-            .set('token', `${environment.admin.token}`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.data.should.be.a('object');
