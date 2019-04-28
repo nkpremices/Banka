@@ -12,7 +12,7 @@
             "Author": "Prémices NZANZU KAMASUWA"
         }
     },
-    "host": "https://banka-heroku.herokuapp.com",
+    "host": "banka-heroku.herokuapp.com",
     "basePath": "/",
     "schemes": [
         "http",
