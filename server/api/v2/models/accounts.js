@@ -17,8 +17,6 @@ import queries from '../../../helpers/v2/db.querries';
  *  about a user
  * @returns {Promise}
  */
-
-// a function to save an account when requested
 const saveAccount = (accountName, currency,
     type, status, user) => new Promise(async (resolve, reject) => {
     // creating a temp account
@@ -53,7 +51,6 @@ const saveAccount = (accountName, currency,
  * @property {function} number - A function to get an account
  * from the database by acount number
  */
-// A function to verify if an account is already stored
 const verifyAccount = {
     /**
      * A function to get an account from the database
@@ -79,12 +76,16 @@ const verifyAccount = {
      * @returns {Promise}
      */
     number: number => new Promise(async (resolve, reject) => {
-        try {
-            const tempAccount = await querryDb
-                .query(queries.findAccountByNumber(number));
-            resolve(tempAccount.rows[0]);
-        } catch (error) {
-            reject(error);
+        if (parseInt(number, 10)) {
+            try {
+                const tempAccount = await querryDb
+                    .query(queries.findAccountByNumber(number));
+                resolve(tempAccount.rows[0]);
+            } catch (error) {
+                reject(new Error('Error on account verification'));
+            }
+        } else {
+            reject(new Error('Sorry, Error occured'));
         }
     }),
 };
@@ -101,8 +102,8 @@ const findAccount = accountNumber => new Promise(async (resolve, reject) => {
         const tempAccount = await verifyAccount.number(accountNumber);
         if (tempAccount) resolve(tempAccount);
         else {
-            const errorMsg = 'An account with the provided '
-            + 'number was not found';
+            const errorMsg = 'An account with number '
+            + `${accountNumber} was not found`;
             reject(new Error(errorMsg));
         }
     } catch (error) {
@@ -118,8 +119,6 @@ const findAccount = accountNumber => new Promise(async (resolve, reject) => {
  * @param {string} status - The status to check
  * @returns {boolean} retObj - True if the status is the same
  */
-
-// A function to verify the account status
 const verifyAccountStatus = (account,
     status) => new Promise(async (resolve, reject) => {
     try {

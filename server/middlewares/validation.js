@@ -31,8 +31,8 @@ export default (useJoiError = false, schema) => {
     const passwordFieldError = 'Password must be at least 5 letters containing'
     + ' at least a number a Lowercase letter and an Uppercase letter';
 
-    const nameFieldErrorMessage = ' name must not contain '
-    + 'spaces and must be at least 3 characters';
+    const nameFieldErrorMessage = ' name can not contain '
+    + 'spaces or numbers and must be at least 3 characters';
 
     // validation middleware
     /**

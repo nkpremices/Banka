@@ -125,9 +125,9 @@ describe('Signup v2', () => {// eslint-disable-line
                 .send(user)
                 .end((err, res) => {
                     res.should.have.status(205);
-                    res.body.data.should.be.an('object');
-                    res.body.data.should.have
-                        .property('error', 'Email address already in use');
+                    res.body.error.should.be.an('object');
+                    res.body.error.should.have
+                        .property('message', 'Email address already in use');
                     done();
                 });
         });
@@ -136,7 +136,7 @@ describe('Signup v2', () => {// eslint-disable-line
             chai
                 .request(app)
                 .post('/api/v2/auth/signup')
-                .set('token', `${environment.admin.token}`)
+                .set('authorization', `Bearer ${environment.admin.token}`)
                 .send(staffAdminUser)
                 .end((err, res) => {
                     res.should.have.status(201);
@@ -153,7 +153,7 @@ describe('Signup v2', () => {// eslint-disable-line
                 .send(staffAdminUser1)
                 .end((err, res) => {
                     res.should.have.status(403);
-                    res.body.data.should.be.an('object');
+                    res.body.error.should.be.an('object');
                     done();
                 });
         });
@@ -163,11 +163,11 @@ describe('Signup v2', () => {// eslint-disable-line
             chai
                 .request(app)
                 .post('/api/v2/auth/signup')
-                .set('token', '124dsdg')
+                .set('authorization', '124dsdg')
                 .send(staffAdminUser2)
                 .end((err, res) => {
-                    res.should.have.status(400);
-                    res.body.data.should.be.an('object');
+                    res.should.have.status(403);
+                    res.body.error.should.be.an('object');
                     done();
                 });
         });
@@ -209,9 +209,10 @@ describe('Signin v2', () => {// eslint-disable-line
             .send(user3)
             .end((err, res) => {
                 res.should.have.status(404);
-                res.body.should.have.property('data')
+                res.body.should.have.property('error')
                     .which.have
-                    .property('error', 'A user with that email doesn\'t exist');
+                    .property('message', 'A user with that email'
+                    + ' doesn\'t exist');
                 done();
             });
     });

@@ -14,8 +14,8 @@ import checkNumber from '../../../helpers/check.number';
     * whether it is credit or debit
     * @param {object} Req - the request object
     * @param {object} Res - the result object
-    * @param {function} A function comming from the model
-    * it can be for crediting or for debiting
+    * @param {function} ModelFunction - A function comming
+    * from the model. it can be for crediting or for debiting
     * @returns {Promise}
 */
 
@@ -24,57 +24,55 @@ const makeTransaction = async (Req, Res, operation, ModelFunction) => {
     const result = {};
     const resStatus = 200;
     let error;
+    let tempUser;
 
     // getting the body and the account number
     const { amount } = Req.body;
-    let { accountNumber } = Req.params;
+    const { accountNumber } = Req.params;
 
-    // Validate the accountNumber
-    accountNumber = checkNumber(Req.params
-        .accountNumber) ? parseInt(accountNumber, 10) : false;
-    // Getting the token from the header
+    // Getting the token from headers
+    const { authorization } = Req.headers;
     // Verifying the token
-    const tempUser = await usersModel.verifyToken(Req.headers.token);
+    if (authorization) {
+        tempUser = await usersModel
+            .verifyToken(authorization.split(' ')[1]);
+    }
+
     if (tempUser) {
         if (tempUser.type === 'staff' && tempUser.isloggedin) {
-            if (accountNumber) {
-                // trying to save an account
-                try {
-                    // Verify if the account exists
-                    // if not, an exception will be catched up
-                    const tempAccount = await accountsModel
-                        .findAccount(accountNumber);
+            // trying to save an account
+            try {
+                // Verify if the account exists
+                // if not, an exception will be catched up
+                const tempAccount = await accountsModel
+                    .findAccount(accountNumber);
 
-                    // Verify if the account is active
-                    const Verify = await accountsModel
-                        .verifyAccountStatus(tempAccount, 'active');
+                // Verify if the account is active
+                const Verify = await accountsModel
+                    .verifyAccountStatus(tempAccount, 'active');
 
+                if (Verify) {
                     const tempTransaction = await ModelFunction(tempAccount,
                         amount, tempUser);
 
-                    if (Verify) {
-                        // Sending back the required object
-                        result.status = resStatus;
-                        result.message = `Account ${operation}ed successfully`;
-                        result.data = {
-                            transactionId: tempTransaction.id,
-                            accountNumber: tempAccount.accountnumber,
-                            amount,
-                            cashier: tempUser.id,
-                            transactionType: tempTransaction.type,
-                            accountBalance: tempTransaction.newbalance,
-                        };
-                        Res.status(resStatus).json(result);
-                    } else {
-                        error = `Only an active account can be  ${operation}ed`;
-                        sendError(403, result, Res, error);
-                    }
-                } catch (err) {
-                    sendError(404, result, Res, `${err}`.replace('Error', ''));
+                    // Sending back the required object
+                    result.status = resStatus;
+                    result.message = `Account ${operation}ed successfully`;
+                    result.data = {
+                        transactionId: tempTransaction.id,
+                        accountNumber: tempAccount.accountnumber,
+                        amount,
+                        cashier: tempUser.id,
+                        transactionType: tempTransaction.type,
+                        accountBalance: tempTransaction.newbalance,
+                    };
+                    Res.status(resStatus).json(result);
+                } else {
+                    error = `Only an active account can be  ${operation}ed`;
+                    sendError(403, result, Res, error);
                 }
-            } else {
-                error = 'Invalid account number provided';
-                sendError(400, result, Res, error);
+            } catch (err) {
+                sendError(404, result, Res, `${err}`.replace('Error:', ''));
             }
         } else {
             error = `Only a logged in staff(cashier) can  ${operation} `
@@ -131,15 +129,20 @@ export default {
         const result = {};
         const resStatus = 200;
         let error;
+        let tempUser;
 
         let { transactionId } = req.params;
 
         // Validate the accountNumber
         transactionId = checkNumber(req.params
             .transactionId) ? parseInt(transactionId, 10) : false;
-        // Getting the token from the header
+        // Getting the token from headers
+        const { authorization } = req.headers;
         // Verifying the token
-        const tempUser = await usersModel.verifyToken(req.headers.token);
+        if (authorization) {
+            tempUser = await usersModel
+                .verifyToken(authorization.split(' ')[1]);
+        }
         if (tempUser) {
             if (tempUser.isloggedin) {
                 if (transactionId) {
@@ -150,11 +153,18 @@ export default {
                         // up
                         const transaction = await transactionsModel
                             .findTransactions.specific(transactionId);
-                        if ((tempUser.isadmin || tempUser.type === 'staff')
-                        && !(transaction.length === 0)) {
+                        /**
+                         * A single function to send back a
+                         * transaction
+                         *
+                         * @param {*} warning - A warning message
+                         * if the account is already deleted
+                         */
+                        const sendTransaction = (warning) => {
                             // Sending back the required
                             // object
                             result.status = resStatus;
+                            result.warning = warning;
                             result.data = transaction.map((el) => {
                                 const tempTransaction = {
                                     transactionId: el.id,
@@ -168,32 +178,35 @@ export default {
                                 return tempTransaction;
                             });
                             res.status(resStatus).json(result);
-                        } else if (tempUser.type === 'client'
-                        && !(transaction.length === 0)) {
+                        };
+                        if (!(transaction.length === 0)) {
                             // console.log(transaction);
-                            const tempAccount = await accountsModel
-                                .findAccount(transaction[0].accountnumber);
-                            if (tempAccount.owneremail === tempUser.email) {
-                            // Sending back the required
-                            // object
-                                result.status = resStatus;
-                                result.data = transaction.map((el) => {
-                                    const tempTransaction = {
-                                        transactionId: el.id,
-                                        createdOn: new Date(el.createdon),
-                                        type: el.type,
-                                        accountNumber: el.accountnumber,
-                                        amount: el.amount,
-                                        oldBalance: el.oldbalance,
-                                        newBalance: el.newbalance,
-                                    };
-                                    return tempTransaction;
-                                });
-                                res.status(resStatus).json(result);
-                            } else {
-                                error = 'A user only see transactions '
-                                + 'related to his accounts';
-                                sendError(403, result, res, error);
+                            try {
+                                const tempAccount = await accountsModel
+                                    .findAccount(transaction[0].accountnumber);
+                                if (tempAccount.owneremail === tempUser.email) {
+                                    sendTransaction();
+                                } else {
+                                    error = 'A user only see transactions '
+                                    + 'related to his accounts';
+                                    sendError(403, result, res, error);
+                                }
+                            } catch (Error) {
+                                if (tempUser.type === 'client') {
+                                    error = 'The account '
+                                    + `${transaction[0].accountnumber} `
+                                    + `related to transaction ${transactionId}`
+                                    + ' is already deleted. Please, contact a'
+                                    + ' staff member';
+                                    sendError(403, result, res, error);
+                                } else if (tempUser.type === 'staff'
+                                || tempUser.isadmin) {
+                                    const warning = 'The account '
+                                    + `${transaction[0].accountnumber} related `
+                                    + `to transaction ${transactionId} is`
+                                    + ' already deleted';
+                                    sendTransaction(warning);
+                                }
                             }
                         } else {
                             error = 'No transactions found for ID '
@@ -202,7 +215,7 @@ export default {
                         }
                     } catch (err) {
                         sendError(404, result, res, `${err}`
-                            .replace('Error', ''));
+                            .replace('Error:', ''));
                     }
                 } else {
                     error = 'Invalid transaction Id provided';

@@ -69,7 +69,7 @@ describe('home', () => {// eslint-disable-line
 // Testing the authentication endpoints
 
 // Testing the signup
-describe('Signup', () => {// eslint-disable-line
+describe('Signup v1', () => {// eslint-disable-line
     it('it should create a new user account', (done) => {// eslint-disable-line
         chai
             .request(app)
@@ -97,9 +97,9 @@ describe('Signup', () => {// eslint-disable-line
                 .send(user)
                 .end((err, res) => {
                     res.should.have.status(205);
-                    res.body.data.should.be.an('object');
-                    res.body.data.should.have
-                        .property('error', 'Email address already in use');
+                    res.body.error.should.be.an('object');
+                    res.body.error.should.have
+                        .property('message', 'Email address already in use');
                     done();
                 });
         });
@@ -113,8 +113,8 @@ describe('Signup', () => {// eslint-disable-line
                     res.should.have.status(400);
                     res.body.error.should.be.an('object');
                     res.body.error.should.have
-                        .property('message', 'Last name must not contain '
-                        + 'spaces and must be at least 3 characters');
+                        .property('message', 'Last name can not contain spaces '
+                        + 'or numbers and must be at least 3 characters');
                     done();
                 });
         });
@@ -124,7 +124,7 @@ describe('Signup', () => {// eslint-disable-line
             chai
                 .request(app)
                 .post('/api/v1/auth/signup')
-                .set('token', `${environment.admin.token}`)
+                .set('authorization', `Bearer ${environment.admin.token}`)
                 .send(staffAdminUser)
                 .end((err, res) => {
                     res.should.have.status(201);
@@ -141,7 +141,7 @@ describe('Signup', () => {// eslint-disable-line
                 .send(staffAdminUser1)
                 .end((err, res) => {
                     res.should.have.status(403);
-                    res.body.data.should.be.an('object');
+                    res.body.error.should.be.an('object');
                     done();
                 });
         });
@@ -151,17 +151,17 @@ describe('Signup', () => {// eslint-disable-line
             chai
                 .request(app)
                 .post('/api/v1/auth/signup')
-                .set('token', '124dsdg')
+                .set('authorization', '124dsdg')
                 .send(staffAdminUser2)
                 .end((err, res) => {
-                    res.should.have.status(400);
-                    res.body.data.should.be.an('object');
+                    res.should.have.status(403);
+                    res.body.error.should.be.an('object');
                     done();
                 });
         });
 });
 
-describe('Signin', () => {// eslint-disable-line
+describe('Signin v1', () => {// eslint-disable-line
     it('it should login an existing user with valid credentials', (done) => {// eslint-disable-line
         const user2 = {
             email: 'yvettekal@gmail.com',
@@ -197,9 +197,10 @@ describe('Signin', () => {// eslint-disable-line
             .send(user3)
             .end((err, res) => {
                 res.should.have.status(404);
-                res.body.should.have.property('data')
+                res.body.should.have.property('error')
                     .which.have
-                    .property('error', 'A user with that email doesn\'t exist');
+                    .property('message', 'A user with that '
+                    + 'email doesn\'t exist');
                 done();
             });
     });

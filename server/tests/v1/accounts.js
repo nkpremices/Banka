@@ -59,7 +59,7 @@ describe('Accounts', () => {// eslint-disable-line
         chai
             .request(app)
             .post('/api/v1/accounts')
-            .set('token', userToken)
+            .set('authorization', `Bearer ${userToken}`)
             .send(accountCreationTemp)
             .end((err, res) => {
                 res.should.have.status(201);
@@ -98,7 +98,7 @@ describe('Accounts', () => {// eslint-disable-line
         chai
             .request(app)
             .patch(`/api/v1/accounts/${AccountNumber}`)
-            .set('token', `${environment.admin.token}`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .send(accountStatusObj)
             .end((err, res) => {
                 res.should.have.status(200);
@@ -113,7 +113,7 @@ describe('Accounts', () => {// eslint-disable-line
         chai
             .request(app)
             .delete(`/api/v1/accounts/${AccountNumber}`)
-            .set('token', `${environment.admin.token}`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.data.should.be.a('object');

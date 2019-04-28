@@ -30,6 +30,7 @@ export default {
         const result = {};
         const resStatus = 201;
         let error;
+        let tempUser;
 
         // getting the body
         const {
@@ -39,8 +40,12 @@ export default {
         } = req.body;
 
         // Getting the token from the header
+        const { authorization } = req.headers;
         // Verifying the token
-        const tempUser = usersModel.verifyToken(req.headers.token);
+        if (authorization) {
+            tempUser = await usersModel
+                .verifyToken(authorization.split(' ')[1]);
+        }
         if (tempUser) {
             // Verifying if the user is logged in
             if (tempUser.isLoggedIn) {
@@ -68,7 +73,7 @@ export default {
                         res.status(resStatus).json(result);
                     } catch (err) {
                         sendError(400, result, res, `${err}`
-                            .replace('Error', ''));
+                            .replace('Error:', ''));
                     }
                 } else {
                     error = 'Account name already in use';
@@ -94,6 +99,7 @@ export default {
         const result = {};
         const resStatus = 200;
         let error;
+        let tempUser;
 
         // getting the body and the account number
         const { status } = req.body;
@@ -102,9 +108,14 @@ export default {
         // Validate the accountNumber
         accountNumber = checkNumber(req.params
             .accountNumber) ? parseInt(accountNumber, 10) : false;
+
         // Getting the token from the header
+        const { authorization } = req.headers;
         // Verifying the token
-        const tempUser = usersModel.verifyToken(req.headers.token);
+        if (authorization) {
+            tempUser = await usersModel
+                .verifyToken(authorization.split(' ')[1]);
+        }
         if (tempUser) {
             if ((tempUser.isAdmin || tempUser.type === 'staff')
             && tempUser.isLoggedIn) {
@@ -140,7 +151,7 @@ export default {
                         }
                     } catch (err) {
                         sendError(404, result, res, `${err}`
-                            .replace('Error', ''));
+                            .replace('Error:', ''));
                     }
                 } else {
                     error = 'Invalid account number provided';
@@ -167,6 +178,7 @@ export default {
         const result = {};
         const resStatus = 200;
         let error;
+        let tempUser;
 
         // getting the the account id
         let { accountNumber } = req.params;
@@ -175,9 +187,12 @@ export default {
         accountNumber = checkNumber(req.params
             .accountNumber) ? parseInt(accountNumber, 10) : false;
 
-        // Getting the token from the header
+        const { authorization } = req.headers;
         // Verifying the token
-        const tempUser = usersModel.verifyToken(req.headers.token);
+        if (authorization) {
+            tempUser = await usersModel
+                .verifyToken(authorization.split(' ')[1]);
+        }
         if (tempUser) {
             if ((tempUser.isAdmin || tempUser.type === 'staff')
                 && tempUser.isLoggedIn) {
@@ -200,7 +215,7 @@ export default {
                         res.status(resStatus).json(result);
                     } catch (err) {
                         sendError(404, result, res, `${err}`
-                            .replace('Error', ''));
+                            .replace('Error:', ''));
                     }
                 } else {
                     error = 'Invalid account number provided';

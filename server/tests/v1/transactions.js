@@ -72,7 +72,7 @@ describe('Transactions', () => {// eslint-disable-line
         chai
             .request(app)
             .post('/api/v1/auth/signup')
-            .set('token', `${environment.admin.token}`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .send(cashier)
             .end((err, res) => {
                 res.should.have.status(201);
@@ -103,7 +103,7 @@ describe('Transactions', () => {// eslint-disable-line
             chai
                 .request(app)
                 .post('/api/v1/accounts')
-                .set('token', userToken)
+                .set('authorization', `Bearer ${userToken}`)
                 .send(accountCreationTemp)
                 .end((err, res) => {
                     res.should.have.status(201);
@@ -120,7 +120,7 @@ describe('Transactions', () => {// eslint-disable-line
         chai
             .request(app)
             .patch(`/api/v1/accounts/${AccountNumber}`)
-            .set('token', `${environment.admin.token}`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
             .send(accountStatusObj)
             .end((err, res) => {
                 res.should.have.status(200);
@@ -138,7 +138,7 @@ describe('Transactions', () => {// eslint-disable-line
         chai
             .request(app)
             .post(`/api/v1/transactions/${AccountNumber}/credit`)
-            .set('token', cashierToken)
+            .set('authorization', `Bearer ${cashierToken}`)
             .send(credit)
             .end((err, res) => {
                 res.should.have.status(200);
@@ -161,7 +161,7 @@ describe('Transactions', () => {// eslint-disable-line
         chai
             .request(app)
             .post(`/api/v1/transactions/${AccountNumber}/debit`)
-            .set('token', cashierToken)
+            .set('authorization', `Bearer ${cashierToken}`)
             .send(debit)
             .end((err, res) => {
                 res.should.have.status(200);

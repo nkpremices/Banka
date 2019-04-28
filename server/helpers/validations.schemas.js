@@ -49,7 +49,7 @@ export default {
         type: string.lowercase().valid('current', 'savings').required(),
     }),
     activateDeactivateAccount: Joi.object().keys({
-        status: string.lowercase().valid('draft', 'active', 'dormant')
+        status: string.lowercase().valid('active', 'dormant')
             .required(),
     }),
     creditDebitAccount: Joi.object().keys({
