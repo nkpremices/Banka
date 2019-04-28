@@ -227,4 +227,19 @@ describe('Transactions v2', () => {// eslint-disable-line
                 done();
             });
     });
+    it('it should not debit with an invalid account number', (done) => {// eslint-disable-line
+        const debit = {
+            amount: 2000,
+        };
+
+        chai
+            .request(app)
+            .post(`/api/v2/transactions/${AccountNumber}j/debit`)
+            .set('authorization', `Bearer ${cashierToken}`)
+            .send(debit)
+            .end((err, res) => {
+                res.should.have.status(400);
+                done();
+            });
+    });
 });
