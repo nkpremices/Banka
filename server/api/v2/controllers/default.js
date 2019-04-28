@@ -7,7 +7,7 @@ export default (req, res) => {
     const status = 404;
     const result = {
         status,
-        data: {
+        error: {
             message: 'The requested endpoint doesn\'t exist',
         },
     };
