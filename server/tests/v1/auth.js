@@ -66,6 +66,18 @@ describe('home', () => {// eslint-disable-line
     });
 });
 
+// Testing the default controller
+describe('default', () => {// eslint-disable-line
+    it('should return an object', (done) => { // eslint-disable-line
+        chai.request(app)// eslint-disable-line
+            .get('/sfdsgdgdsd')
+            .end((err, res) => {
+                res.should.have.status(404);
+                done();
+            });
+    });
+});
+
 // Testing the authentication endpoints
 
 // Testing the signup

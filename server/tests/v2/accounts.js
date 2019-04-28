@@ -291,7 +291,6 @@ describe('Accounts v2', () => {// eslint-disable-line
                 done();
             });
     });
-
     it('it should delete an account', (done) => {// eslint-disable-line
         chai
             .request(app)
@@ -302,6 +301,58 @@ describe('Accounts v2', () => {// eslint-disable-line
                 res.body.data.should.be.a('object');
                 res.body.data.should.have
                     .property('message', 'Account successfully deleted');
+                done();
+            });
+    });
+
+    it('it should not delete an account if an invalid token is provided', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .delete(`/api/v2/accounts/${AccountNumber}`)
+            .set('authorization', 'Beare')
+            .end((err, res) => {
+                res.should.have.status(403);
+                done();
+            });
+    });
+    it('it should not delete an account with an invalid account number', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .delete(`/api/v1/accounts/${AccountNumber}j`)
+            .set('authorization', `Bearer ${environment.admin.token}`)
+            .end((err, res) => {
+                res.should.have.status(400);
+                done();
+            });
+    });
+
+    it('it should not get all accounts if a invalid token is provided', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .get('/api/v2/accounts/?status=dormant')
+            .set('authorization', `Bearer ${environment.admin.token}j`)
+            .end((err, res) => {
+                res.should.have.status(403);
+                done();
+            });
+    });
+    it('it should not get all accounts with an empty status', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .get('/api/v2/accounts/?status=')
+            .set('authorization', `Bearer ${environment.admin.token}`)
+            .end((err, res) => {
+                res.should.have.status(403);
+                done();
+            });
+    });
+    it('it should not get all accounts with an invalid status', (done) => {// eslint-disable-line
+        chai
+            .request(app)
+            .get('/api/v2/accounts/?statu')
+            .set('authorization', `Bearer ${environment.admin.token}`)
+            .end((err, res) => {
+                res.should.have.status(403);
                 done();
             });
     });
