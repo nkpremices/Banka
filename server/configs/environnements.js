@@ -78,9 +78,17 @@ const environments = {
         database: {
             user: dbUser,
             host: dbHost,
-            name: devDbName,
+            name: testDbName,
             password: dbPasswor,
             port: dbPort,
+        },
+        admin: {
+            token: process.env.ADMIN_TOKEN,
+            email: process.env.ADMIN_EMAIL,
+            password: process.env.ADMIN_PASSWORD,
+        },
+        user: {
+            token: userToken,
         },
         saltingRounds,
         jwtKey,
