@@ -15,8 +15,8 @@
     "host": "banka-heroku.herokuapp.com",
     "basePath": "/",
     "schemes": [
-        "http",
-        "https"
+        "https",
+        "http"
     ],
     "paths": {
         "/api/v2/auth/signup": {
