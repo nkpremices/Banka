@@ -34,6 +34,8 @@ export default (useJoiError = false, schema) => {
     const nameFieldErrorMessage = ' name can not contain '
     + 'spaces or numbers and must be at least 3 characters';
 
+    const emailFieldErrorMessage = 'Invalid email provided';
+
     // validation middleware
     /**
      * A function to validate schemas
@@ -67,6 +69,8 @@ export default (useJoiError = false, schema) => {
                                 message = `First${nameFieldErrorMessage}`;
                             } else if (message.includes('lastName')) {
                                 message = `Last${nameFieldErrorMessage}`;
+                            } else if (message.includes('email')) {
+                                message = emailFieldErrorMessage;
                             }
                             const errorObj = {
                                 status: 400,

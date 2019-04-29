@@ -7,7 +7,8 @@ import Joi from 'joi';
 
 const string = Joi.string();
 const Bool = Joi.boolean();
-const email = string.email().lowercase().required();
+const email = string.email()
+    .regex(/^[a-z._\-0-9]*[@][A-Za-z]*[.][a-z]{2,4}$/).required();
 const password = string
     .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/).min(5).required();
 
