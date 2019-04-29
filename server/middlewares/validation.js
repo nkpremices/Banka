@@ -63,13 +63,16 @@ export default (useJoiError = false, schema) => {
                             // Build error object
                             let message = err.details[0].message
                                 .replace(/['"]/g, '');
-                            if (message.includes('password')) {
+                            if (message.includes('password with value')) {
                                 message = passwordFieldError;
-                            } else if (message.includes('firstName')) {
+                            } else if (message
+                                .includes('firstName with value')) {
                                 message = `First${nameFieldErrorMessage}`;
-                            } else if (message.includes('lastName')) {
+                            } else if (message
+                                .includes('lastName with value')) {
                                 message = `Last${nameFieldErrorMessage}`;
-                            } else if (message.includes('email')) {
+                            } else if (message
+                                .includes('email with value')) {
                                 message = emailFieldErrorMessage;
                             }
                             const errorObj = {
