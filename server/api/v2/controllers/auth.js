@@ -83,8 +83,13 @@ export default {
             if (verify.adminOrStaffReq) {
                 if (verify.foundToken) {
                     if (verify.foundAdmin) {
-                        userRegister(email, firstName, lastName,
-                            password, type, isAdmin);
+                        if (type && typeof (isAdmin) === 'boolean') {
+                            userRegister(email, firstName, lastName,
+                                password, type, isAdmin);
+                        } else {
+                            error = 'isAdmin and type are required';
+                            sendError(400, result, res, error);
+                        }
                     } else {
                         error = 'Invalid token provided'
                         + ' or the admin is not logged in';
