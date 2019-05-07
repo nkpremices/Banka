@@ -3,11 +3,11 @@ import authRouter from './auth';
 import accountsRouter from './accounts';
 import transactionsRouter from './transactions';
 
-const v1 = express();
+const v1router = express();
 
 
-v1.use('/auth', authRouter);
-v1.use('/accounts', accountsRouter);
-v1.use('/transactions', transactionsRouter);
+v1router.use('/auth', authRouter);
+v1router.use('/accounts', accountsRouter);
+v1router.use('/transactions', transactionsRouter);
 
-export default v1;
+export default v1router;
