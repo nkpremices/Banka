@@ -35,8 +35,7 @@ export default {
         // Initializing variables
         const result = {};
         const resStatus = 201;
-        let error;
-        let tempUser;
+        const tempUser = req.user;
 
         // getting the body
         const {
@@ -45,54 +44,27 @@ export default {
             type,
         } = req.body;
 
-        // Getting the token from headers
-        const { authorization } = req.headers;
-        // Verifying the token
-        if (authorization) {
-            tempUser = await usersModel
-                .verifyToken(authorization.split(' ')[1]);
-        }
-        if (tempUser) {
-            // Verifying if the user is logged in
-            if (tempUser.isloggedin) {
-                // Verifying the availability of the given fields
-                const verify = await accountsModel.verifyAccount
-                    .name(accountName, tempUser.id);
+        try {
+            // trying to save an account
+            const tempAccount = await accountsModel
+                .saveAccount(accountName, currency,
+                    type, 'draft', tempUser);
 
-                if (!verify) {
-                    try {
-                        // trying to save an account
-                        const tempAccount = await accountsModel
-                            .saveAccount(accountName, currency,
-                                type, 'draft', tempUser);
-
-                        // Sending back the required object
-                        result.status = resStatus;
-                        result.message = 'Account created successfully';
-                        result.data = {
-                            accountNumber: tempAccount.accountnumber,
-                            firstName: tempUser.firstname,
-                            lastName: tempUser.lastname,
-                            email: tempUser.email,
-                            type: tempAccount.type,
-                            openingBalance: tempAccount.balance,
-                        };
-                        res.status(resStatus).json(result);
-                    } catch (err) {
-                        sendError(400, result, res, `${err}`
-                            .replace('Error:', ''));
-                    }
-                } else {
-                    error = 'Account name already in use';
-                    sendError(205, result, res, error);
-                }
-            } else {
-                error = 'The user is not logged in';
-                sendError(403, result, res, error);
-            }
-        } else {
-            error = 'Invalid token provided or the user is not signed up';
-            sendError(403, result, res, error);
+            // Sending back the required object
+            result.status = resStatus;
+            result.message = 'Account created successfully';
+            result.data = {
+                accountNumber: tempAccount.accountnumber,
+                firstName: tempUser.firstname,
+                lastName: tempUser.lastname,
+                email: tempUser.email,
+                type: tempAccount.type,
+                openingBalance: tempAccount.balance,
+            };
+            res.status(resStatus).json(result);
+        } catch (err) {
+            sendError(400, result, res, `${err}`
+                .replace('Error:', ''));
         }
     },
     /**
@@ -102,66 +74,46 @@ export default {
         * @returns {Promise}
     */
     activateDeactivateAccount: async (req, res) => {
-        // account activation part of the users controller
+        // account activation part of the accounts controller
         const result = {};
         const resStatus = 200;
         let error;
-        let tempUser;
 
         // getting the body and the account number
         const { status } = req.body;
         const { accountNumber } = req.params;
 
-        const { authorization } = req.headers;
-        // Verifying the token
-        if (authorization) {
-            tempUser = await usersModel
-                .verifyToken(authorization.split(' ')[1]);
-        }
-        if (tempUser) {
-            if ((tempUser.isadmin || tempUser.type === 'staff')
-            && tempUser.isloggedin) {
-                // trying to find if the account exists
-                try {
-                    const tempAccount = await accountsModel
-                        .findAccount(accountNumber);
+        // trying to find if the account exists
+        try {
+            const tempAccount = await accountsModel
+                .findAccount(accountNumber);
 
-                    // Veryfying the status first
-                    const verify = await accountsModel
-                        .verifyAccountStatus(tempAccount, status);
+            // Veryfying the status first
+            const verify = await accountsModel
+                .verifyAccountStatus(tempAccount, status);
 
-                    // Display a custom message if the
-                    // status is the same
-                    if (verify) {
-                        error = `Account ${tempAccount.accountnumber} `
-                        + `is already ${status}`;
-                        sendError(205, result, res, error);
-                    } else {
-                        // change the account status
-                        const updatedAccount = await accountsModel
-                            .changeAccountStatus(tempAccount, status);
-                        // Sending back the required object
-                        result.status = resStatus;
-                        result.message = 'Account updated successfully';
-                        result.data = {
-                            accountNumber: updatedAccount.accountnumber,
-                            status: updatedAccount.status,
-                        };
-                        res.status(resStatus).json(result);
-                    }
-                } catch (err) {
-                    sendError(404, result, res, `${err}`
-                        .replace('Error:', ''));
-                }
+            // Display a custom message if the
+            // status is the same
+            if (verify) {
+                error = `Account ${tempAccount.accountnumber} `
+                + `is already ${status}`;
+                sendError(205, result, res, error);
             } else {
-                error = 'Only a logged in admin/staff can activate/deactivate '
-                    + ' an account. Provide an admin token or login';
-                sendError(403, result, res, error);
+                // change the account status
+                const updatedAccount = await accountsModel
+                    .changeAccountStatus(tempAccount, status);
+                // Sending back the required object
+                result.status = resStatus;
+                result.message = 'Account updated successfully';
+                result.data = {
+                    accountNumber: updatedAccount.accountnumber,
+                    status: updatedAccount.status,
+                };
+                res.status(resStatus).json(result);
             }
-        } else {
-            error = 'Invalid token provided or the admin/staff'
-            + ' is not signed up';
-            sendError(403, result, res, error);
+        } catch (err) {
+            sendError(404, result, res, `${err}`
+                .replace('Error:', ''));
         }
     },
     /**
@@ -174,52 +126,28 @@ export default {
         // account deletion part of the users controller
         const result = {};
         const resStatus = 200;
-        let error;
-        let tempUser;
 
         // getting the the account number
         const { accountNumber } = req.params;
+        // trying to find the account before to
+        // delete
+        try {
+            const tempAccount = await accountsModel
+                .findAccount(accountNumber);
 
-        // Getting the token from headers
-        const { authorization } = req.headers;
-        // Verifying the token
-        if (authorization) {
-            tempUser = await usersModel
-                .verifyToken(authorization.split(' ')[1]);
-        }
+            // deleting the account
+            await accountsModel
+                .deleteAccount(tempAccount.accountnumber);
 
-        if (tempUser) {
-            if ((tempUser.isadmin || tempUser.type === 'staff')
-                && tempUser.isloggedin) {
-                // trying to find the account vefore to
-                // delete
-                try {
-                    const tempAccount = await accountsModel
-                        .findAccount(accountNumber);
-
-                    // deleting the account
-                    await accountsModel
-                        .deleteAccount(tempAccount.accountnumber);
-
-                    // Sending back the required object
-                    result.status = resStatus;
-                    result.data = {
-                        message: 'Account successfully deleted',
-                    };
-                    res.status(resStatus).json(result);
-                } catch (err) {
-                    sendError(404, result, res, `${err}`
-                        .replace('Error:', ''));
-                }
-            } else {
-                error = 'Only a logged in admin/staf can delete '
-                    + ' an account. Provide an admin/staff token or login';
-                sendError(403, result, res, error);
-            }
-        } else {
-            error = 'Invalid token provided or the '
-            + 'admin/staff is not signed up';
-            sendError(403, result, res, error);
+            // Sending back the required object
+            result.status = resStatus;
+            result.data = {
+                message: 'Account successfully deleted',
+            };
+            res.status(resStatus).json(result);
+        } catch (err) {
+            sendError(404, result, res, `${err}`
+                .replace('Error:', ''));
         }
     },
     /**
