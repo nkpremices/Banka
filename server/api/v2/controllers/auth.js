@@ -27,15 +27,7 @@ export default {
         // Initialising variables
         const result = {};
         const status = 201;
-        let error;
-        let AdminToken;
 
-        const { authorization } = req.headers;
-
-        if (authorization) {
-            // eslint-disable-next-line prefer-destructuring
-            AdminToken = authorization.split(' ')[1];
-        }
         // getting the body of the request
         const {
             email,
@@ -74,34 +66,12 @@ export default {
             }
         };
 
-        // Verifying the availability of the given fields
-        const verify = await usersModel
-            .VerifyUser(email, type, isAdmin, AdminToken);
-        // See the availability of the provided email
-        if (!verify.foundEmail) {
-            // see if it's an admin request
-            if (verify.adminOrStaffReq) {
-                if (verify.foundToken) {
-                    if (verify.foundAdmin) {
-                        userRegister(email, firstName, lastName,
-                            password, type, isAdmin);
-                    } else {
-                        error = 'Invalid token provided'
-                        + ' or the admin is not logged in';
-                        sendError(400, result, res, error);
-                    }
-                } else {
-                    error = 'Only an admin can create admin or staff'
-                    + ' accounts.A token must be provided';
-                    sendError(403, result, res, error);
-                }
-            } else {
-                userRegister(email, firstName, lastName,
-                    password, 'client', false);
-            }
-        } else {
-            error = 'Email address already in use';
-            sendError(205, result, res, error);
+        if (req.reqType === 'admin') {
+            userRegister(email, firstName, lastName, password, type, isAdmin);
+        }
+
+        if (req.reqType === 'client') {
+            userRegister(email, firstName, lastName, password, 'client', false);
         }
     },
     /**

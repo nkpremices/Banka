@@ -1,13 +1,13 @@
 import '@babel/polyfill';
 import express from 'express';
 import defaultErrorController from './api/v2/controllers/default';
-import v1 from './api/v1/routes/index';
+import v1router from './api/v1/routes/index';
 import v1Docs from './api/v1/routes/docs';
-import v2 from './api/v2/routes/index';
+import v2router from './api/v2/routes/index';
 import v2Docs from './api/v2/routes/docs';
 import home from './api/v1/routes/home';
 import environement from './configs/environnements';
-import registerMiddleware from './middlewares/register';
+import register from './middlewares/register';
 import createAdmin from './helpers/v1/create.admin';
 import initializeDb from './middlewares/initialize.db';
 
@@ -15,7 +15,7 @@ import initializeDb from './middlewares/initialize.db';
 const app = express({ strict: true });
 
 // Register middleware
-registerMiddleware(app);
+register(app);
 
 // Creating the admin v1
 createAdmin();
@@ -29,11 +29,11 @@ if (environement.name === 'development') {
 
 
 // App for v1
-app.use('/api/v1', v1);
+app.use('/api/v1', v1router);
 app.use('/docs/v1', v1Docs);
 
 // App for v2
-app.use('/api/v2', v2);
+app.use('/api/v2', v2router);
 app.use('/docs/v2', v2Docs);
 
 app.use('/', home);

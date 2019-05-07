@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import accountsController from '../controllers/accounts';
-import validate from '../../../middlewares/validation';
+import validateBody from '../../../middlewares/validate.body';
 
 const accountsRouter = Router();
 const {
@@ -10,9 +10,9 @@ const {
 } = accountsController;
 
 accountsRouter
-    .post('', validate(true, 'createBankAccount'), createAccount);
+    .post('', validateBody(true, 'createBankAccount'), createAccount);
 accountsRouter
-    .patch('/:accountNumber', validate(true, 'activateDeactivateAccount'),
+    .patch('/:accountNumber', validateBody(true, 'activateDeactivateAccount'),
         activateDeactivateAccount);
 accountsRouter
     .delete('/:accountNumber', deleteAccount);

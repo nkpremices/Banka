@@ -27,7 +27,7 @@ export default (useJoiError = false, schema) => {
         stripUnknown: true, // remove unknown keys from the validated data
     };
 
-    // Vlidation error messages build
+    // Validation error messages build
     const passwordFieldError = 'Password must be at least 5 letters containing'
     + ' at least a number a Lowercase letter and an Uppercase letter';
 
@@ -60,16 +60,19 @@ export default (useJoiError = false, schema) => {
                             req.body = data;
                             next();
                         } else {
-                            // Build error object
+                            // Building the error object
                             let message = err.details[0].message
                                 .replace(/['"]/g, '');
-                            if (message.includes('password')) {
+                            if (message.includes('password with value')) {
                                 message = passwordFieldError;
-                            } else if (message.includes('firstName')) {
+                            } else if (message
+                                .includes('firstName with value')) {
                                 message = `First${nameFieldErrorMessage}`;
-                            } else if (message.includes('lastName')) {
+                            } else if (message
+                                .includes('lastName with value')) {
                                 message = `Last${nameFieldErrorMessage}`;
-                            } else if (message.includes('email')) {
+                            } else if (message
+                                .includes('email with value')) {
                                 message = emailFieldErrorMessage;
                             }
                             const errorObj = {

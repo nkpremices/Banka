@@ -16,8 +16,7 @@ export default (app) => {
     // Parse req object and make data available on req.body
         .use(bodyParser.json())
         .use(bodyParser.urlencoded({ extended: true }))
-    // Allow cross origin requests
-        .use(cors());
+        .use(cors()); // Allow cross origin requests
 
     if (process.env.NODE_ENV !== 'test' && environment !== 'production') {
     // Logging http requests

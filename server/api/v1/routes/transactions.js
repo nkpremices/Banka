@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import transactionsController from '../controllers/transactions';
-import validate from '../../../middlewares/validation';
+import validateBdy from '../../../middlewares/validate.body';
 
 const transactionsRouter = Router();
 const {
@@ -10,9 +10,9 @@ const {
 
 transactionsRouter
     .post('/:accountNumber/credit',
-        validate(true, 'creditDebitAccount'), creditAccount);
+        validateBdy(true, 'creditDebitAccount'), creditAccount);
 transactionsRouter
     .post('/:accountNumber/debit',
-        validate(true, 'creditDebitAccount'), debitAccount);
+        validateBdy(true, 'creditDebitAccount'), debitAccount);
 
 export default transactionsRouter;
