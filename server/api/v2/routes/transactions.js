@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import transactionsController from '../controllers/transactions';
-import validateBody from '../../../middlewares/validation';
+import validateBody from '../../../middlewares/validate.body';
 import validateRoute from '../../../middlewares/validate.routes';
 
 const transactionsRouter = Router();
