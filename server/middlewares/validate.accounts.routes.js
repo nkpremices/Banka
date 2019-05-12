@@ -133,9 +133,29 @@ const getSpecificAccount = async (req, res, next) => {
     }
 };
 
+/**
+ * A function to validate the request of getting
+ * one's accounts by a user
+ *
+ * @param {object} req - the request object
+ * @param {object} res - the result object
+ * @param {function} next - the next call back
+ */
+const getOwnAccounts = (req, res, next) => {
+    // initializing variables
+    const result = {};
+
+    if (req.user.email === req.params.userEmail) next();
+    else {
+        const error = 'A user can view only his own acccounts';
+        sendError(403, result, res, error);
+    }
+};
+
 export default {
     checkAccountNumber,
     accountCreation,
     getAccountTransactions,
     getSpecificAccount,
+    getOwnAccounts,
 };
