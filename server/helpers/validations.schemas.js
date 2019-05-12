@@ -56,4 +56,6 @@ export default {
     creditDebitAccount: Joi.object().keys({
         amount: Joi.number().positive().allow(0).required(),
     }),
+    email,
+    number: Joi.number().positive().allow(0).required(),
 };

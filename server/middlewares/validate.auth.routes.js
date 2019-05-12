@@ -3,32 +3,10 @@
  * @name validateROutes
  */
 
-import checkNumber from '../helpers/check.number';
+import Joi from 'joi';
+import validationSchemas from '../helpers/validations.schemas';
 import sendError from '../helpers/send.error';
 import usersModel from '../api/v2/models/auth';
-import accountsModel from '../api/v2/models/accounts';
-
-/**
- * A function to validate the account number on every
- * request where the account number is needed in the path
- *
- * @param {object} req - the request object
- * @param {object} res - the result object
- * @param {function} next - the next call back
- */
-const checkAccountNumber = (req, res, next) => {
-    const result = {};
-    let { accountNumber } = req.params;
-    // Validate the accountNumber
-    accountNumber = checkNumber(req.params
-        .accountNumber) ? parseInt(accountNumber, 10) : false;
-    if (accountNumber) {
-        next();
-    } else {
-        const error = 'Invalid account number provided';
-        sendError(400, result, res, error);
-    }
-};
 
 /**
  * A function to validate the email if it's already used
@@ -121,47 +99,10 @@ const token = (userType) => {
             next();
         } else {
             error = 'Invalid token provided or the'
-            + ` ${userType} is not signed up 1`;
+            + ` ${userType} is not signed up`;
             sendError(403, result, res, error);
         }
     };
-};
-
-
-/**
- * A function to validate the account creation
- *
- * @param {object} req - the request object
- * @param {object} res - the result object
- * @param {function} next - the next call back
- */
-const accountCreation = async (req, res, next) => {
-    // Initializing variables
-    const result = {};
-    let error;
-    const tempUser = req.user;
-
-    // getting the body
-    const {
-        accountName,
-    } = req.body;
-
-    // Verifying if the user is logged in
-    if (tempUser.isloggedin) {
-        // Verifying the availability of the given fields
-        const verify = await accountsModel.verifyAccount
-            .name(accountName, tempUser.id);
-
-        if (!verify) {
-            next();
-        } else {
-            error = 'Account name already in use';
-            sendError(205, result, res, error);
-        }
-    } else {
-        error = 'The user is not logged in';
-        sendError(403, result, res, error);
-    }
 };
 
 /**
@@ -182,15 +123,58 @@ const adminStaffAuthorization = operation => async (req, res, next) => {
         next();
     } else {
         error = `Only a logged in admin/staff can ${operation} `
-            + ' an account. Provide an admin/staff token or login';
+            + '. Provide an admin/staff token or login';
         sendError(403, result, res, error);
     }
 };
 
+/**
+ * A function to validate the email on the request path
+ *
+ * @param {object} req - the request object
+ * @param {object} res - the result object
+ * @param {function} next - the next call back
+ */
+const checkEmail = (req, res, next) => {
+    // initializing variables
+    const result = {};
+
+    // getting the the user email
+    const { userEmail } = req.params;
+    Joi.validate(userEmail, validationSchemas.email, (err) => {
+        if (!err) next();
+        else {
+            const error = 'Invalid email provided';
+            sendError(400, result, res, error);
+        }
+    });
+};
+
+/**
+ * A function to validate the login of a user
+ *
+ * @param {object} req - the request object
+ * @param {object} res - the result object
+ * @param {function} next - the next call back
+ */
+const checkUserLogin = (action) => {
+    // initializing variables
+    const result = {};
+
+    return async (req, res, next) => {
+        if (req.user.isloggedin) next();
+        else {
+            const error = `Only a logged in user can ${action}`
+            + '. Login the user please';
+            sendError(400, result, res, error);
+        }
+    };
+};
+
 export default {
-    checkAccountNumber,
     signup,
-    accountCreation,
     token,
     adminStaffAuthorization,
+    checkEmail,
+    checkUserLogin,
 };

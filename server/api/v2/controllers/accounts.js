@@ -158,76 +158,45 @@ export default {
         * @returns {Promise}
     */
     getAccountTransactions: async (req, res) => {
-        // account deletion part of the users controller
+        // Initializing varialbles
         const result = {};
         const resStatus = 200;
         let error;
-        let tempUser;
 
         // getting the the account number
         const { accountNumber } = req.params;
 
-        // Getting the token from headers
-        const { authorization } = req.headers;
-        // Verifying the token
-        if (authorization) {
-            tempUser = await usersModel
-                .verifyToken(authorization.split(' ')[1]);
-        }
+        // trying to fetch data
+        try {
+            // Getting the transactions
+            const transactions = await transactionsModel
+                .findTransactions.all(accountNumber);
 
-        if (tempUser) {
-            if (tempUser.isloggedin) {
-                // trying to fetch data
-                try {
-                    // Finding the account
-                    // eslint-disable-next-line
-                    const tempAccount = await accountsModel
-                        .findAccount(accountNumber);
-                    if (tempUser.email === tempAccount.owneremail) {
-                        // Getting the transactions
-                        const transactions = await transactionsModel
-                            .findTransactions.all(accountNumber);
-
-                        if (transactions.length === 0) {
-                            error = 'No transactions found for '
-                            + 'this account ';
-                            sendError(404, result, res, error);
-                        } else {
-                            // Sending back the
-                            // required object
-                            result.status = resStatus;
-                            result.data = transactions.map((el) => {
-                                const transaction = {
-                                    transactionId: el.id,
-                                    createdOn: new Date(el.createdon),
-                                    type: el.type,
-                                    accountNumber: el.accountnumber,
-                                    amount: el.amount,
-                                    oldBalance: el.oldbalance,
-                                    newBalance: el.newbalance,
-                                };
-                                return transaction;
-                            });
-                            res.status(resStatus).json(result);
-                        }
-                    } else {
-                        error = 'A user can view only the transactions '
-                        + 'related to his own accounts';
-                        sendError(403, result, res, error);
-                    }
-                } catch (err) {
-                    sendError(404, result, res, `${err}`
-                        .replace('Error:', ''));
-                }
+            if (transactions.length === 0) {
+                error = 'No transactions found for '
+                + 'this account ';
+                sendError(404, result, res, error);
             } else {
-                error = 'Only a logged in user can get an account\'s '
-                    + 'transaction history. Provide a user token or login';
-                sendError(403, result, res, error);
+                // Sending back the
+                // required object
+                result.status = resStatus;
+                result.data = transactions.map((el) => {
+                    const transaction = {
+                        transactionId: el.id,
+                        createdOn: new Date(el.createdon),
+                        type: el.type,
+                        accountNumber: el.accountnumber,
+                        amount: el.amount,
+                        oldBalance: el.oldbalance,
+                        newBalance: el.newbalance,
+                    };
+                    return transaction;
+                });
+                res.status(resStatus).json(result);
             }
-        } else {
-            error = 'Invalid token provided or the '
-            + 'user is not signed up';
-            sendError(403, result, res, error);
+        } catch (err) {
+            sendError(404, result, res, `${err}`
+                .replace('Error:', ''));
         }
     },
     /**
@@ -242,70 +211,47 @@ export default {
         const result = {};
         const resStatus = 200;
         let error;
-        let tempUser;
 
         // getting the the user email
         const { userEmail } = req.params;
 
-        // Getting the token from headers
-        const { authorization } = req.headers;
-        // Verifying the token
-        if (authorization) {
-            tempUser = await usersModel
-                .verifyToken(authorization.split(' ')[1]);
-        }
+        try {
+            // Trying to verify the email
+            const verify = await usersModel.VerifyUser(userEmail);
+            const tempClient = verify.tempUser;
 
-        if (tempUser) {
-            if (tempUser.isloggedin
-                && (tempUser.isadmin || tempUser.type === 'staff')) {
-                try {
-                    // Trying to verify the email
-                    const verify = await usersModel.VerifyUser(userEmail);
-                    const tempClient = verify.tempUser;
+            // Accessing his accounts if he exists
+            if (verify.foundEmail) {
+                const clientAccounts = await accountsModel
+                    .getSpecifiUsersAccounts(tempClient.id);
 
-                    // Accessing his accounts if he exists
-                    if (verify.foundEmail) {
-                        const clientAccounts = await accountsModel
-                            .getSpecifiUsersAccounts(tempClient.id);
-
-                        if (clientAccounts.length === 0) {
-                            error = 'No accounts found for this client ';
-                            sendError(404, result, res, error);
-                        } else {
-                            // Sending back the
-                            // required object
-                            result.status = resStatus;
-                            result.data = clientAccounts.map((el) => {
-                                const tempTransaction = {
-                                    createdOn: new Date(el.createdon),
-                                    accountNumber: el.accountnumber,
-                                    type: el.type,
-                                    status: el.status,
-                                    balance: el.balance,
-                                };
-                                return tempTransaction;
-                            });
-                            res.status(resStatus).json(result);
-                        }
-                    } else {
-                        error = 'A user with the provided '
-                        + 'email was not found ';
-                        sendError(404, result, res, error);
-                    }
-                } catch (err) {
-                    sendError(404, result, res, `${err}`
-                        .replace('Error:', ''));
+                if (clientAccounts.length === 0) {
+                    error = 'No accounts found for this client ';
+                    sendError(404, result, res, error);
+                } else {
+                    // Sending back the
+                    // required object
+                    result.status = resStatus;
+                    result.data = clientAccounts.map((el) => {
+                        const tempTransaction = {
+                            createdOn: new Date(el.createdon),
+                            accountNumber: el.accountnumber,
+                            type: el.type,
+                            status: el.status,
+                            balance: el.balance,
+                        };
+                        return tempTransaction;
+                    });
+                    res.status(resStatus).json(result);
                 }
             } else {
-                error = 'Only a logged in Admin/staff can View all accounts '
-                    + 'owned by a specific user. Provide a Admin/staff token '
-                    + 'or login';
-                sendError(403, result, res, error);
+                error = 'A user with the provided '
+                + 'email was not found ';
+                sendError(404, result, res, error);
             }
-        } else {
-            error = 'Invalid token provided or the '
-            + 'Admin/staff is not signed up';
-            sendError(403, result, res, error);
+        } catch (err) {
+            sendError(404, result, res, `${err}`
+                .replace('Error:', ''));
         }
     },
     /**
@@ -319,55 +265,29 @@ export default {
         // Initializing variables
         const result = {};
         const resStatus = 200;
-        let error;
-        let tempUser;
 
         // getting the the account id
         const { accountNumber } = req.params;
 
-        // Getting the token from headers
-        const { authorization } = req.headers;
-        // Verifying the token
-        if (authorization) {
-            tempUser = await usersModel
-                .verifyToken(authorization.split(' ')[1]);
-        }
+        // trying to find the account
+        try {
+            const tempAccount = await accountsModel
+                .findAccount(accountNumber);
 
-        if (tempUser) {
-            if (tempUser.isloggedin) {
-                // trying to find the account
-                try {
-                    const tempAccount = await accountsModel
-                        .findAccount(accountNumber);
-                    if (tempUser.email === tempAccount.owneremail) {
-                        // Sending back the required object
-                        result.status = resStatus;
-                        result.data = {
-                            createdOn: new Date(tempAccount.createdon),
-                            accountNumber: tempAccount.accountnumber,
-                            ownerEmail: tempAccount.owneremail,
-                            type: tempAccount.type,
-                            status: tempAccount.status,
-                            balance: tempAccount.balance,
-                        };
-                        res.status(resStatus).json(result);
-                    } else {
-                        error = 'A user can view only his own acccounts';
-                        sendError(403, result, res, error);
-                    }
-                } catch (err) {
-                    sendError(404, result, res, `${err}`
-                        .replace('Error:', ''));
-                }
-            } else {
-                error = 'Only a logged in user can get a specific account\'s '
-                    + 'details. Login the user please';
-                sendError(403, result, res, error);
-            }
-        } else {
-            error = 'Invalid token provided or the '
-            + 'user is not signed up';
-            sendError(403, result, res, error);
+            // Sending back the required object
+            result.status = resStatus;
+            result.data = {
+                createdOn: new Date(tempAccount.createdon),
+                accountNumber: tempAccount.accountnumber,
+                ownerEmail: tempAccount.owneremail,
+                type: tempAccount.type,
+                status: tempAccount.status,
+                balance: tempAccount.balance,
+            };
+            res.status(resStatus).json(result);
+        } catch (err) {
+            sendError(404, result, res, `${err}`
+                .replace('Error:', ''));
         }
     },
     /**
@@ -382,75 +302,55 @@ export default {
         const result = {};
         const resStatus = 200;
         let error;
-        let tempSuperUser;
 
-        // Getting the token from headers
-        const { authorization } = req.headers;
-        // Verifying the token
-        if (authorization) {
-            tempSuperUser = await usersModel
-                .verifyToken(authorization.split(' ')[1]);
-        }
         // Getting the queries params
         const { status } = req.query;
 
-        if (tempSuperUser) {
-            if ((tempSuperUser.isadmin || tempSuperUser.type === 'staff')
-            && tempSuperUser.isloggedin) {
-                // trying to fetch data
-                try {
-                    let allAccounts;
-                    if (status === 'active' || status === 'dormant') {
-                        allAccounts = await accountsModel
-                            .getAccountsByStatus(status);
-                    } else if (Object.keys(req.query).length === 0) {
-                        allAccounts = await accountsModel
-                            .getAllAccounts();
-                    }
+        // trying to fetch data
+        try {
+            let allAccounts;
+            if (status === 'active' || status === 'dormant') {
+                allAccounts = await accountsModel
+                    .getAccountsByStatus(status);
+            } else if (Object.keys(req.query).length === 0) {
+                allAccounts = await accountsModel
+                    .getAllAccounts();
+            }
 
-                    if (allAccounts) {
-                        if (allAccounts.length === 0) {
-                            const queryParam = status === 'dormant'
-                                ? 'dormant' : 'draft';
-                            error = `There are no ${queryParam} `
-                            + 'bank accounts for now';
-                            sendError(404, result, res, error);
-                        } else {
-                            // Sending back the required object
-                            result.status = resStatus;
-                            result.data = allAccounts.map((el) => {
-                                const account = {
-                                    createdOn: new Date(el.createdon),
-                                    accountNumber: el.accountnumber,
-                                    ownerEmail: el.owneremail,
-                                    type: el.type,
-                                    status: el.status,
-                                    balance: el.balance,
-                                };
-                                return account;
-                            });
-                            res.status(resStatus).json(result);
-                        }
-                    } else if ((status && Object.keys(req.query).length > 0)
-                        || status === '') {
-                        error = 'Invalid status provided';
-                        sendError(403, result, res, error);
-                    } else {
-                        error = 'Invalid querry parameter';
-                        sendError(403, result, res, error);
-                    }
-                } catch (err) {
-                    sendError(404, result, res, `${err}`.replace('Error:', ''));
+            if (allAccounts) {
+                if (allAccounts.length === 0) {
+                    const queryParam = status && status === 'dormant'
+                        ? 'dormant' : 'draft';
+                    const voidStr = '';
+                    error = `There are no ${status ? queryParam : voidStr} `
+                    + 'bank accounts for now';
+                    sendError(404, result, res, error);
+                } else {
+                    // Sending back the required object
+                    result.status = resStatus;
+                    result.data = allAccounts.map((el) => {
+                        const account = {
+                            createdOn: new Date(el.createdon),
+                            accountNumber: el.accountnumber,
+                            ownerEmail: el.owneremail,
+                            type: el.type,
+                            status: el.status,
+                            balance: el.balance,
+                        };
+                        return account;
+                    });
+                    res.status(resStatus).json(result);
                 }
+            } else if ((status && Object.keys(req.query).length > 0)
+                || status === '') {
+                error = 'Invalid status provided';
+                sendError(403, result, res, error);
             } else {
-                error = 'Only a logged in admin/staff can View all accounts '
-                    + ' Provide a admin/staff token or login';
+                error = 'Invalid querry parameter';
                 sendError(403, result, res, error);
             }
-        } else {
-            error = 'Invalid token provided or the '
-            + 'admin/staff is not signed up';
-            sendError(403, result, res, error);
+        } catch (err) {
+            sendError(404, result, res, `${err}`.replace('Error:', ''));
         }
     },
 };
