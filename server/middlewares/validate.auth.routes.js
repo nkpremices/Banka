@@ -99,7 +99,7 @@ const token = (userType) => {
             next();
         } else {
             error = 'Invalid token provided or the'
-            + ` ${userType} is not signed up 1`;
+            + ` ${userType} is not signed up`;
             sendError(403, result, res, error);
         }
     };
