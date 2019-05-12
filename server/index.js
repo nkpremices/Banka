@@ -44,7 +44,7 @@ app.post('*', defaultErrorController);
 app.delete('*', defaultErrorController);
 app.patch('*', defaultErrorController);
 
-app.listen(`${environement.app.port}`, () => {
+app.listen(environement.app.port, () => {
     // eslint-disable-next-line
     console.log(`Server now listening at localhost:${environement.app.port}`);
 });
