@@ -61,16 +61,17 @@ accountsRouter
         getSpecificAccount);
 
 accountsRouter
+    .get('/own/:userEmail',
+        validateAuthRoutes.checkEmail,
+        validateAuthRoutes.token('user'),
+        validateAuthRoutes.checkUserLogin('a list of his own accounts'),
+        validateAccRoutes.getOwnAccounts,
+        getSpecificUserAccounts);
+
+accountsRouter
     .get('',
         validateAuthRoutes.token('admin/staff'),
         validateAuthRoutes.adminStaffAuthorization('View all accounts'),
         getAllAccounts);
-
-accountsRouter
-    .get('/:userEmail',
-        validateAuthRoutes.checkEmail,
-        validateAuthRoutes.token('user'),
-        validateAuthRoutes.checkUserLogin('a list of his own accounts'),
-        getSpecificUserAccounts);
 
 export default accountsRouter;
