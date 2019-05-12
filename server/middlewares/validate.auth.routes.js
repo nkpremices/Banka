@@ -123,7 +123,7 @@ const adminStaffAuthorization = operation => async (req, res, next) => {
         next();
     } else {
         error = `Only a logged in admin/staff can ${operation} `
-            + ' an account. Provide an admin/staff token or login';
+            + '. Provide an admin/staff token or login';
         sendError(403, result, res, error);
     }
 };
