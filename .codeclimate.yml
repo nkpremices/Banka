@@ -5,3 +5,4 @@ plugins:
 ## exclude UI folder in the Analysis of made by code climate
 exclude_patterns:
 - "UI/"
+- "server/tests/**/*.js"
