@@ -1,4 +1,5 @@
 [![Coverage Status](https://coveralls.io/repos/github/nkpremices/Banka/badge.svg?branch=develop)](https://coveralls.io/github/nkpremices/Banka?branch=develop)  [![Build Status](https://travis-ci.com/nkpremices/Banka.svg)](https://travis-ci.com/nkpremices/Banka) [![Maintainability](https://api.codeclimate.com/v1/badges/bee1220a16f6a543c205/maintainability)](https://codeclimate.com/github/nkpremices/Banka/maintainability)  
+
 # Banka
 A core banking operations web application. It is meant to support a single bank.
 
