@@ -171,4 +171,3 @@ All the created API endpoints are documented and available [here](https://banka-
 
 * Run tests
 ```npm test``` 
-
